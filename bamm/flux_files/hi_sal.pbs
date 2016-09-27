@@ -1,0 +1,24 @@
+#!/bin/bash
+#PBS -N hi_sal
+#PBS -M jonsmitc@umich.edu
+#PBS -m abe
+
+#PBS -l procs=1,tpn=1,pmem=1gb,walltime=450:00:00
+#PBS -j oe
+#PBS -V
+
+#PBS -A drabosky_flux
+#PBS -l qos=flux
+#PBS -q flux
+#PBS -t 1-100%10
+
+####  End PBS preamble
+#  Include the next three lines always
+if [ "x${PBS_NODEFILE}" != "x" ] ; then
+   cat $PBS_NODEFILE   # contains a list of the CPUs you were using if run with PBS file
+fi
+
+export OMP_NUM_THREADS=${PBS_NP}
+
+cd /scratch/drabosky_flux/jonsmitc/Salamanders/bamm/output-${PBS_ARRAYID}/
+~/fossil/build/bamm -c control_hi.txt --outName hi --lambdaIsTimeVariablePrior 1 --minCladeSizeForShift 5 --numberOfChains 2

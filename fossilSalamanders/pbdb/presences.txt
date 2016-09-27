@@ -1,0 +1,131 @@
+species	total occs	Bathonian	Callovian	Oxfordian	Kimmeridgian	Portlandian	Berriasian	Valanginian	Hauterivian	Barremian	Aptian	Albian	Cenomanian	Turonian	Coniacian	Santonian	Campanian	Maastrichtian	Danian	Thanetian	Ypresian	Lutetian	Bartonian	Priabonian	Rupelian	Chattian	Lower Miocene	Middle Miocene	Upper Miocene	Pliocene	Pleistocene
+Salamandra sansaniensis sansaniensis	7																						1			1		5			
+Megalotriton sp. sp.	4																							3	1						
+Noterpeton bolivianum bolivianum	1																	1													
+Pseudotriton ruber ruber	1																														1
+Ambystoma tigrinum tigrinum	59																											1		1	57
+Plethodon glutinosus glutinosus	5																														5
+Habrosaurus dilatus dilatus	39																1	33	5												
+Proamphiuma cretacea cretacea	1																	1													
+Opisthotriton kayi kayi	88																51	30	5	2											
+Piceoerpeton naylori naylori	2																	2													
+Prodesmodon copei copei	25																5	19	1												
+Scapherpeton tectum tectum	120																54	59	5	2											
+Lisserpeton bairdi bairdi	13																1	8	3	1											
+Palaeoproteus klatti klatti	1																					1									
+Tylototriton weigelti weigelti	1																					1									
+Prosiren elinorae elinorae	6										1	5																			
+Habrosaurus sp. sp.	4																1	3													
+Parrisia neocesariensis neocesariensis	2																2														
+Habrosaurus prodilatus prodilatus	1																1														
+Scapherpeton sp. sp.	21																8	11		2											
+Opisthotriton sp. sp.	16																4	9		3											
+Lisserpeton atlantes atlantes	1																	1													
+Lisserpeton sp. sp.	2																	2													
+Opisthotriton gidleyi gidleyi	1																		1												
+Piceoerpeton willwoodense willwoodense	12																			10	2										
+Cryptobranchus saskatchewanensis saskatchewanensis	1																			1											
+Necturus krausei krausei	1																			1											
+Amphiuma jepseni jepseni	1																			1											
+Paleoamphiuma tetradactylum tetradactylum	1																				1										
+Chrysotriton tiheni tiheni	1																				1										
+Batrachosauroides gotoi gotoi	1																				1										
+Ambystoma tiheni tiheni	1																							1							
+Batrachosauroides sp. sp.	2																								1		1				
+Taricha miocenica miocenica	1																									1					
+Andrias matthewi matthewi	6																										4	2			
+Ambystoma minshalli minshalli	10																										1	9			
+Ambystoma priscum priscum	2																											2			
+Siren sp. sp.	8																											2	1	1	4
+Ambystoma sp. sp.	9																											2			7
+Ambystoma maculatum maculatum	5																											1			4
+Batrachosauroides dissimulans dissimulans	3																										1	2			
+Pseudobranchus vetustus vetustus	1																												1		
+Siren simpsoni simpsoni	1																												1		
+Siren hesterna hesterna	1																										1				
+Amphiuma sp. sp.	4																												1		3
+Notophthalmus sp. sp.	3																												1		2
+Siren miotexana miotexana	3																										1	2			
+Amphiuma antica antica	1																											1			
+Notophthalmus slaughteri slaughteri	2																											2			
+Siren lacertina lacertina	13																													1	12
+Salamandra opaca opaca	3																														3
+Gyrinophilus porphyriticus porphyriticus	2																														2
+Cryptobranchus guildayi guildayi	2																														2
+Notophthalmus viridescens viridescens	5																														5
+Plethodon gultinosus gultinosus	1																														1
+Ambystoma alamosensis alamosensis	3																														3
+Taricha sp. sp.	2																														2
+Pseudobranchus robustus robustus	4																														4
+Necturus sp. sp.	1																														1
+Siren intermedia intermedia	1																														1
+Nezpercius dodsoni dodsoni	2																2														
+Chunerpeton tianyiensis tianyiensis	3		1	1	1																										
+Jeholotriton paradoxus paradoxus	1		1																												
+Liaoxitriton daohugouensis daohugouensis	1		1																												
+Valdotriton gracilis gracilis	1									1																					
+Hylaeobatrachus sp. sp.	1									1																					
+Apricosiren ensomi ensomi	2						2																								
+Marmorerpeton sp. sp.	5	5																													
+Amphiuma means means	2																														2
+Chelotriton sp. sp.	6																									2	2	2			
+Triturus vulgaris vulgaris	2																											2			
+Triturus marmoratus marmoratus	6																										1	3	1	1	
+Kababisha humarensis humarensis	1												1																		
+Kababisha sudanensis sudanensis	1												1																		
+Marmorerpeton freemani freemani	1	1																													
+Marmorerpeton kermacki kermacki	2	2																													
+Oligosemia spinosa spinosa	1																												1		
+Andrias scheuchzeri scheuchzeri	7																									1	5	1			
+Chelotriton paradoxus paradoxus	4																									1		3			
+Salamandra sp. sp.	4																			1		1			1			1			
+Eoscapherpeton asiaticum asiaticum	2													1	1																
+Mioproteus caucasicus caucasicus	6																										2	3	1		
+Chelotriton pliocenicus pliocenicus	1																													1	
+Apricosiren sp. sp.	1						1																								
+Iridotriton hechti hechti	1				1																										
+Nesovtriton mynbulakensis mynbulakensis	3													1	2																
+Horezmia gracile gracile	2											1	1																		
+Eoscapherpeton sp. b sp. b	1															1															
+Eoscapherpeton superum superum	1															1															
+Triturus sp. sp.	4																				1					2	1				
+Urupia monstrosa monstrosa	1	1																													
+Galverpeton ibericum ibericum	1									1																					
+Palaeoproteus gallicus gallicus	3																			3											
+Chelotriton robustus robustus	1																									1					
+Chelotriton sp. type II sp. type II	1																												1		
+Chelotriton sp. type I sp. type I	1																												1		
+Notophthalmus crassus crassus	1																										1				
+Kokartus honorarius honorarius	2	2																													
+Desmognathus sp. sp.	2																														2
+Cryptobranchus alleganiensis alleganiensis	2																														2
+Desmognathus ochrophaeus ochrophaeus	2																														2
+Eurycea sp. sp.	1																														1
+Ambystoma maculotum maculotum	1																														1
+Chioglossa meini meini	1																									1					
+Triturus roehrsi roehrsi	1																									1					
+Koalliella sp. sp.	1																			1											
+Liaoxitriton zhongjiani zhongjiani	1										1																				
+Laccotriton subsolanus subsolanus	1					1																									
+Sinerpeton fengshanensis fengshanensis	1					1																									
+Kababisha sp. sp.	2												2																		
+Desmognathus fuscus fuscus	1																														1
+Gyrinophilus sp. sp.	1																														1
+Cryptobranchus sp. sp.	1																														1
+Desmognathus monticola monticola	1																														1
+Ambystoma jeffersonianum jeffersonianum	1																														1
+Beiyanerpeton jianpingensis jianpingensis	1			1																											
+Dicamptodon antiquus antiquus	1																			1											
+Carpathotriton sp. sp.	1																											1			
+Lissotriton sp. sp.	1																											1			
+Triturus helveticus helveticus	1																										1				
+Piceoerpeton sp. sp.	1																	1													
+Aviturus exsecratus exsecratus	1																			1											
+Ulanurus fractus fractus	1																			1											
+Paranecturus garbanii garbanii	8																	8													
+Prodesmodon sp. sp.	1																	1													
+Lissotriton rohrsi rohrsi	4																												4		
+Salamandrina sp. sp.	1																												1		
+Parahynobius sp. sp.	1																												1		
+Mertensiella caucasica caucasica	1																												1		
+Salamandra salamandra salamandra	1																												1		

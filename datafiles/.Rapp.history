@@ -1,0 +1,717 @@
+## Run BioGeoBEARS on salamander data#
+# Load the package (after installation, see above).#
+library(optimx)         # You need to have some version of optimx available#
+                        # as it is a BioGeoBEARS dependency; however, if you#
+                        # don't want to use optimx, and use optim() (from R core) #
+                        # you can set:#
+                        # BioGeoBEARS_run_object$use_optimx = FALSE#
+                        # ...everything should work either way -- NJM 2014-01-08#
+library(FD)       # for FD::maxent() (make sure this is up-to-date)#
+library(snow)     # (if you want to use multicore functionality; some systems/R versions prefer library(parallel), try either)#
+library(parallel)#
+library(BioGeoBEARS)#
+###########################################################################################
+#### Source all of the annoying BGB stuff#
+source("http://phylo.wdfiles.com/local--files/biogeobears/cladoRcpp.R") # (needed now that traits model added; source FIRST!)#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_add_fossils_randomly_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_basics_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_calc_transition_matrices_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_classes_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_detection_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_DNA_cladogenesis_sim_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_extract_Qmat_COOmat_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_generics_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_models_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_on_multiple_trees_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_plots_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_readwrite_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_simulate_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_makePlots_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stochastic_mapping_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stratified_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_univ_model_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/calc_uppass_probs_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/calc_loglike_sp_v01.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/get_stratified_subbranch_top_downpass_likelihoods_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/runBSM_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/stochastic_map_given_inputs.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/summarize_BSM_tables_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_traits_v1.R") # added traits model#
+calc_loglike_sp = compiler::cmpfun(calc_loglike_sp_prebyte)    # crucial to fix bug in uppass calculations#
+calc_independent_likelihoods_on_each_branch = compiler::cmpfun(calc_independent_likelihoods_on_each_branch_prebyte)#
+    # slight speedup hopefully#
+# However, you can find the extdata directory like this:#
+extdata_dir <- np(system.file("extdata", package="BioGeoBEARS"))#
+scriptdir <- np(system.file("extdata/a_scripts", package="BioGeoBEARS"))#
+list.files(extdata_dir)#
+###########################################################################################
+Path_base <- "~/Documents/Salamanders/"#
+setwd(paste(Path_base, "datafiles", sep=""))#
+#
+#z <- define_BioGeoBEARS_run(trfn="http://phylo.wdfiles.com/local--files/biogeobears/Psychotria_5.2.newick", geogfn="http://phylo.wdfiles.com/local--files/biogeobears/Psychotria_geog.data")#
+#frP <- bears_2param_standard_fast(trfn="Psychotria_5.2.newick", geogfn="Psychotria_geog.data")#
+#
+tree <- read.tree("fossilTree.tre")#
+inputGeog <- read.table("sal_geog.data", stringsAsFactors=F, header=T, row.names=1)#
+inputGeog <- cbind(tree$tip.label, inputGeog[tree$tip.label,])#
+colnames(inputGeog) <- c(Ntip(tree), 6)#
+#inputGeog[,2] <- gsub("\\?","0",inputGeog[,2])#
+write.table(inputGeog, file="input_geog.data", quote=F, row.names=F, col.names=T, sep="\t")#
+# d = dispersal, e= extinction (these two are LaGrange), next is j = founder-event speciation (bears_3param), then v = vicariance proportion, then max_ent_constraint_05 which impacts the probability of different range sizes (low=small sizes, hi=big sizes)#
+z_dec <- define_BioGeoBEARS_run()#
+#
+z_dec$geogfn <- "input_geog.data"#
+z_dec$trfn <- "fossilTree.tre"#
+#
+z_dec$use_optimx <- T#
+z_dec$num_cores_to_use <- 2#
+z_dec$max_range_size <- 6#
+z_dec$force_sparse <- FALSE#
+z_dec$include_null_range <- TRUE#
+z_dec$useAmbiguities <- TRUE#
+z_dec <- readfiles_BioGeoBEARS_run(z_dec)#
+z_dec$return_condlikes_table <- TRUE#
+z_dec$calc_TTL_loglike_from_condlikes_table <- TRUE#
+z_dec$calc_ancprobs <- TRUE#
+tipranges <- getranges_from_LagrangePHYLIP(lgdata_fn=z_dec$geogfn)#
+#
+check_BioGeoBEARS_run(z_dec)#
+#
+y_dec <- bears_optim_run(z_dec)#
+#
+z_decjv <- z_dec#
+z_decjv$BioGeoBEARS_model_object@params_table["j", "type"] <- "free"#
+z_decjv$BioGeoBEARS_model_object@params_table["j", "init"] <- 1e-4#
+z_decjv$BioGeoBEARS_model_object@params_table["v", "type"] <- "free"#
+z_decjv$BioGeoBEARS_model_object@params_table["v", "init"] <- 1e-4#
+check_BioGeoBEARS_run(z_decjv)#
+z_decjv <- readfiles_BioGeoBEARS_run(z_decjv)#
+#
+y_decjv <- bears_optim_run(z_dec)#
+#
+########
+plot_BioGeoBEARS_results(y, analysis_titletxt="", plotwhat="text", label.offset=0.15, tipcex=0.1, statecex=0.5, splitcex=0.5, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z$trfn), plotlegend=T)
+plot_BioGeoBEARS_results(z_dec, analysis_titletxt="", plotwhat="text", label.offset=0.15, tipcex=0.1, statecex=0.5, splitcex=0.5, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z$trfn), plotlegend=T)
+plot_BioGeoBEARS_results(z_decjv, analysis_titletxt="", plotwhat="text", label.offset=0.15, tipcex=0.1, statecex=0.5, splitcex=0.5, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z$trfn), plotlegend=T)
+plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="text", label.offset=0.15, tipcex=0.1, statecex=0.5, splitcex=0.5, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z$trfn), plotlegend=T)
+plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="text", label.offset=0.15, tipcex=0.1, statecex=0.5, splitcex=0.5, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)
+plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.15, tipcex=0.1, statecex=0.5, splitcex=0.5, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)
+plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.1, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)
+########
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("sal_dec.pdf", height=10, width=10)#
+plot_BioGeoBEARS_results(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.1, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)#
+dev.off()#
+#
+pdf("sal_decjv.pdf", height=10, width=10)#
+plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.1, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
+dev.off()
+setwd(paste(Path_base, "datafiles", sep=""))
+pdf((paste(Path_base, "figures/sal_dec.pdf",sep=""), height=10, width=10)#
+plot_BioGeoBEARS_results(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.1, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)#
+dev.off()#
+#
+pdf((paste(Path_base, "figures/sal_decjv.pdf",sep=""), height=10, width=10)#
+plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.1, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
+dev.off()
+pdf(paste(Path_base, "figures/sal_dec.pdf", sep=""), height=10, width=10)
+plot_BioGeoBEARS_results(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.1, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)#
+dev.off()
+pdf(paste(Path_base, "figures/sal_decjv.pdf",sep=""), height=10, width=10)#
+plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.1, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
+dev.off()
+y_dec
+str(y_dec)
+y_dec$optim_result$value
+y_decjv$optim_result
+pdf(paste(Path_base, "figures/sal_dec.pdf", sep=""), height=10, width=10)#
+plot_BioGeoBEARS_results(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.1, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)#
+dev.off()#
+#
+pdf(paste(Path_base, "figures/sal_decjv.pdf",sep=""), height=10, width=10)#
+plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.1, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
+dev.off()
+?plot_BioGeoBEARS_results
+head(inputGeog)
+inputGeog <- read.table("sal_geog.data", stringsAsFactors=F, header=T, row.names=1)
+head(inputGeog)
+get_LnL_from_BioGeoBEARS_results_object(y_decjv)
+get_LnL_from_BioGeoBEARS_results_object(y_dec)
+### Make a PHYLIP style file#
+Path_base <- "~/Documents/Salamanders/"#
+#
+setwd(paste(Path_base, "datafiles", sep=""))#
+#
+geo1 <- read.csv("geography_morph.csv", stringsAsFactors=F)#
+geo2 <- read.csv("geography_tree.csv", stringsAsFactors=F)#
+#
+fos <- read.csv("fossilSalamanders.csv", stringsAsFactors=F)[,c("genus", "species", "ENA", "WNA", "Neo", "Eur", "CASIA", "EASIA")]#
+fos_names <- apply(fos[,1:2], 1, paste, collapse="_")#
+fosMat <- cbind(fos_names, fos[,3:8])#
+colnames(fosMat) <- c("X", "ENA", "WNA", "NEO", "EUR", "CASIA", "EASIA")
+head(fosMat)
+fosMat
+## Run BioGeoBEARS on salamander data#
+# Load the package (after installation, see above).#
+library(optimx)         # You need to have some version of optimx available#
+                        # as it is a BioGeoBEARS dependency; however, if you#
+                        # don't want to use optimx, and use optim() (from R core) #
+                        # you can set:#
+                        # BioGeoBEARS_run_object$use_optimx = FALSE#
+                        # ...everything should work either way -- NJM 2014-01-08#
+library(FD)       # for FD::maxent() (make sure this is up-to-date)#
+library(snow)     # (if you want to use multicore functionality; some systems/R versions prefer library(parallel), try either)#
+library(parallel)#
+library(BioGeoBEARS)#
+###########################################################################################
+#### Source all of the annoying BGB stuff#
+source("http://phylo.wdfiles.com/local--files/biogeobears/cladoRcpp.R") # (needed now that traits model added; source FIRST!)#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_add_fossils_randomly_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_basics_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_calc_transition_matrices_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_classes_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_detection_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_DNA_cladogenesis_sim_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_extract_Qmat_COOmat_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_generics_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_models_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_on_multiple_trees_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_plots_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_readwrite_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_simulate_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_makePlots_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stochastic_mapping_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stratified_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_univ_model_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/calc_uppass_probs_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/calc_loglike_sp_v01.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/get_stratified_subbranch_top_downpass_likelihoods_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/runBSM_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/stochastic_map_given_inputs.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/summarize_BSM_tables_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_traits_v1.R") # added traits model#
+calc_loglike_sp = compiler::cmpfun(calc_loglike_sp_prebyte)    # crucial to fix bug in uppass calculations#
+calc_independent_likelihoods_on_each_branch = compiler::cmpfun(calc_independent_likelihoods_on_each_branch_prebyte)#
+    # slight speedup hopefully#
+# However, you can find the extdata directory like this:#
+extdata_dir <- np(system.file("extdata", package="BioGeoBEARS"))#
+scriptdir <- np(system.file("extdata/a_scripts", package="BioGeoBEARS"))#
+list.files(extdata_dir)#
+###########################################################################################
+Path_base <- "~/Documents/Salamanders/"#
+setwd(paste(Path_base, "datafiles", sep=""))#
+#
+tree <- read.tree("fossilTree.tre")#
+inputGeog <- read.table("sal_geog.data", stringsAsFactors=F, header=T, row.names=1)#
+inputGeog <- cbind(tree$tip.label, inputGeog[tree$tip.label,])#
+inputGeog[,2] <- gsub("\\?","0",inputGeog[,2])#
+#
+inputGeog <- cbind(inputGeog, rep("", nrow(inputGeog)))#
+colnames(inputGeog) <- c(Ntip(tree), 6, "(A W S Er C E)")#
+#
+write.table(inputGeog, file="input_geog.data", quote=F, row.names=F, col.names=T, sep="\t")#
+colnames(minorProb) <- c("X", "ENA", "WNA", "NEO", "EUR", "CASIA", "EASIA")#
+# d = dispersal, e= extinction (these two are LaGrange), next is j = founder-event speciation (bears_3param), then v = vicariance proportion, then max_ent_constraint_05 which impacts the probability of different range sizes (low=small sizes, hi=big sizes)#
+z_dec <- define_BioGeoBEARS_run()#
+#
+z_dec$geogfn <- "input_geog.data"#
+z_dec$trfn <- "fossilTree.tre"#
+#
+z_dec$use_optimx <- T#
+z_dec$num_cores_to_use <- 2#
+z_dec$max_range_size <- 6#
+z_dec$force_sparse <- FALSE#
+z_dec$include_null_range <- TRUE#
+z_dec$useAmbiguities <- TRUE#
+z_dec <- readfiles_BioGeoBEARS_run(z_dec)#
+z_dec$return_condlikes_table <- TRUE#
+z_dec$calc_TTL_loglike_from_condlikes_table <- TRUE#
+z_dec$calc_ancprobs <- TRUE#
+tipranges <- getranges_from_LagrangePHYLIP(lgdata_fn=z_dec$geogfn)#
+#
+check_BioGeoBEARS_run(z_dec)#
+#
+y_dec <- bears_optim_run(z_dec)#
+#
+z_decjv <- z_dec#
+z_decjv$BioGeoBEARS_model_object@params_table["j", "type"] <- "free"#
+z_decjv$BioGeoBEARS_model_object@params_table["j", "init"] <- 1e-4#
+z_decjv$BioGeoBEARS_model_object@params_table["v", "type"] <- "free"#
+z_decjv$BioGeoBEARS_model_object@params_table["v", "init"] <- 1e-4#
+check_BioGeoBEARS_run(z_decjv)#
+z_decjv <- readfiles_BioGeoBEARS_run(z_decjv)#
+#
+y_decjv <- bears_optim_run(z_dec)#
+#
+########
+pdf(paste(Path_base, "figures/sal_dec_hardFos.pdf", sep=""), height=10, width=10)#
+plot_BioGeoBEARS_results(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.1, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)#
+dev.off()#
+#
+pdf(paste(Path_base, "figures/sal_decjv_hardFos.pdf",sep=""), height=10, width=10)#
+plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.15, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
+dev.off()
+z <- read.tree("~/Documents/Salamanders/pyron_2014/pyron2014.tre")
+Ntip(z)
+max(nodeHeights(z))
+## Run BioGeoBEARS on salamander data#
+# Load the package (after installation, see above).#
+library(optimx)         # You need to have some version of optimx available#
+                        # as it is a BioGeoBEARS dependency; however, if you#
+                        # don't want to use optimx, and use optim() (from R core) #
+                        # you can set:#
+                        # BioGeoBEARS_run_object$use_optimx = FALSE#
+                        # ...everything should work either way -- NJM 2014-01-08#
+library(FD)       # for FD::maxent() (make sure this is up-to-date)#
+library(snow)     # (if you want to use multicore functionality; some systems/R versions prefer library(parallel), try either)#
+library(parallel)#
+library(BioGeoBEARS)#
+###########################################################################################
+#### Source all of the annoying BGB stuff#
+source("http://phylo.wdfiles.com/local--files/biogeobears/cladoRcpp.R") # (needed now that traits model added; source FIRST!)#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_add_fossils_randomly_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_basics_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_calc_transition_matrices_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_classes_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_detection_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_DNA_cladogenesis_sim_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_extract_Qmat_COOmat_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_generics_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_models_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_on_multiple_trees_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_plots_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_readwrite_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_simulate_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_makePlots_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stochastic_mapping_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stratified_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_univ_model_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/calc_uppass_probs_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/calc_loglike_sp_v01.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/get_stratified_subbranch_top_downpass_likelihoods_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/runBSM_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/stochastic_map_given_inputs.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/summarize_BSM_tables_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_traits_v1.R") # added traits model#
+calc_loglike_sp = compiler::cmpfun(calc_loglike_sp_prebyte)    # crucial to fix bug in uppass calculations#
+calc_independent_likelihoods_on_each_branch = compiler::cmpfun(calc_independent_likelihoods_on_each_branch_prebyte)#
+    # slight speedup hopefully#
+# However, you can find the extdata directory like this:#
+extdata_dir <- np(system.file("extdata", package="BioGeoBEARS"))#
+scriptdir <- np(system.file("extdata/a_scripts", package="BioGeoBEARS"))#
+list.files(extdata_dir)#
+###########################################################################################
+Path_base <- "~/Documents/Salamanders/"#
+setwd(paste(Path_base, "datafiles", sep=""))#
+#
+tree <- read.tree("fossilTree.tre")#
+inputGeog <- read.table("sal_geog.data", stringsAsFactors=F, header=T, row.names=1)#
+inputGeog <- cbind(tree$tip.label, inputGeog[tree$tip.label,])#
+inputGeog[,2] <- gsub("\\?","0",inputGeog[,2])#
+#
+inputGeog <- cbind(inputGeog, rep("", nrow(inputGeog)))#
+colnames(inputGeog) <- c(Ntip(tree), 6, "(A W S Er C E)")#
+#
+write.table(inputGeog, file="input_geog.data", quote=F, row.names=F, col.names=T, sep="\t")#
+colnames(minorProb) <- c("X", "ENA", "WNA", "NEO", "EUR", "CASIA", "EASIA")#
+# d = dispersal, e= extinction (these two are LaGrange), next is j = founder-event speciation (bears_3param), then v = vicariance proportion, then max_ent_constraint_05 which impacts the probability of different range sizes (low=small sizes, hi=big sizes)#
+z_dec <- define_BioGeoBEARS_run()#
+#
+z_dec$geogfn <- "input_geog.data"#
+z_dec$trfn <- "fossilTree.tre"#
+#
+z_dec$use_optimx <- T#
+z_dec$num_cores_to_use <- 1#
+z_dec$max_range_size <- 6#
+z_dec$force_sparse <- FALSE#
+z_dec$include_null_range <- FALSE#
+z_dec$useAmbiguities <- TRUE#
+z_dec <- readfiles_BioGeoBEARS_run(z_dec)#
+z_dec$return_condlikes_table <- TRUE#
+z_dec$calc_TTL_loglike_from_condlikes_table <- TRUE#
+z_dec$calc_ancprobs <- TRUE#
+tipranges <- getranges_from_LagrangePHYLIP(lgdata_fn=z_dec$geogfn)#
+#
+check_BioGeoBEARS_run(z_dec)#
+#
+y_dec <- bears_optim_run(z_dec)#
+#
+z_decjv <- z_dec#
+z_decjv$BioGeoBEARS_model_object@params_table["j", "type"] <- "free"#
+z_decjv$BioGeoBEARS_model_object@params_table["j", "init"] <- 1e-4#
+z_decjv$BioGeoBEARS_model_object@params_table["v", "type"] <- "free"#
+z_decjv$BioGeoBEARS_model_object@params_table["v", "init"] <- 1e-4#
+check_BioGeoBEARS_run(z_decjv)#
+z_decjv <- readfiles_BioGeoBEARS_run(z_decjv)#
+#
+y_decjv <- bears_optim_run(z_dec)#
+#
+########
+pdf(paste(Path_base, "figures/sal_dec*_hardFos.pdf", sep=""), height=10, width=10)#
+plot_BioGeoBEARS_results(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.1, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)#
+dev.off()#
+#
+pdf(paste(Path_base, "figures/sal_dec*jv_hardFos.pdf",sep=""), height=10, width=10)#
+plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.15, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
+dev.off()
+## Run BioGeoBEARS on salamander data#
+# Load the package (after installation, see above).#
+library(optimx)         # You need to have some version of optimx available#
+                        # as it is a BioGeoBEARS dependency; however, if you#
+                        # don't want to use optimx, and use optim() (from R core) #
+                        # you can set:#
+                        # BioGeoBEARS_run_object$use_optimx = FALSE#
+                        # ...everything should work either way -- NJM 2014-01-08#
+library(FD)       # for FD::maxent() (make sure this is up-to-date)#
+library(snow)     # (if you want to use multicore functionality; some systems/R versions prefer library(parallel), try either)#
+library(parallel)#
+library(BioGeoBEARS)#
+###########################################################################################
+#### Source all of the annoying BGB stuff#
+source("http://phylo.wdfiles.com/local--files/biogeobears/cladoRcpp.R") # (needed now that traits model added; source FIRST!)#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_add_fossils_randomly_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_basics_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_calc_transition_matrices_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_classes_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_detection_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_DNA_cladogenesis_sim_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_extract_Qmat_COOmat_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_generics_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_models_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_on_multiple_trees_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_plots_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_readwrite_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_simulate_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_makePlots_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stochastic_mapping_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stratified_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_univ_model_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/calc_uppass_probs_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/calc_loglike_sp_v01.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/get_stratified_subbranch_top_downpass_likelihoods_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/runBSM_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/stochastic_map_given_inputs.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/summarize_BSM_tables_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_traits_v1.R") # added traits model#
+calc_loglike_sp = compiler::cmpfun(calc_loglike_sp_prebyte)    # crucial to fix bug in uppass calculations#
+calc_independent_likelihoods_on_each_branch = compiler::cmpfun(calc_independent_likelihoods_on_each_branch_prebyte)#
+    # slight speedup hopefully#
+# However, you can find the extdata directory like this:#
+extdata_dir <- np(system.file("extdata", package="BioGeoBEARS"))#
+scriptdir <- np(system.file("extdata/a_scripts", package="BioGeoBEARS"))#
+list.files(extdata_dir)#
+###########################################################################################
+Path_base <- "~/Documents/Salamanders/"#
+setwd(paste(Path_base, "datafiles", sep=""))#
+#
+tree <- read.tree("fossilTree.tre")#
+inputGeog <- read.table("sal_geog.data", stringsAsFactors=F, header=T, row.names=1)#
+inputGeog <- cbind(tree$tip.label, inputGeog[tree$tip.label,])#
+#inputGeog[,2] <- gsub("\\?","0",inputGeog[,2])#
+#
+inputGeog <- cbind(inputGeog, rep("", nrow(inputGeog)))#
+colnames(inputGeog) <- c(Ntip(tree), 6, "(A W S Er C E)")#
+#
+write.table(inputGeog, file="input_geog.data", quote=F, row.names=F, col.names=T, sep="\t")#
+colnames(minorProb) <- c("X", "ENA", "WNA", "NEO", "EUR", "CASIA", "EASIA")#
+# d = dispersal, e= extinction (these two are LaGrange), next is j = founder-event speciation (bears_3param), then v = vicariance proportion, then max_ent_constraint_05 which impacts the probability of different range sizes (low=small sizes, hi=big sizes)#
+z_dec <- define_BioGeoBEARS_run()#
+#
+z_dec$geogfn <- "input_geog.data"#
+z_dec$trfn <- "fossilTree.tre"#
+#
+z_dec$use_optimx <- T#
+z_dec$num_cores_to_use <- 1#
+z_dec$max_range_size <- 6#
+z_dec$force_sparse <- FALSE#
+z_dec$include_null_range <- FALSE#
+z_dec$useAmbiguities <- TRUE#
+z_dec <- readfiles_BioGeoBEARS_run(z_dec)#
+z_dec$return_condlikes_table <- TRUE#
+z_dec$calc_TTL_loglike_from_condlikes_table <- TRUE#
+z_dec$calc_ancprobs <- TRUE#
+tipranges <- getranges_from_LagrangePHYLIP(lgdata_fn=z_dec$geogfn)#
+#
+check_BioGeoBEARS_run(z_dec)#
+#
+y_dec <- bears_optim_run(z_dec)#
+#
+z_decjv <- z_dec#
+z_decjv$BioGeoBEARS_model_object@params_table["j", "type"] <- "free"#
+z_decjv$BioGeoBEARS_model_object@params_table["j", "init"] <- 1e-4#
+z_decjv$BioGeoBEARS_model_object@params_table["v", "type"] <- "free"#
+z_decjv$BioGeoBEARS_model_object@params_table["v", "init"] <- 1e-4#
+check_BioGeoBEARS_run(z_decjv)#
+z_decjv <- readfiles_BioGeoBEARS_run(z_decjv)#
+#
+y_decjv <- bears_optim_run(z_dec)#
+#
+########
+pdf(paste(Path_base, "figures/sal_dec*.pdf", sep=""), height=10, width=10)#
+plot_BioGeoBEARS_results(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.1, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)#
+dev.off()#
+#
+pdf(paste(Path_base, "figures/sal_dec*jv.pdf",sep=""), height=10, width=10)#
+plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.15, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
+dev.off()
+str(y_decjv)
+nrow(tree$edge)
+apply(y_decjv$relative_probs_of_each_state_at_branch_top_AT_node_DOWNPASS,2,mean)
+barplot(apply(y_decjv$relative_probs_of_each_state_at_branch_top_AT_node_DOWNPASS,2,mean))
+plot(tree)
+plot(tree, show.tip.label=F)
+nodelabels(pie=y_decjv$relative_probs_of_each_state_at_branch_top_AT_node_DOWNPASS)
+y_decjv$relative_probs_of_each_state_at_branch_top_AT_node_DOWNPASS[1,]
+head(inputGeog)
+unique(inputGeog[,2])
+mean(c(27,102))
+mean(c(158,166))
+119+30
+149/2
+(231+217)/2
+(41+95)/2
+(217+117)/2
+(95+112)/255
+(95+112)/2
+181/2
+Alpha <- 1#
+Colors <- c(rgb(1,1,1,1),	# Null#
+			rgb(27/255,158/255,119/255,Alpha),	#Eastern NA#
+			rgb(102/255, 166/255,30/255, Alpha),	#Western NA#
+			rgb(230/255, 171/255, 2/255, Alpha),	# Central & South America#
+			rgb(231/255, 41/255, 138/255, Alpha),	# Europe & NAfrica (and subSaharan Africa for a couple fossils)#
+			rgb(217/255, 95/255, 2/255, Alpha),	#Central Asia#
+			rgb(117/255, 112/255, 179/255, Alpha),	# Eastern Asia#
+			rgb(64.5/255, 162/255, 74.5/255, Alpha),	#Pan-North America#
+			rep(rgb(0,0,0, Alpha),11),	# Unobserved combos#
+			rgb(224/255, 68/255, 70/255, Alpha),	#Europe + Central Asia#
+			rgb(0,0,0, Alpha),	# Unobserved (Europe + East Asia)#
+			rgb(167/255, 103.5/255, 90.5/255, Alpha),	# Pan-Asia#
+			rep(rgb(0,0,0,Alpha), 42) # Unobserved combos#
+)#
+#names(Colors) <- c("A", "W", "S", "Er", "C", "E", "AW", "")#
+plot(tree, cex=0.15, label.offset=0.1)#
+nodelabels(pie=y_decjv$relative_probs_of_each_state_at_branch_top_AT_node_DOWNPASS, piecol=Colors)
+#names(Colors) <- c("A", "W", "S", "Er", "C", "E", "AW", "")#
+plot(tree, cex=0.15, label.offset=0.1)#
+nodelabels(pie=y_decjv$relative_probs_of_each_state_at_branch_top_AT_node_DOWNPASS, piecol=Colors, cex=0.15)
+plot_BioGeoBEARS_results
+plot_BioGeoBEARS_results(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T, skiplabels=T)
+Path_base <- "~/Documents/Salamanders/"#
+setwd(paste(Path_base, "Rscripts/", sep=""))#
+source("plot_BGB.R")
+plot_BGB(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.15, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)
+setwd(paste(Path_base, "datafiles", sep=""))
+plot_BGB(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.15, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)
+## Run BioGeoBEARS on salamander data#
+# Load the package (after installation, see above).#
+library(optimx)         # You need to have some version of optimx available#
+                        # as it is a BioGeoBEARS dependency; however, if you#
+                        # don't want to use optimx, and use optim() (from R core) #
+                        # you can set:#
+                        # BioGeoBEARS_run_object$use_optimx = FALSE#
+                        # ...everything should work either way -- NJM 2014-01-08#
+library(FD)       # for FD::maxent() (make sure this is up-to-date)#
+library(snow)     # (if you want to use multicore functionality; some systems/R versions prefer library(parallel), try either)#
+library(parallel)#
+library(BioGeoBEARS)#
+###########################################################################################
+#### Source all of the annoying BGB stuff#
+source("http://phylo.wdfiles.com/local--files/biogeobears/cladoRcpp.R") # (needed now that traits model added; source FIRST!)#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_add_fossils_randomly_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_basics_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_calc_transition_matrices_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_classes_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_detection_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_DNA_cladogenesis_sim_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_extract_Qmat_COOmat_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_generics_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_models_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_on_multiple_trees_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_plots_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_readwrite_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_simulate_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_makePlots_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stochastic_mapping_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stratified_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_univ_model_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/calc_uppass_probs_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/calc_loglike_sp_v01.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/get_stratified_subbranch_top_downpass_likelihoods_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/runBSM_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/stochastic_map_given_inputs.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/summarize_BSM_tables_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_traits_v1.R") # added traits model#
+calc_loglike_sp = compiler::cmpfun(calc_loglike_sp_prebyte)    # crucial to fix bug in uppass calculations#
+calc_independent_likelihoods_on_each_branch = compiler::cmpfun(calc_independent_likelihoods_on_each_branch_prebyte)#
+    # slight speedup hopefully#
+# However, you can find the extdata directory like this:#
+extdata_dir <- np(system.file("extdata", package="BioGeoBEARS"))#
+scriptdir <- np(system.file("extdata/a_scripts", package="BioGeoBEARS"))#
+list.files(extdata_dir)#
+###########################################################################################
+Path_base <- "~/Documents/Salamanders/"#
+setwd(paste(Path_base, "Rscripts/", sep=""))#
+source("plot_BGB.R")#
+#
+setwd(paste(Path_base, "datafiles", sep=""))#
+#
+tree <- read.tree("fossilTree.tre")#
+inputGeog <- read.table("sal_geog.data", stringsAsFactors=F, header=T, row.names=1)#
+inputGeog <- cbind(tree$tip.label, inputGeog[tree$tip.label,])#
+#inputGeog[,2] <- gsub("\\?","0",inputGeog[,2])#
+#
+inputGeog <- cbind(inputGeog, rep("", nrow(inputGeog)))#
+colnames(inputGeog) <- c(Ntip(tree), 6, "(A W S Er C E)")#
+#
+write.table(inputGeog, file="input_geog.data", quote=F, row.names=F, col.names=T, sep="\t")#
+colnames(minorProb) <- c("X", "ENA", "WNA", "NEO", "EUR", "CASIA", "EASIA")#
+# d = dispersal, e= extinction (these two are LaGrange), next is j = founder-event speciation (bears_3param), then v = vicariance proportion, then max_ent_constraint_05 which impacts the probability of different range sizes (low=small sizes, hi=big sizes)#
+z_dec <- define_BioGeoBEARS_run()#
+#
+z_dec$geogfn <- "input_geog.data"#
+z_dec$trfn <- "fossilTree.tre"#
+#
+z_dec$use_optimx <- T#
+z_dec$num_cores_to_use <- 1#
+z_dec$max_range_size <- 6#
+z_dec$force_sparse <- FALSE#
+z_dec$include_null_range <- FALSE#
+z_dec$useAmbiguities <- TRUE#
+z_dec <- readfiles_BioGeoBEARS_run(z_dec)#
+z_dec$return_condlikes_table <- TRUE#
+z_dec$calc_TTL_loglike_from_condlikes_table <- TRUE#
+z_dec$calc_ancprobs <- TRUE#
+tipranges <- getranges_from_LagrangePHYLIP(lgdata_fn=z_dec$geogfn)#
+#
+check_BioGeoBEARS_run(z_dec)#
+#
+y_dec <- bears_optim_run(z_dec)#
+#
+z_decjv <- z_dec#
+z_decjv$BioGeoBEARS_model_object@params_table["j", "type"] <- "free"#
+z_decjv$BioGeoBEARS_model_object@params_table["j", "init"] <- 1e-4#
+z_decjv$BioGeoBEARS_model_object@params_table["v", "type"] <- "free"#
+z_decjv$BioGeoBEARS_model_object@params_table["v", "init"] <- 1e-4#
+check_BioGeoBEARS_run(z_decjv)#
+z_decjv <- readfiles_BioGeoBEARS_run(z_decjv)#
+#
+y_decjv <- bears_optim_run(z_dec)#
+#
+########
+pdf(paste(Path_base, "figures/sal_dec*.pdf", sep=""), height=10, width=10)#
+plot_BGB(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T, skiplabels=T)#
+dev.off()#
+#
+pdf(paste(Path_base, "figures/sal_dec*jv.pdf",sep=""), height=10, width=10)#
+plot_BGB(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.15, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
+dev.off()
+## Run BioGeoBEARS on salamander data#
+# Load the package (after installation, see above).#
+library(optimx)         # You need to have some version of optimx available#
+                        # as it is a BioGeoBEARS dependency; however, if you#
+                        # don't want to use optimx, and use optim() (from R core) #
+                        # you can set:#
+                        # BioGeoBEARS_run_object$use_optimx = FALSE#
+                        # ...everything should work either way -- NJM 2014-01-08#
+library(FD)       # for FD::maxent() (make sure this is up-to-date)#
+library(snow)     # (if you want to use multicore functionality; some systems/R versions prefer library(parallel), try either)#
+library(parallel)#
+library(BioGeoBEARS)#
+###########################################################################################
+#### Source all of the annoying BGB stuff#
+source("http://phylo.wdfiles.com/local--files/biogeobears/cladoRcpp.R") # (needed now that traits model added; source FIRST!)#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_add_fossils_randomly_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_basics_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_calc_transition_matrices_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_classes_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_detection_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_DNA_cladogenesis_sim_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_extract_Qmat_COOmat_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_generics_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_models_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_on_multiple_trees_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_plots_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_readwrite_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_simulate_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_makePlots_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stochastic_mapping_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stratified_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_univ_model_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/calc_uppass_probs_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/calc_loglike_sp_v01.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/get_stratified_subbranch_top_downpass_likelihoods_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/runBSM_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/stochastic_map_given_inputs.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/summarize_BSM_tables_v1.R")#
+source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_traits_v1.R") # added traits model#
+calc_loglike_sp = compiler::cmpfun(calc_loglike_sp_prebyte)    # crucial to fix bug in uppass calculations#
+calc_independent_likelihoods_on_each_branch = compiler::cmpfun(calc_independent_likelihoods_on_each_branch_prebyte)#
+    # slight speedup hopefully#
+# However, you can find the extdata directory like this:#
+extdata_dir <- np(system.file("extdata", package="BioGeoBEARS"))#
+scriptdir <- np(system.file("extdata/a_scripts", package="BioGeoBEARS"))#
+list.files(extdata_dir)#
+###########################################################################################
+Path_base <- "~/Documents/Salamanders/"#
+setwd(paste(Path_base, "Rscripts/", sep=""))#
+source("plot_BGB.R")#
+#
+setwd(paste(Path_base, "datafiles", sep=""))#
+#
+tree <- read.tree("fossilTree.tre")#
+inputGeog <- read.table("sal_geog.data", stringsAsFactors=F, header=T, row.names=1)#
+inputGeog <- cbind(tree$tip.label, inputGeog[tree$tip.label,])#
+inputGeog[,2] <- gsub("\\?","0",inputGeog[,2])	# Toggle this for hardFos or softFos#
+#
+inputGeog <- cbind(inputGeog, rep("", nrow(inputGeog)))#
+colnames(inputGeog) <- c(Ntip(tree), 6, "(A W S Er C E)")#
+#
+write.table(inputGeog, file="input_geog.data", quote=F, row.names=F, col.names=T, sep="\t")#
+colnames(minorProb) <- c("X", "ENA", "WNA", "NEO", "EUR", "CASIA", "EASIA")#
+# d = dispersal, e= extinction (these two are LaGrange), next is j = founder-event speciation (bears_3param), then v = vicariance proportion, then max_ent_constraint_05 which impacts the probability of different range sizes (low=small sizes, hi=big sizes)#
+z_dec <- define_BioGeoBEARS_run()#
+#
+z_dec$geogfn <- "input_geog.data"#
+z_dec$trfn <- "fossilTree.tre"#
+#
+z_dec$use_optimx <- T#
+z_dec$num_cores_to_use <- 1#
+z_dec$max_range_size <- 6#
+z_dec$force_sparse <- FALSE#
+z_dec$include_null_range <- FALSE#
+z_dec$useAmbiguities <- TRUE#
+z_dec <- readfiles_BioGeoBEARS_run(z_dec)#
+z_dec$return_condlikes_table <- TRUE#
+z_dec$calc_TTL_loglike_from_condlikes_table <- TRUE#
+z_dec$calc_ancprobs <- TRUE#
+tipranges <- getranges_from_LagrangePHYLIP(lgdata_fn=z_dec$geogfn)#
+#
+check_BioGeoBEARS_run(z_dec)#
+#
+y_dec <- bears_optim_run(z_dec)#
+#
+z_decjv <- z_dec#
+z_decjv$BioGeoBEARS_model_object@params_table["j", "type"] <- "free"#
+z_decjv$BioGeoBEARS_model_object@params_table["j", "init"] <- 1e-4#
+z_decjv$BioGeoBEARS_model_object@params_table["v", "type"] <- "free"#
+z_decjv$BioGeoBEARS_model_object@params_table["v", "init"] <- 1e-4#
+check_BioGeoBEARS_run(z_decjv)#
+z_decjv <- readfiles_BioGeoBEARS_run(z_decjv)#
+#
+y_decjv <- bears_optim_run(z_dec)#
+#
+########
+pdf(paste(Path_base, "figures/sal_dec*.pdf", sep=""), height=10, width=10)#
+plot_BGB(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T, skiplabels=T)#
+dev.off()#
+#
+pdf(paste(Path_base, "figures/sal_dec*jv.pdf",sep=""), height=10, width=10)#
+plot_BGB(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.15, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
+dev.off()

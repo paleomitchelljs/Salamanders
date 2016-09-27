@@ -1,0 +1,17 @@
+Bin,Bin name,Base_Ma,Midpoint_Ma,SampledSp,2Tsp,3Tsp,3T_lambda,BC_lambda,3T_mu,BC_mu,Good_u,Gap_rich,3T_rich,3T_samp,collections,occurrences,mean_rich,median_rich
+64,Thanetian,61.7,58.8,2,NA,NA,NA,NA,NA,NA,0,NA,NA,NA,1,2,2,2
+60,Santonian,85.8,85.3,1,1,NA,NA,NA,NA,NA,1,NA,NA,NA,1,2,2,2
+59,Coniacian,89.3,87.5,2,2,1,0,NA,0.693,NA,0.667,2,1,2,2,3,1.5,1.5
+58,Turonian,94.3,91.8,2,,,NA,NA,NA,NA,0,NA,NA,NA,2,2,1,1
+57,Cenomanian,99.7,97,1,1,,NA,NA,NA,NA,0,NA,NA,NA,1,1,1,1
+56,Albian,112.6,106.2,1,,,NA,NA,NA,NA,0,NA,NA,NA,1,1,1,1
+55,Aptian,125.5,119,1,NA,NA,NA,NA,NA,NA,0,NA,NA,NA,1,1,1,1
+54,Barremian,130,127.7,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,0
+53,Hauterivian,136.4,133.2,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,0
+52,Valanginian,140.2,138.3,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,0
+51,Berriasian,145.5,142.8,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,NA,NA,0
+50,Portlandian,150.8,148.2,2,,NA,NA,NA,NA,NA,0,NA,NA,NA,1,2,2,2
+49,Kimmeridgian,155.7,153.2,1,1,,NA,NA,NA,NA,0,NA,NA,NA,1,1,1,1
+48,Oxfordian,161.2,158.4,2,1,1,0,NA,0,NA,0,4,1,2,1,2,2,2
+47,Callovian,164.7,162.9,3,,,NA,NA,NA,NA,0,NA,NA,NA,1,3,3,3
+46,Bathonian,167.7,166.2,1,NA,NA,NA,NA,NA,NA,1,NA,NA,NA,2,2,1,1

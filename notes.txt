@@ -1,0 +1,36 @@
+Lissotriton vulgaris (w Europe to w Russia) Smooth newt
+Salamandrella keyserlingi (cent Russia to far-east) Siberian salamander
+
+Salamandridae: fully opisthocoelous & SNF exiting posterior to tranverse proc in all verts but T1, with 2 SNF
+	Notophthalmus differs from Taricha in having convex or linear (vs concave) inter-prezygapophyseal neural arch margins
+		N viridescnes is unique in having hihgly convex inter-prezygapophyseal neural arch margin
+		
+Plethodontid atlantes: paired articular facets on odontoid process
+Ambystoma atlantes: non-faceted odontoid process with wide space to condyles
+
+Hydromantes: long, cylindrical transverse processes
+Batrachoseps: transverse processes with distinct angle along their length
+
+
+Pyron 2014 Sys Bio:
+DECj model preferred over DEC model:
+"In contrast to the Gondwanan Cradle evident in the caecilians, the MRCA of salamanders is reconstructed in a Laurasian Cradle (Nearctic + Eastern Palearctic) approximately 209 Ma, again reinforcing a Pangaean origin of early amphibian lineages. Stemgroup salamanders are known from the Eastern Palearctic and Nearctic in the Jurassic"
+"In contrast, the divergence between the Palearctic and Nearctic cryptobranchids (Andrias and Cryptobranchus) dates to approximately 43 Ma, similar to previous studies"
+
+"The dicamptodontids are Nearctic, 
+whereas the ambystomatids are primarily Nearctic with a recent (presumably overland) expansion into the margins of Tropical Middle America, approximately 10 Ma. 
+Divergence between the Nearctic dicamptodontid + ambystomatid clade and the primarily Palearctic salamandrids (Salamandroidea) is also consistent with a vicariant origin while Laurasia was fragmenting. 
+The salamandrids show movement between the Western and Eastern Palearctic and the Eastern Palearctic and Southeast Asia frequently throughout the Cenozoic, presumably"
+
+Pyron regions:
+Tropical South America (S)
+Tropical Middle America (S)
+West indies (S)
+Nearctic (W & ENA)
+Aftrotropical (Er)
+Western Paleartic (Er+CASIA)
+Eastern Palartic (CASIA + EASIA)
+Madagascar (NULL)
+Australasia (NULL)
+Southeast Asia (EASIA)
+South Asia (NULL)
