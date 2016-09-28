@@ -1,0 +1,1 @@
+generation,rank_1,rank_2,swapAccepted

@@ -1,0 +1,581 @@
+Species ID,Kingdom,Phylum,Class,Order,Family,Genus,Species,Authority,Infraspecific rank,Infraspecific name,Infraspecific authority,Stock/subpopulation,Synonyms,Common names (Eng),Common names (Fre),Common names (Spa),Red List status,Red List criteria,Red List criteria version,Year assessed,Population trend,Petitioned
+2664,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Afghanodon,mustersi,"(Smith, 1940)",,,,,Batrachuperus mustersi  |Paradactylodon mustersi,,,,CR,B2ab(iii),3.1,2004,decreasing,N
+59049,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,altamirani,"(Dugès, 1895)",,,,,Amblystoma altamirani|Ambystoma  zempoalaense|Rhyacosiredon  altamirani|Rhyacosiredon  zempoalaensis ,Mountain Stream Siredon,,Ajolote,EN,"A2ace; B1ab(iii,v)+2ab(iii,v)",3.1,2008,decreasing,N
+59050,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,amblycephalum,"Taylor, 1940",,,,,Ambystoma  amblycephala ,"Blunthead Salamander, Blunt-headed Salamander",,Ajolote de Cabeza Chata,CR,B1ab(iii),3.1,2016,decreasing,N
+59051,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,andersoni,"Krebs & Brandon, 1984",,,,,"",Anderson's Salamander,,"Achoque (Local Mexican Name), Ajolote",CR,B1ab(iii),3.1,2015,decreasing,N
+59052,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,annulatum,"(Cope, 1886)",,,,,Linguaelapsus annulatum  ,Ringed Salamander,,,LC,,3.1,2014,stable,N
+59053,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,barbouri,"Kraus & Petranka, 1989",,,,,"",Streamside Salamander,,,NT,,3.1,2004,decreasing,N
+136128,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,bishopi,"(Goin, 1950)",,,,,Linguaelapsus bishopi  ,Reticulated Flatwoods Salamander,,,VU,A2c,3.1,2008,decreasing,N
+59054,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,bombypellum,"Taylor, 1940",,,,,Ambystoma bombypella,"Delicateskin Salamander , Axolotl",,Ajolote,CR,B1ab(iii)+2ab(iii),3.1,2008,decreasing,N
+1098,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,californiense,"Gray, 1853",,,,,Ambystoma tigrinum   ,California Tiger Salamander,,,VU,A2c,3.1,2004,decreasing,N
+1099,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,cingulatum,"(Cope, 1867)",,,,,Amblystoma cingulatum  ,Frosted Flatwoods Salamander,,,VU,A2c,3.1,2008,decreasing,N
+59055,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,dumerilii,"(Dugès, 1870)",,,,,Amblystoma  dumerili|Bathysiredon  dumerilii|Bathysiredon  dumerilii  subspecies queretarensis |Siredon  dumerilii,Lake Patzcuaro Salamander ,,Achoque,CR,"B1ab(iii,v)+2ab(iii,v)",3.1,2008,decreasing,N
+59056,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,flavipiperatum,"Dixon, 1963",,,,,"",Yellow-peppered Salamander,,Ajolote de Chapala,EN,B1ab(iii)+2ab(iii),3.1,2016,decreasing,N
+59057,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,gracile,"(Baird, 1857)",,,,,Siredon gracilis  ,Northwestern Salamander,,,LC,,3.1,2015,stable,N
+59058,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,granulosum,"Taylor, 1944",,,,,"",Granular Salamander,,Ajolote,CR,B1ab(iii),3.1,2008,decreasing,N
+59059,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,jeffersonianum,"(Green, 1827)",,,,,Salamandra jeffersoniana  ,Jefferson Salamander,,,LC,,3.1,2015,stable,N
+59060,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,laterale,"Hallowell, 1856",,,,,Ambystoma platineum  ,Blue-spotted Salamander,,,LC,,3.1,2015,stable,N
+59061,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,leorae,"(Taylor, 1943)",,,,,Rhyacosiredon leorae,"Leora's Stream Salamander, Leora's Stream Siredon",,Ajolote,CR,"B1ab(iii,v)+2ab(iii,v)",3.1,2008,decreasing,N
+1093,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,lermaense,"(Taylor, 1940)",,,,,Siredon lermaensis,Lake Lerma Salamander,,Ajolote,EN,"B1ab(iii,v)+2ab(iii,v)",3.1,2015,decreasing,N
+59062,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,mabeei,"Bishop, 1928",,,,,Linguaelapsus  mabeei  ,Mabee's Salamander,,,LC,,3.1,2004,decreasing,N
+59063,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,macrodactylum,"(Baird, 1850)",,,,,Ambystoma macrodactyla  ,Long-toed Salamander,,,LC,,3.1,2015,stable,N
+59064,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,maculatum,"(Shaw, 1802)",,,,,Salamandra  punctata  ,Spotted Salamander,,,LC,,3.1,2015,stable,N
+199970,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,mavortium,"Baird, 1850",,,,,"",Western Tiger Salamander,,,LC,,3.1,2015,unknown,N
+1095,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,mexicanum,"(Shaw & Nodder, 1798)",,,,,Gyrinus mexicanus  ,Axolotl,,Ajolote,CR,"B2ab(iii,v)",3.1,2010,decreasing,N
+59065,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,opacum,"(Gravenhorst, 1807)",,,,,Salamandra opaca  ,Marbled Salamander,,,LC,,3.1,2004,stable,N
+59066,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,ordinarium,"Taylor, 1940",,,,,Ambystoma ordinaria,"Michoacan Stream Salamander, Michoacan Stream Siredon, Puerto Hondo Stream Salamander",,,EN,"B1ab(iii,iv,v)",3.1,2015,decreasing,N
+59067,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,rivulare,"(Taylor, 1940)",,,,,Rhyacosiredon rivularis  ,,,,DD,,3.1,2008,unknown,N
+59068,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,rosaceum,"Taylor, 1941",,,,,Ambystoma   fluvinatum|Ambystoma  rosaceum  subspecies nigrum |Axolotes  maculata ,Tarahumara Salamander,,,LC,,3.1,2015,unknown,N
+61893,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,silvense,"(Webb, 2004)",,,,,Ambystoma  silvensis  ,Pine Woods Salamander,,,DD,,3.1,2008,unknown,N
+59069,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,talpoideum,"(Holbrook, 1838)",,,,,Salamandra  talpoidea  ,Mole Salamander,,,LC,,3.1,2004,stable,N
+59070,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,taylori,"Brandon, Maruska & Rumph, 1982",,,,,"",Taylor's Salamander,,,CR,B1ab(iii),3.1,2015,unknown,N
+59071,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,texanum,"(Matthes, 1855)",,,,,Salamandra texana  ,Smallmouth Salamander,,,LC,,3.1,2015,stable,N
+83293207,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,tigrinum,"(Green, 1825)",,,,,"","Tiger Salamander, Salamandra, Eastern Tiger Salamander",,,LC,,3.1,2015,stable,N
+59073,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Ambystoma,velasci,"(Dugès, 1888)",,,,,Amblystoma velasci|Ambystoma lacustris,Plateau Tiger Salamander,,Salamandra,LC,,3.1,2010,unknown,N
+59074,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMPHIUMIDAE,Amphiuma,means,"Garden, 1821",,,,,Axolotus lacertinus  ,Two-toed Amphiuma,,,LC,,3.1,2004,unknown,N
+59075,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMPHIUMIDAE,Amphiuma,pholeter,"Neill, 1964",,,,,"",One-toed Amphiuma,,,NT,,3.1,2004,decreasing,N
+59076,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMPHIUMIDAE,Amphiuma,tridactylum,"Cuvier, 1827",,,,,Muraenopsis  tridactyla  ,Three-toed Amphiuma,,,LC,,3.1,2004,stable,N
+1272,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,CRYPTOBRANCHIDAE,Andrias,davidianus,"(Blanchard, 1871)",,,,,Sieboldia  davidiana,Chinese Giant Salamander,,,CR,A2ad,3.1,2004,decreasing,N
+1273,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,CRYPTOBRANCHIDAE,Andrias,japonicus,"(Temminck, 1836)",,,,,Triton   japonicus  ,Japanese Giant Salamander,,,NT,,3.1,2004,decreasing,N
+1282,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Aneides,aeneus,"(Cope & Packard, 1881)",,,,,"",Green Salamander,,,NT,,3.1,2004,decreasing,N
+59115,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Aneides,ferreus,"Cope, 1869",,,,,"",Clouded Salamander,,,NT,,3.1,2004,decreasing,N
+59116,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Aneides,flavipunctatus,"(Strauch, 1870)",,,,,"",Black Salamander,,,NT,,3.1,2004,decreasing,N
+59117,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Aneides,hardii,"(Taylor, 1941)",,,,,"",Sacramento Mountain Salamander,,,LC,,3.1,2004,stable,N
+59118,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Aneides,lugubris,"(Hallowell, 1849)",,,,,Ambystoma  punctulatum |Autodax  lugubris|Plethodon  crassulus |Salamandra  lugubris ,"Arboreal Salamander, Sad-colored Anaides",,,LC,,3.1,2008,stable,N
+59119,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Aneides,vagrans,"Wake & Jackman, 1998",,,,,"",Wandering Salamander,,,NT,,3.1,2015,decreasing,N
+59373,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Aquiloeurycea,cephalica,"(Cope, 1865)",,,,,Geotriton  cephalicus|Magnadigita  sulcata|Oedipus manni |Oedipus  cephalicus|Oedipus  sulcatus|Pseudoeurycea cephalica|Pseudoeurycea  sulcata|Spelerpes  cephalicus |Spelerpes  sulcatum ,Chunky False Brook Salamander ,,,NT,,3.1,2016,decreasing,N
+59379,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Aquiloeurycea,galeanae,"(Taylor, 1941)",,,,,Bolitoglossa galaenae |Pseudoeurycea galeanae,Galeana False Brook Salamander,,,NT,,3.1,2016,unknown,N
+59391,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Aquiloeurycea,praecellens,"(Rabb, 1955)",,,,,Parvimolge praecellens|Pseudoeurycea praecellens,Admirable False Brook Salamander,,,CR,B1ab(iii),3.1,2016,decreasing,N
+61911,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Aquiloeurycea,quetzalanensis,"(Parra-Olea, Canseco-Márquez and García-París, 2004)",,,,,Pseudoeurycea quetzalanensis,Cuetzalan Salamander,,Salamandra De Cuetzalan,DD,,3.1,2016,unknown,N
+59396,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Aquiloeurycea,scandens,"(Walker, 1955)",,,,,Pseudoeurycea scandens,Tamaulipan False Brook Salamander,,,VU,D2,3.1,2016,unknown,N
+59120,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,attenuatus,"(Eschscholtz, 1833)",,,,,"",California Slender Salamander,,,LC,,3.1,2004,stable,N
+2649,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,campi,"Marlow, Brode and Wake, 1979",,,,,"",Inyo Mountains Salamander,,,EN,"B1ab(iii,v)+2ab(iii,v)",3.1,2004,decreasing,N
+59121,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,diabolicus,"Jockusch, Wake and Yanev, 1998",,,,,"",Hell Hollow Slender Salamander,,,DD,,3.1,2004,unknown,N
+59122,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,gabrieli,"Wake, 1996",,,,,"",San Gabriel Slender Salamander,,,DD,,3.1,2004,unknown,N
+59123,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,gavilanensis,"Jockusch, Yanev and Wake, 2001",,,,,"",Gabilan Mountains Slender Salamander,,,LC,,3.1,2004,stable,N
+59124,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,gregarius,"Jockusch, Wake and Yanev, 1998",,,,,"",Gregarious Slender Salamander,,,LC,,3.1,2004,stable,N
+59125,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,incognitus,"Jockusch, Yanev and Wake, 2001",,,,,"",San Simeon Slender Salamander,,,DD,,3.1,2004,unknown,N
+59126,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,kawia,"Jockusch, Wake and Yanev, 1998",,,,,"",Sequoia Slender Salamander,,,DD,,3.1,2004,unknown,N
+59127,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,luciae,"Jockusch, Yanev and Wake, 2001",,,,,"",Santa Lucia Mountains Slender Salamander,,,LC,,3.1,2004,stable,N
+59128,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,major,"Camp, 1915",,,,,Batrachoseps aridus  ,Garden Slender Salamander,,,LC,,3.1,2008,stable,N
+59129,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,minor,"Jockusch, Yanev and Wake, 2001",,,,,"",Lesser Slender Salamander,,,DD,,3.1,2004,unknown,N
+59130,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,nigriventris,"Cope, 1869",,,,,"",Blackbelly Slender Salamander,,,LC,,3.1,2004,stable,N
+59131,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,pacificus,"(Cope, 1865)",,,,,"",Channel Islands Slender Salamander,,,LC,,3.1,2004,stable,N
+59132,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,regius,"Jockusch, Wake and Yanev, 1998",,,,,"",Kings River Slender Salamander,,,VU,D2,3.1,2004,stable,N
+2650,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,relictus,"Brame and Murray, 1968",,,,,"",Relictual Slender Salamander,,,DD,,3.1,2004,unknown,N
+59133,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,robustus,"Wake, Yanev and Hansen, 2002",,,,,"",Kern Plateau Salamander,,,NT,,3.1,2004,stable,N
+2647,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,simatus,"Brame & Murray, 1968",,,,,"",Kern Canyon Slender Salamander,,,VU,D2,3.1,2010,stable,N
+2648,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,stebbinsi,"Brame and Murray, 1968",,,,,"",Tehachapi Slender Salamander,,,VU,D2,3.1,2010,unknown,N
+59134,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Batrachoseps,wrighti,"(Bishop, 1937)",,,,,Batrachoseps wrightorum  |Batrachoseps wrightorum  ,Oregon Slender Salamander,,,VU,B1ab(iii),3.1,2004,decreasing,N
+59083,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Batrachuperus,karlschmidti,"Liu, 1925",,,,,"",,,,VU,B1ab(iii),3.1,2004,decreasing,N
+59084,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Batrachuperus,londongensis,"Liu and Tian, 1978",,,,,Batrachuperus longdongensis  ,Longdong Stream Salamander,,,EN,"B1ab(iii,v)",3.1,2004,decreasing,N
+59085,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Batrachuperus,pinchonii,"(David, 1872)",,,,,Batrachuperus cochranae  ,"Stream Salamander, Western Chinese Mountain Salamander",,,VU,A2ad,3.1,2004,decreasing,N
+59086,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Batrachuperus,taibaiensis,"Song, Zeng, Wu, Liu and Fu, 2001",,,,,"",,,,DD,,3.1,2004,unknown,N
+59087,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Batrachuperus,tibetanus,"Schmidt, 1925",,,,,"",Alpine Stream Salamander,,,VU,A2ad,3.1,2004,decreasing,N
+59088,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Batrachuperus,yenyuanensis,"Liu, 1950",,,,,"",Yenyuan Stream Salamander,,,VU,"B1ab(iii,v)+2ab(iii,v)",3.1,2004,decreasing,N
+59135,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,adspersa,"(Peters, 1863)",,,,,"",,,,LC,,3.1,2004,stable,N
+59136,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,alberchi,"García-París, Parra-Olea, Brame & Wake, 2002",,,,,"",Alberch's Salamander,,,LC,,3.1,2008,stable,N
+59137,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,altamazonica,"(Cope, 1874)",,,,,"",,,,LC,,3.1,2010,stable,N
+59138,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,alvaradoi,"Taylor, 1954",,,,,Bolitoglossa arborescandens,Moravia de Chirripo Salamander,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59139,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,anthracina,"Brame, Savage, Wake & Hanken, 2001",,,,,"",Coal Black Salamander,,,DD,,3.1,2008,unknown,N
+59140,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,biseriata,"Tanner, 1962",,,,,"",Two-lined Mushroomtongue Salamander,,,LC,,3.1,2010,stable,N
+59141,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,borburata,"Trapido, 1942",,,,,"",,,Salamandra Costera,NT,,3.1,2004,stable,N
+135803,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,bramei,"Wake, Savage & Hanken, 2007",,,,,"",,,,DD,,3.1,2008,unknown,N
+59142,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,capitana,"Brame & Wake, 1963",,,,,"",Orphan Salamander,,,CR,B2ab(iii),3.1,2004,decreasing,N
+59143,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,carri,"McCranie & Wilson, 1993",,,,,"",Cloud Forest Salamander ,,,CR,B1ab(iii)+2ab(iii),3.1,2008,decreasing,N
+59144,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,celaque,"McCranie & Wilson, 1993",,,,,"",Celaque Mushroomtongue Salamander ,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59145,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,cerroensis,"(Taylor, 1952)",,,,,Magnadigita  cerroensis ,Millville Mushroomtongue Salamander ,,,LC,,3.1,2008,stable,N
+59146,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,chica,"Brame and Wake, 1963",,,,,"",,,,VU,B1ab(iii),3.1,2004,decreasing,N
+59147,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,colonnea,"(Dunn, 1924)",,,,,Oedipus  colonneus ,La Loma Salamander,,,LC,,3.1,2008,unknown,N
+59148,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,compacta,"Wake, Brame & Duellman, 1973",,,,,"",Cerro Pando Salamander,,,EN,B1ab(iii),3.1,2014,unknown,N
+59149,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,conanti,"McCranie & Wilson, 1993",,,,,"",Conant's Mushroomtongue Salamander ,,,EN,B1ab(iii),3.1,2010,decreasing,N
+61896,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,copia,"Wake, Hanken and Ibáñez, 2005",,,,,"",El Copé Giant Salamander,,,DD,,3.1,2006,unknown,N
+59150,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,cuchumatana,"(Stuart, 1943)",,,,,Magnadigita  cuchumatana|Oedipus  cuchumatanus ,Oak Forest Salamander,,,NT,,3.1,2008,decreasing,N
+59151,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,cuna,"Wake, Brame & Duellman, 1973",,,,,"",Camp Sasardi Salamander,,,DD,,3.1,2008,unknown,N
+59152,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,decora,"McCranie & Wilson, 1997",,,,,"",,,,CR,B1ab(iii)+2ab(iii),3.1,2008,decreasing,N
+59153,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,diaphora,"McCranie & Wilson, 1995",,,,,"",,,,CR,B2ab(iii),3.1,2010,decreasing,N
+59154,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,digitigrada,"Wake, Brame and Thomas, 1982",,,,,"",,Bolitoglosse du Rio Santa Rosa,,DD,,3.1,2004,unknown,N
+59155,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,diminuta,"Robinson, 1976",,,,,Nototriton  diminuta,Quebrada Valverde Salamander,,,VU,D2,3.1,2008,stable,N
+59156,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,dofleini,"(Werner, 1903)",,,,,Bolitoglossa  schmidti|Oedipus  dofleini |Oedipus  schmidti |Spelerpes  dofleini ,"Alta Verapaz Salamander, Doflein's Salamander, Doflein's Mushroomtongue Salamander, Palm Salamander",,,NT,,3.1,2008,decreasing,N
+59157,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,dunni,"(Schmidt, 1933)",,,,,Magnadigita  dunni |Oedipus  dunni ,"Dunn's Mushroomtongue Salamander , Dunn's Salamander",,,EN,B1ab(iii),3.1,2014,unknown,N
+59158,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,engelhardti,"(Schmidt, 1936)",,,,,Magnadigita  engelhardti |Oedipus  engelhardti ,"Engelhardt's Mushroomtongue Salamander , Engelhardt's Salamander",,,EN,B1ab(iii),3.1,2008,decreasing,N
+59159,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,epimela,"Wake & Brame, 1963",,,,,"",Tapanti Mushroomtongue Salamander ,,,DD,,3.1,2008,unknown,N
+59160,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,equatoriana,"Brame and Wake, 1972",,,,,"",,,,LC,,3.1,2004,unknown,N
+59161,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,flavimembris,"(Schmidt, 1936)",,,,,Magnadigita  flavimembris|Oedipus  flavimembris ,"Yellow-legged Mushroomtongue Salamander, Yellow-legged Salamander ",,Salamandra De Patas Amarillas,EN,B1ab(iii),3.1,2008,decreasing,N
+59162,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,flaviventris,"(Schmidt, 1936)",,,,,Oedipus  flaviventris ,"Yellowbelly Mushroomtongue Salamander, Yellow-bellied Salamander",,Salamandra De Panza Amarilla,EN,B1ab(iii),3.1,2008,decreasing,N
+59163,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,franklini,"(Schmidt, 1936)",,,,,Bolitoglossa nigroflavescens  |Bolitoglossa  brevipes|Magnadigita brevipes|Magnadigita  franklini|Magnadigita  nigroflavescens|Oedipus  franklini ,"Franklin's Mushroomtongue Salamander, Black-bellied Salamander, Common Franklin's Salamander , Franklin's Salamander",,,EN,B1ab(iii),3.1,2008,decreasing,N
+136082,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,gomezi,"Wake, Savage & Hanken, 2007",,,,,"",Gomez's Web-footed Salamander,,,DD,,3.1,2008,unknown,N
+59164,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,gracilis,"Bolaños, Robinson & Wake, 1987",,,,,"",Rio Quiri Salamander ,,,VU,D2,3.1,2008,stable,N
+59165,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,guaramacalensis,"Schargel, Garcia-Perez and Smith, 2002",,,,,"",,,,VU,D2,3.1,2004,stable,N
+59166,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,hartwegi,"Wake & Brame, 1969",,,,,"","Hartweg's Mushroomtongue Salamander, Hartweg's Salamander",,,NT,,3.1,2008,stable,N
+61897,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,heiroreias,"Greenbaum, 2004",,,,,"",Holy-mountain Salamander,,,EN,B1ab(iii)+2ab(iii),3.1,2010,unknown,N
+59167,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,helmrichi,"(Schmidt, 1936)",,,,,Magnadigita  helmrichi|Oedipus  helmrichi ,Coban Mushroomtongue Salamander ,,,NT,,3.1,2008,stable,N
+59168,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,hermosa,"Papenfuss, Wake and Adler, 1983 (1984)",,,,,"","Guerreran Mushroomtongue Salamander, Guerreran Salamander",,,NT,,3.1,2008,unknown,N
+59169,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,hiemalis,"Lynch, 2001",,,,,"",,,,DD,,3.1,2009,unknown,N
+59170,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,hypacra,"(Brame & Wake, 1962)",,,,,Magnadigita hypacra  ,Paramo Frontino Salamander,,,LC,,3.1,2009,stable,N
+18435628,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,indio,"Sunyer, Lotzkat, Hertz, Wake, Aléman, Robleto & Köhler, 2008",,,,,"",,,,DD,,3.1,2013,unknown,N
+18435631,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,insularis,"Sunyer, Lotzkat, Hertz, Wake, Aléman, Robleto & Köhler, 2008",,,,,"",,,,VU,D2,3.1,2013,unknown,N
+59171,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,jacksoni,"Elias, 1984",,,,,"",Jackson's Mushroomtongue Salamander,,,DD,,3.1,2008,decreasing,N
+59172,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,lignicolor,"(Peters, 1873)",,,,,Bolitoglossa palustris|Bolitoglossa  ahli|Oedipus ahli|Oedipus  lignicolor|Spelerpes punctatum|Spelerpes  lignicolor ,Camron Mushroomtongue Salamander,,,VU,B1ab(iii),3.1,2008,decreasing,N
+59173,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,lincolni,"(Stuart, 1943)",,,,,Bolitoglossa resplendens|Magnadigita  lincolni|Oedipus  lincolni ,"Lincoln's Mushroomtongue Salamander, Lincoln's Salamander",,,NT,,3.1,2008,stable,N
+59174,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,longissima,"McCranie & Cruz-Díaz, 1996",,,,,"",,,,CR,B1ab(iii),3.1,2008,decreasing,N
+59175,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,lozanoi,"Acosta-Galvis and Restrepo, 2001",,,,,"",,,,DD,,3.1,2004,unknown,N
+59176,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,macrinii,"(Lafrentz, 1930)",,,,,Magnadigita macrinii|Oedipus macrinii,"Oaxacan Mushroomtongue Salamander, Oaxacan Salamander",,,NT,,3.1,2008,decreasing,N
+61898,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,magnifica,"Hanken, Wake and Savage, 2005",,,,,"",Magnificent Web-footed Salamander,,,EN,B1ab(iii)+2ab(iii),3.1,2006,decreasing,N
+59177,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,marmorea,"(Tanner & Brame, 1961)",,,,,Magnadigita  marmorea ,Crater Salamander,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59178,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,medemi,"Brame & Wake, 1972",,,,,"",Finca Chibigui Salamander,,,VU,B1ab(iii),3.1,2008,decreasing,N
+59179,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,meliana,"Wake & Lynch, 1982",,,,,"",Mexican Mushroomtongue Salamander,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59180,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,mexicana,"Duméril, Bibron & Duméril, 1854",,,,,Bolitoglossa moreleti|Geotriton  mexicana|Oedipus  mexicanus|Pseudotriton  mexicanus|Salamandra  mexicana|Spelerpes  mexicana,"Mexican Mushroomtongue Salamander, Black-and-Gold Salamander, Galliwasp",,Salamanquesa,LC,,3.1,2008,decreasing,N
+59181,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,minutula,"Wake, Brame & Duellman, 1973",,,,,"",,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59182,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,mombachoensis,"Köhler & McCranie, 1999",,,,,"",,,Salamandra De Mombacho,VU,D2,3.1,2008,stable,N
+59183,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,morio,"(Cope, 1869)",,,,,Geotriton  morio|Oedipus  morio|Spelerpes bocourti|Spelerpes  morio,Cope's Mushroomtongue Salamander ,,,LC,,3.1,2008,stable,N
+59184,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,mulleri,"(Brocchi, 1883)",,,,,Oedipus  mulleri|Spelerpes  mulleri ,"Müller's Mushroomtongue Salamander, Müller's Salamander",,Salamandra De Müller,VU,B1ab(iii),3.1,2008,decreasing,N
+59185,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,nicefori,"Brame and Wake, 1963",,,,,"",San Gil Mushroomtongue Salamander,,,LC,,3.1,2004,stable,N
+59186,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,nigrescens,"(Taylor, 1949)",,,,,Magnadigita  nigrescens ,"Cordillera Central Salamander, Black Web-fotted Salamander ",,,EN,B1ab(iii),3.1,2008,decreasing,N
+59187,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,oaxacensis,"Parra-Olea, Garcia-Paris and Wake, 2002",,,,,"",Atoyac Salamander,,,DD,,3.1,2008,unknown,N
+61899,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,obscura,"Hanken, Wake and Savage, 2005",,,,,"",Tapantí Giant Salamander,,,VU,D2,3.1,2006,unknown,N
+59188,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,occidentalis,"Taylor, 1941",,,,,Bolitoglossa bilineata,Southern Banana Salamander,,,LC,,3.1,2008,stable,N
+59189,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,odonnelli,"(Stuart, 1943)",,,,,Oedipus  odonnelli ,O'Donnell's Salamander,,Salamandra De O'Donnell,NT,,3.1,2014,unknown,N
+61900,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,oresbia,"McCranie, Espinal and Wilson, 2005",,,,,"",,,,CR,B1ab(iii)+2ab(iii),3.1,2006,decreasing,N
+59190,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,orestes,"Brame & Wake, 1962",,,,,Bolitoglossa spongai,Culata Mushroomtongue Salamander,,Salamandra Meridena,VU,D2,3.1,2004,stable,N
+59191,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,palmata,"(Werner, 1897)",,,,,"",,,,VU,B1ab(iii),3.1,2004,stable,N
+59192,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,pandi,"Brame and Wake, 1963",,,,,"",Pandi Mushroomtongue Salamander,,,EN,B1ab(iii),3.1,2004,decreasing,N
+135735,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,paraensis,"(Unterstein, 1930)",,,,,Bolitoglossa altamazonica  |Bolitoglossa altamazonica  ,,,,DD,,3.1,2010,unknown,N
+59193,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,peruviana,"(Boulenger, 1883)",,,,,"",Peru Mushroomtongue Salamander,,,LC,,3.1,2004,unknown,N
+59194,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,pesrubra,"(Taylor, 1952)",,,,,Magnadigita  pesrubra |Magnadigita  torresi ,,,,VU,A2ace,3.1,2008,decreasing,N
+59195,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,phalarosoma,"Wake & Brame, 1962",,,,,"",Medellin Mushroomtongue Salamander,,,DD,,3.1,2008,unknown,N
+59196,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,platydactyla,"(Gray, 1831)",,,,,Geotriton  carbonarius |Oedipus  carbonarius|Oedipus  platydactylus|Oedipus  variegatus|Salamandra  platydactylus |Salamandra  variegata |Spelerpes  variegatus,"Broadfoot Mushroomtongue Salamander, Broad-footed Salamander",,Achoque De Tierra,NT,,3.1,2008,decreasing,N
+59197,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,porrasorum,"McCranie & Wilson, 1995",,,,,"",,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59198,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,ramosi,"Brame and Wake, 1972",,,,,"",Ramos' Mushroomtongue Salamander,,Salamandra Manchada,LC,,3.1,2004,stable,N
+59199,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,riletti,"Holman, 1964",,,,,Magnadigita riletti,"Rilett's Mushroomtongue Salamander, Rilett's Salamander",,,EN,B1ab(iii),3.1,2008,decreasing,N
+59200,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,robusta,"(Cope, 1894)",,,,,Magnadigita  robusta|Oedipus  robustus ,"Robust Mushroomtongue Salamander, Ringtail Salamander",,,LC,,3.1,2008,decreasing,N
+59201,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,rostrata,"(Brocchi, 1883)",,,,,Magnadigita  rostrata|Oedipus  rostratum|Spelerpes  rostratum ,"Longnose Mushroomtongue Salamander, Long-nosed Salamander",,Salamandra Narigona,VU,B1ab(iii),3.1,2008,decreasing,N
+59202,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,rufescens,"(Cope, 1869)",,,,,Geotriton  rufescens|Oedipus rufescens |Palmatotriton  rufescens|Spelerpes  rufescens,"Northern Banana Salamander, Common Dwarf Salamander, Rufescent Salamander",,,LC,,3.1,2008,stable,N
+59203,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,salvinii,"(Gray, 1868)",,,,,Oedipus  salvinii |Spelerpes  attitlanensis |Spelerpes  salvinii,Salvin's Mushroomtongue Salamander,,,EN,B1ab(iii),3.1,2010,decreasing,N
+59204,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,savagei,"Brame and Wake, 1963",,,,,"",,,,DD,,3.1,2004,unknown,N
+59205,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,schizodactyla,"Wake & Brame, 1966",,,,,"",Cocle Mushroomtongue Salamander,,,LC,,3.1,2008,decreasing,N
+59206,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,silverstonei,"Brame & Wake, 1972",,,,,"",Silverstone's Mushroomtongue Salamander ,,,VU,B1ab(iii),3.1,2004,decreasing,N
+59207,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,sima,"(Vaillant, 1911)",,,,,"",,,,VU,B1ab(iii),3.1,2004,decreasing,N
+61901,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,sombra,"Hanken, Wake and Savage, 2005",,,,,"",Shadowy Web-footed Salamander,,,VU,D2,3.1,2006,stable,N
+59208,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,sooyorum,"Vial, 1963",,,,,"",Cordillera Talamanca Salamander,,,EN,"B1ab(iii,v)",3.1,2008,decreasing,N
+59210,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,striatula,"(Noble, 1918)",,,,,Oedipus  striatulus ,Cukra Mushroomtongue Salamander,,,LC,,3.1,2008,decreasing,N
+59211,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,stuarti,"Wake & Brame, 1969",,,,,"","Stuart's Mushroomtongue Salamander, Stuart's Salamander",,,DD,,3.1,2008,unknown,N
+59212,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,subpalmata,"(Boulenger, 1896)",,,,,Magnadigita  subpalmata|Oedipus   subpalmatus|Spelerpes  subpalmatus ,La Palma Salamander,,,EN,B1ab(v),3.1,2008,decreasing,N
+194323,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,suchitanensis,"Campbell, Smith, Streicher, Acevedo & Brodie, 2010",,,,,"",,,,DD,,3.1,2012,unknown,N
+59213,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,synoria,"McCranie & Köhler, 1999",,,,,"",,,,CR,B1ab(iii),3.1,2010,unknown,N
+136027,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,tatamae,"Acosta & Hoyos, 2006",,,,,"",,,,NT,,3.1,2008,unknown,N
+59214,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,taylori,"Wake, Brame & Myers, 1970",,,,,"",Cerro Cituro Salamander,,,DD,,3.1,2008,unknown,N
+136005,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,tica,"García-París, Parra-Olea & Wake, 2008",,,,,"",,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59215,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,vallecula,"Brame and Wake, 1963",,,,,"",Yarmal Mushroomtongue Salamander,,,LC,,3.1,2004,stable,N
+59216,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,veracrucis,"Taylor, 1951",,,,,"","Veracruz Mushroomtongue Salamander, Veracruz Salamander ",,,EN,B1ab(iii),3.1,2008,decreasing,N
+59217,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,walkeri,"Brame and Wake, 1972",,,,,Bolitoglossa (Eladinea) walkeri,Walker's Mushroomtongue Salamander,Bolitoglosse de Walker,"Salamandra de San Antonio, Salamandra de Walker, Salamandra montañera",NT,,3.1,2004,stable,N
+59218,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,yucatana,"(Peters, 1882)",,,,,Oedipus  yucatanus |Spelerpes yucatanicus|Spelerpus  yucatanus,"Yucatan Mushroomtongue Salamander, Yucatan Salamander",,Salamanquesa,LC,,3.1,2008,decreasing,N
+59219,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bolitoglossa,zapoteca,"Parra-Olea, Garcia-Paris and Wake, 2002",,,,,"",Zapotec Salamander,,,CR,B1ab(iii),3.1,2015,unknown,N
+59220,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Bradytriton,silus,"Wake & Elias, 1983",,,,,"",Finca Chiblac Salamander,,,CR,"B2ab(i,ii,iii)",3.1,2008,decreasing,N
+136131,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Calotriton,arnoldi,"Carranza and Amat, 2005",,,,,"",,,,CR,"B2ab(iii,iv)",3.1,2009,decreasing,N
+59448,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Calotriton,asper,"(Dugès, 1852)",,,,,Calotriton  punctulatus|Diemictylus  asper|Euproctus asper  |Euproctus  pyrenaeus|Hemitriton  asper |Hemitriton  bibronii|Hemitriton  cinereus |Hemitriton  punctulatus |Hemitriton  rugosus |Molge  aspera|Molge  bolivari|Triton  asper|Triton  bibroni|Triton  cinereus|Triton  pyrenaeus |Triton  repandus |Triton  rugosus,"Pyrenean Brook Salamander, Pyreneen Salamander, Pyrenean Mountain Salamander, Pyrenean Newt, Pyrenean Mountain Newt, Pyrenees Mountain Newt, Pyrenees Mountain Salamander ",,Tritón Pirenaico,NT,,3.1,2009,decreasing,N
+62051108,PLANTAE,TRACHEOPHYTA,MAGNOLIOPSIDA,THEALES,THEACEAE,Camellia,caudata,Wall.,,,,,"",,,,LC,,3.1,2015,unknown,N
+168540,ANIMALIA,CHORDATA,ACTINOPTERYGII,SYNBRANCHIFORMES,CHAUDHURIIDAE,Chaudhuria,caudata,"Annandale, 1918",,,,,"","Inle swamp eel, Burmese Spineless Eel",,,DD,,3.1,2012,unknown,N
+4657,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Chioglossa,lusitanica,"Bocage, 1864",,,,,"",Golden-striped Salamander,,Salamandra Rabilarga,VU,"B2ab(ii,iii,iv)",3.1,2016,decreasing,N
+59221,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Chiropterotriton,arboreus,"(Taylor, 1941)",,,,,Bolitoglossa arborea|Chiropterotriton arborea,"Arboreal Splayfoot Salamander, Arboreal Flat-footed Salamander",,Salamandra pie-plano arbórea,CR,"B1ab(i,ii,iii)",3.1,2016,decreasing,N
+59222,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Chiropterotriton,chiropterus,"(Cope, 1863)",,,,,Bolitoglossa chiroptera|Chiropterotriton chiroptera|Oedipus chiropterus|Spelerpes chiropterus|Spelerpes laticeps,Common Splayfoot Salamander,,Salamandra pie-plano común,CR,A2ac,3.1,2008,decreasing,N
+59223,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Chiropterotriton,chondrostega,"(Taylor, 1941)",,,,,Bolitoglossa  chondrostega ,"Gristle-headed Splayfoot Salamander, Gristle-headed Salamander",,Salamandra pie-plano cartilaginosa,EN,B1ab(iii),3.1,2008,decreasing,N
+59224,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Chiropterotriton,cracens,"Rabb, 1958",,,,,Chiropterotriton  chondrostega  subspecies cracens ,"Graceful Splayfoot Salamander, Graceful Flat-footed Salamander",,,EN,B1ab(v),3.1,2008,decreasing,N
+59225,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Chiropterotriton,dimidiatus,"(Taylor, 1940)",,,,,Bolitoglossa  dimidiata ,"Dwarf Splayfoot Salamander, Dwarf Flat-footed Salamander",,Salamandra pie-plano enana,EN,"B1ab(iii,v)+2ab(iii,v)",3.1,2016,decreasing,N
+59226,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Chiropterotriton,lavae,"(Taylor, 1942)",,,,,Bolitoglossa lavae,"Pigmy Splayfoot Salamander, Pigmy Flat-footed Salamander",,Salamandra pie-plano pigmea,CR,B1ab(iii),3.1,2016,decreasing,N
+59227,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Chiropterotriton,magnipes,"Rabb, 1965",,,,,"","Bigfoot Splayfoot Salamander, Big-footed Salamander",,Salamandra pie plano patona,CR,"B2ab(iii,v)",3.1,2008,decreasing,N
+59228,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Chiropterotriton,mosaueri,"(Woodall, 1941)",,,,,Oedipus mosaueri,Cave Splayfoot Salmander,,,CR,"B1ab(iii,v)",3.1,2016,unknown,N
+59229,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Chiropterotriton,multidentatus,"(Taylor, 1939)",,,,,Bolitoglossa  multidentata|Oedipus  multidentatus,"Toothy Splayfoot Salamander, Toothy Salamander",,Salamandra pie plano multidentada,EN,"B1ab(iii,v)",3.1,2008,decreasing,N
+59230,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Chiropterotriton,orculus,"(Cope, 1865)",,,,,Spelerpes  orculus ,Cope's Flat-footed Salamander,,,VU,B1ab(iii),3.1,2008,decreasing,N
+59231,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Chiropterotriton,priscus,"Rabb, 1956",,,,,"","Primeval Splayfoot Salamander, Primeval Flat-footed Salamander",,Salamandra pie plano primitiva,NT,,3.1,2008,stable,N
+59232,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Chiropterotriton,terrestris,"(Taylor, 1941)",,,,,"",,,,CR,B1ab(iii),3.1,2010,unknown,N
+22701083,ANIMALIA,CHORDATA,AVES,PASSERIFORMES,PIPRIDAE,Chiroxiphia,caudata,"(Shaw & Nodder, 1793)",,,,,"","Swallow-tailed Manakin, Blue Manakin",,,LC,,3.1,2012,stable,N
+45702,PLANTAE,TRACHEOPHYTA,MAGNOLIOPSIDA,MYRTALES,MELASTOMATACEAE,Clidemia,caudata,Wurdack,,,,,"",,,,NT,,3.1,2004,,N
+62452570,ANIMALIA,ARTHROPODA,INSECTA,ORTHOPTERA,TETTIGONIIDAE,Clonia,caudata,"Uvarov, 1942",,,,,"",Namibian Clonia,,,LC,,3.1,2014,unknown,N
+22682874,ANIMALIA,CHORDATA,AVES,CORACIIFORMES,CORACIIDAE,Coracias,caudatus,"Linnaeus, 1766",,,,,Coracias caudata |Coracias caudata |Coracias caudata ,Lilac-breasted Roller,Rollier à longs brins,,LC,,3.1,2012,stable,N
+59077,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,CRYPTOBRANCHIDAE,Cryptobranchus,alleganiensis,"(Daudin, 1803)",,,,,Cryptobranchus guildayi|Salamandra  alleganiensis  ,Hellbender,,,NT,,3.1,2004,decreasing,N
+59234,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Cryptotriton,alvarezdeltoroi,"(Papenfuss and Wake, 1987)",,,,,"",Alvarez del Toro's Salamander,,,EN,B1ab(iii),3.1,2008,decreasing,N
+54360,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Cryptotriton,monzoni,"(Campbell & Smith, 1998)",,,,,Nototriton  monzoni ,,,,CR,B1ab(iii),3.1,2008,decreasing,N
+61545710,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Cryptotriton,nasalis,"(Dunn, 1924)",,,,,Chiropterotriton nasalis|Cryptotriton wakei|Nototriton nasalis|Oedipus nasalis,Cortes Salamander,,,EN,B1ab(iii),3.1,2014,unknown,N
+190988,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Cryptotriton,sierraminensis,"Vásquez-Almazán, Rovito, Good &  Wake, 2009",,,,,"",Sierra de las Minas Hidden Salamander,,,DD,,3.1,2012,stable,N
+59236,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Cryptotriton,veraepacis,"(Lynch & Wake, 1978)",,,,,Chiropterotriton veraepacis|Nototriton  veraepacis,Baja Verapaz Salamander,,,CR,B1ab(iii),3.1,2012,decreasing,N
+59441,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Cynops,ensicauda,"(Hallowell, 1860)",,,,,"",Sword-tailed Newt,,,EN,"B1ab(iii,v)",3.1,2004,decreasing,N
+59444,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Cynops,pyrrhogaster,"(Boie, 1826)",,,,,"",Japanese Fire-bellied Newt,,,LC,,3.1,2004,stable,N
+19891480,PLANTAE,TRACHEOPHYTA,MAGNOLIOPSIDA,FABALES,LEGUMINOSAE,Dalea,obovatifolia,Ortega,,,,,Dalea coronilla  |Dalea uncifera  |Parosela caudata  |Parosela uncifera  ,,,,LC,,3.1,2012,stable,N
+59237,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Dendrotriton,bromeliacius,"(Schmidt, 1936)",,,,,Chiropterotriton  bromeliacia|Oedipus  bromeliacia ,Volcan Tajumulco Bromeliad Salamander,,,CR,"B2ab(iii,v)",3.1,2008,decreasing,N
+194310,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Dendrotriton,chujorum,"Campbell, Smith, Streicher, Acevedo & Brodie, 2010",,,,,"",,,,CR,B1ab(iii),3.1,2011,stable,N
+59238,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Dendrotriton,cuchumatanus,"(Lynch & Wake, 1975)",,,,,Chiropterotriton  cuchumatanus ,Forest Bromeliad Salamander,,,CR,B1ab(iii),3.1,2008,decreasing,N
+194311,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Dendrotriton,kekchiorum,"Campbell, Smith, Streicher, Acevedo & Brodie, 2010",,,,,"",,,,EN,B1ab(iii),3.1,2011,unknown,N
+59239,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Dendrotriton,megarhinus,"(Rabb, 1960)",,,,,Chiropterotriton  megarhinus ,"Longnose Bromeliad Salamander, Long-nosed Bromeliad Salamander",,,VU,D2,3.1,2008,stable,N
+59240,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Dendrotriton,rabbi,"(Lynch & Wake, 1975)",,,,,Chiropterotriton  rabbi ,Guatemalan Bromeliad Salamander,,,CR,B1ab(iii),3.1,2011,stable,N
+59241,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Dendrotriton,sanctibarbarus,"(McCranie & Wilson, 1997)",,,,,Nototriton  sanctibarbarus ,,,,VU,D2,3.1,2008,stable,N
+59242,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Dendrotriton,xolocalcae,"(Taylor, 1941)",,,,,Bolitoglossa  xolocalcae |Chiropterotriton  xolocalcae,Xolocalca Bromeliad Salamander,,,VU,D2,3.1,2008,stable,N
+61902,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,abditus,"Anderson and Tilley, 2003",,,,,"",Cumberland Dusky Salamander,,,NT,,3.1,2006,unknown,N
+59243,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,aeneus,"Brown and Bishop, 1947",,,,,"",Seepage Salamander,,,NT,,3.1,2004,decreasing,N
+59244,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,apalachicolae,"Means and Karlin, 1989",,,,,"",Apalachicola Dusky Salamander,,,LC,,3.1,2004,stable,N
+59245,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,auriculatus,"(Holbrook, 1838)",,,,,"",Southern Dusky Salamander,,,LC,,3.1,2004,stable,N
+59246,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,brimleyorum,"Stejneger, 1895",,,,,"",Ouachita Dusky Salamander,,,LC,,3.1,2004,stable,N
+59247,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,carolinensis,"Dunn, 1916",,,,,"",Carolina Mountain Dusky Salamander,,,LC,,3.1,2004,stable,N
+59248,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,folkertsi,"Camp, Tilley, Austin and Marshall, 2002",,,,,"",Dwarf Black-bellied Salamander,,,DD,,3.1,2004,unknown,N
+59249,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,fuscus,"(Green, 1818)",,,,,"",Dusky Salamander,,,LC,,3.1,2004,stable,N
+59250,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,imitator,"Dunn, 1927",,,,,"",Imitator Salamander,,,LC,,3.1,2004,stable,N
+59251,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,marmoratus,"(Moore, 1899)",,,,,"",Shovelnose Salamander,,,LC,,3.1,2004,stable,N
+59252,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,monticola,"Dunn, 1916",,,,,"",Seal Salamander,,,LC,,3.1,2004,stable,N
+59253,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,ochrophaeus,"Cope, 1859",,,,,"",Allegheny Mountain Dusky Salamander,,,LC,,3.1,2015,unknown,N
+59254,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,ocoee,"Nicholls, 1949",,,,,"",Ocoee Salamander,,,LC,,3.1,2014,stable,N
+59255,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,orestes,"Tilley & Mahoney, 1996",,,,,"",Blue Ridge Dusky Salamander,,,LC,,3.1,2014,stable,N
+59256,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,quadramaculatus,"(Holbrook, 1840)",,,,,"",Blackbelly Salamander,,,LC,,3.1,2014,stable,N
+59257,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,santeetlah,"Tilley, 1981",,,,,"",Santeetlah Dusky Salamander,,,LC,,3.1,2014,stable,N
+59258,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,welteri,"Barbour, 1950",,,,,"",Black Mountain Salamander,,,LC,,3.1,2014,unknown,N
+59259,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Desmognathus,wrighti,"King, 1936",,,,,"",Pygmy Salamander,,,LC,,3.1,2004,stable,N
+59078,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Dicamptodon,aterrimus,"(Cope, 1868)",,,,,Amblystoma  aterrimum,Idaho Giant Salamander,,,LC,,3.1,2014,stable,N
+59079,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Dicamptodon,copei,"Nussbaum, 1970",,,,,"",Cope's Giant Salamander,,,LC,,3.1,2004,stable,N
+59080,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Dicamptodon,ensatus,"(Eschscholtz, 1833)",,,,,Triton  ensatus  ,"California Giant Salamander, Pacific Giant Salamander",,,NT,,3.1,2004,unknown,N
+59081,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,AMBYSTOMATIDAE,Dicamptodon,tenebrosus,"(Baird and Girard, 1852)",,,,,Amblystoma  tenebrosum,"Coastal Giant Salamander, Pacific Giant Salamander",,,LC,,3.1,2015,stable,N
+22701634,ANIMALIA,CHORDATA,AVES,PASSERIFORMES,THAMNOPHILIDAE,Drymophila,caudata,"(Sclater, 1855)",,,,,"",Long-tailed Antbird,,,LC,,3.1,2012,stable,N
+195971,PLANTAE,TRACHEOPHYTA,LILIOPSIDA,ARECALES,PALMAE,Dypsis,caudata,Beentje,,,,,"",,,,CR,B1ab(iii)+2ab(iii); D,3.1,2012,unknown,N
+59446,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Echinotriton,andersoni,"(Boulenger, 1892)",,,,,"",Anderson's Crocodile Newt,,,EN,B1ab(iii),3.1,2004,decreasing,N
+59447,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Echinotriton,chinhaiensis,"(Chang, 1932)",,,,,"",Chinhai Spiny Newt,,,CR,"B1ab(iii,iv)+2ab(iii,iv)",3.1,2004,decreasing,N
+59260,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Ensatina,eschscholtzii,"Gray, 1850",,,,,Ensatina  croceater|Ensatina  klauberi |Ensatina  platensis|Ensatina  sierrae|Heredia  oregonensis |Plethodon  croceater |Plethodon  eschscholtzii|Plethodon  oregonensis|Plethodon  platensis|Urotropis platensis ,"Ensatina, Eschscholtz Salamander, Common Ensatina, Eschscholtz's Salamander, Redwood Salamander",,,LC,,3.1,2015,stable,N
+31567,PLANTAE,TRACHEOPHYTA,MAGNOLIOPSIDA,MYRTALES,MYRTACEAE,Eugenia,caudata,King,,,,,"",,,,VU,B1+2c,2.3,1998,,N
+59449,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Euproctus,montanus,"(Savi, 1838)",,,,,"","Corsican Brook Salamander, Corsican Mountain Newt",,,LC,,3.1,2009,stable,N
+8371,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Euproctus,platycephalus,"(Gravenhorst, 1829)",,,,,"","Sardinian Brook Salamander, Sardinian Mountain Newt",,,EN,"B2ab(iii,iv)",3.1,2009,decreasing,N
+59261,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,bislineata,"(Green, 1818)",,,,,"",Northern Two-lined Salamander,,,LC,,3.1,2004,stable,N
+59262,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,chamberlaini,"Harrison and Guttman, 2003",,,,,"",Chamberlain's Dwarf Salamander,,,DD,,3.1,2004,unknown,N
+59263,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,chisholmensis,"Chippindale, Price, Wiens and Hillis, 2000",,,,,"",Chisholm Trail Salamander,,,VU,D2,3.1,2004,unknown,N
+59264,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,cirrigera,"(Green, 1818)",,,,,"",Southern Two-lined Salamander,,,LC,,3.1,2004,stable,N
+59265,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,guttolineata,"(Holbrook, 1838)",,,,,"",Three-lined Salamander,,,LC,,3.1,2014,stable,N
+59266,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,junaluska,"Sever, Dundee and Sullivan, 1976",,,,,"",Junaluska Salamander,,,VU,D1,3.1,2004,stable,N
+59267,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,latitans,"Smith and Potter, 1946",,,,,"",Cascade Caverns Salamander,,,VU,B1ab(iii)+2ab(iii),3.1,2004,decreasing,N
+59268,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,longicauda,"(Green, 1818)",,,,,"",Longtail Salamander,,,LC,,3.1,2014,stable,N
+59269,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,lucifuga,"Rafinesque, 1822",,,,,"",Cave Salamander,,,LC,,3.1,2014,unknown,N
+59270,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,multiplicata,"(Cope, 1869)",,,,,"",Many-ribbed Salamander,,,LC,,3.1,2004,stable,N
+8391,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,nana,"Bishop, 1941",,,,,"",San Marcos Salamander,,,VU,D2,3.1,2004,stable,N
+59271,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,naufragia,"Chippindale, Price, Wiens and Hillis, 2000",,,,,"",San Gabriel Springs Salamander,,,EN,"B1ab(iii,v)+2ab(iii,v)",3.1,2004,decreasing,N
+59272,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,neotenes,"Bishop and Wright, 1937",,,,,"",Texas Salamander,,,VU,D2,3.1,2004,unknown,N
+59273,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,pterophila,"Burger, Smith and Potter, 1950",,,,,"",Blanco River Springs Salamander,,,DD,,3.1,2004,unknown,N
+59274,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,quadridigitata,"(Holbrook, 1842)",,,,,"",Dwarf Salamander,,,LC,,3.1,2004,stable,N
+39262,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,rathbuni,"(Stejneger, 1897)",,,,,"",Texas Blind Salamander,,,VU,D2,3.1,2004,stable,N
+39263,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,robusta,"(Longley, 1978)",,,,,"",Blanco Blind Salamander,,,DD,,3.1,2004,unknown,N
+8392,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,sosorum,"Chippindale, Price and Hillis, 1993",,,,,"",Barton Springs Salamander,,,VU,D1+2,3.1,2004,stable,N
+22707,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,spelaea,"(Stejneger, 1892)",,,,,Eurycea spelaeus  |Typhlotriton spelaeus  ,Grotto Salamander,,,LC,,3.1,2004,unknown,N
+59275,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,tonkawae,"Chippindale, Price, Wiens and Hillis, 2000",,,,,"",Jollyville Plateau Salamander,,,EN,"B1ab(iii,v)",3.1,2004,decreasing,N
+8393,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,tridentifera,"Mitchell and Reddall, 1965",,,,,"",Comal Blind Salamander,,,VU,D2,3.1,2004,unknown,N
+59276,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,troglodytes,"Baker, 1957",,,,,"",Eurycea Troglodytes Complex,,,DD,,3.1,2004,unknown,N
+59277,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,tynerensis,"Moore and Hughes, 1939",,,,,"",Oklahoma Salamander,,,NT,,3.1,2004,decreasing,N
+59284,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,wallacei,"(Carr, 1939)",,,,,Haideotriton wallacei  ,Georgia Blind Salamander,,,VU,B1ab(iii)+2ab(iii),3.1,2004,unknown,N
+59278,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,waterlooensis,"Hillis, Chamberlain, Wilcox and Chippindale, 2001",,,,,"",Austin Blind Salamander,,,VU,D2,3.1,2004,unknown,N
+59279,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Eurycea,wilderae,"Dunn, 1920",,,,,"",Blue Ridge Two-lined Salamander,,,LC,,3.1,2014,stable,N
+36199,PLANTAE,TRACHEOPHYTA,MAGNOLIOPSIDA,MYRTALES,MELASTOMATACEAE,Graffenrieda,caudata,Wurdack,,,,,"",,,,VU,D2,2.3,1998,,N
+59280,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Gyrinophilus,gulolineatus,"Brandon, 1965",,,,,"",Berry Cave Salamander,,,EN,B1ab(iii)+2ab(iii),3.1,2004,decreasing,N
+59281,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Gyrinophilus,palleucus,"McCrady, 1954",,,,,"",Tennessee Cave Salamander,,,VU,"B2ab(iii,v)",3.1,2004,decreasing,N
+59282,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Gyrinophilus,porphyriticus,"(Green, 1827)",,,,,"",Spring Salamander,,,LC,,3.1,2015,stable,N
+59283,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Gyrinophilus,subterraneus,"Besharse and Holsinger, 1977",,,,,"",West Virginia Spring Salamander,,,EN,D,3.1,2004,unknown,N
+59285,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Hemidactylium,scutatum,"(Temminck, 1838)",,,,,"",Four-toed Salamander,,,LC,,3.1,2015,stable,N
+10304,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Hydromantes,brunus,"Gorman, 1954",,,,,"",Limestone Salamander,,,VU,D2,3.1,2004,unknown,N
+59286,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Hydromantes,platycephalus,"(Camp, 1916)",,,,,"",Mount Lyell Salamander,,,LC,,3.1,2014,stable,N
+10305,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Hydromantes,shastae,"Gorman and Camp, 1953",,,,,"",Shasta Salamander,,,VU,D2,3.1,2004,stable,N
+10613,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,abei,"Sato, 1934",,,,,"",Abe's Salamander,,,CR,"B2ab(ii,iii,iv)",3.1,2004,decreasing,N
+59089,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,amjiensis,"Gu, 1992",,,,,"",,,,CR,B1ab(iii)+2ab(iii),3.1,2004,decreasing,N
+59090,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,arisanensis,"Maki, 1922",,,,,"",,,,VU,B1ab(iii)+2ab(iii),3.1,2004,decreasing,N
+59091,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,boulengeri,"(Thompson, 1912)",,,,,"",Odaigahara Salamander,,,VU,B1ab(iii),3.1,2004,decreasing,N
+59092,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,chinensis,"Günther, 1889",,,,,"",,,,EN,B2ab(iii),3.1,2004,decreasing,N
+10614,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,dunni,"Tago, 1931",,,,,"",Oita Salamander,,,EN,B2ab(iii),3.1,2004,decreasing,N
+59093,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,formosanus,"Maki, 1922",,,,,"",,,,EN,B1ab(iii)+2ab(iii),3.1,2004,decreasing,N
+61894,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,guabangshanensis,"Shen, Deng and Wang, 2004",,,,,"",,,,DD,,3.1,2006,unknown,N
+10615,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,hidamontanus,"Matsui, 1987",,,,,Hynobius tenuis  ,"Hakuba Salamander, Japanese Mountain Salamander",,,EN,B1ab(iii),3.1,2004,decreasing,N
+61895,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,katoi,"Matsui, Kokuryo, Misawa and Nishikawa, 2004",,,,,"",,,,DD,,3.1,2006,unknown,N
+59094,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,kimurae,"Dunn, 1923",,,,,"",Hida Salamander,,,LC,,3.1,2004,stable,N
+59095,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,leechii,"Boulenger, 1887",,,,,Hynobius manchuricus  |Hynobius mantchuricus  ,"Gensan Salamander , Chinese Salamander, Manchurian Salamander ",,,LC,,3.1,2008,decreasing,N
+59096,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,lichenatus,"Boulenger, 1883",,,,,"",Tohoku Salamander,,,LC,,3.1,2004,stable,N
+135908,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,maoershanensis,"Zhou, Jiang & Jiang, 2006",,,,,"",,,,DD,,3.1,2008,unknown,N
+59097,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,naevius,"(Temminck & Schlegel, 1838)",,,,,Salamandra naevia  ,"Blotched Salamander, Japanese Salamander, Sagami Salamander, Spotted Salamander",,,LC,,3.1,2009,stable,N
+59098,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,nebulosus,"(Temminck and Schlegel, 1838)",,,,,"",Clouded Salamander,,,LC,,3.1,2004,decreasing,N
+59099,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,nigrescens,"Stejneger, 1907",,,,,"",Japanese Black Salamander,,,LC,,3.1,2004,stable,N
+10616,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,okiensis,"Sato, 1940",,,,,"",Oki Salamander,,,CR,B2ab(iii),3.1,2004,decreasing,N
+59100,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,quelpaertensis,"Mori, 1928",,,,,Hynobius quelpartensis  |Hynobius quelpartensis  ,,,,DD,,3.1,2004,unknown,N
+59101,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,retardatus,"(Dunn, 1923)",,,,,"","Ezo Salamander, Hokkaido Salamander",,,LC,,3.1,2004,stable,N
+59102,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,sonani,"(Maki, 1922)",,,,,"",,,,EN,B1ab(iii)+2ab(iii),3.1,2004,decreasing,N
+10617,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,stejnegeri,"Dunn, 1923",,,,,"",Amber-coloured Salamander,,,VU,B1ab(iii),3.1,2004,decreasing,N
+10618,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,takedai,"Matsui and Miyazaki, 1984",,,,,"",Hokuriku Salamander,,,EN,B1ab(iii),3.1,2004,decreasing,N
+59103,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,tokyoensis,"Tago, 1931",,,,,"",Tokyo Salamander,,,VU,B1ab(iii),3.1,2004,decreasing,N
+59104,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,tsuensis,"Abé, 1922",,,,,"",Tsushima Salamander,,,LC,,3.1,2004,stable,N
+59105,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,turkestanicus,"Nikolsky, 1909",,,,,"",Turkestanian Salamander,,,DD,,3.1,2004,unknown,N
+136179,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,yangi,"Kim, Min & Matsui, 2003",,,,,"",,,,EN,B1ab(iii),3.1,2008,decreasing,N
+163493,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,yatsui,"Oyama, 1947",,,,,Hynobius naevius subspecies yatsui,,,,LC,,3.1,2009,stable,N
+59106,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Hynobius,yiwuensis,"Cai, 1985",,,,,"",,,,VU,B2ab(iii),3.1,2004,decreasing,N
+59439,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Hypselotriton,chenggongensis,"Kou and Xing, 1983",,,,,Cynops chenggongensis,,,,DD,,3.1,2004,unknown,N
+59440,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Hypselotriton,cyanurus,"Liu, Hu & Yang, 1962",,,,,Cynops cyanurus,"Chuxiong Fire-bellied Newt, Cyan Newt",,,LC,,3.1,2004,decreasing,N
+59442,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Hypselotriton,orientalis,"(David, 1873)",,,,,Cynops orientalis,Oriental Fire-bellied Newt,,,LC,,3.1,2004,decreasing,N
+59443,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Hypselotriton,orphicus,"Risch, 1983",,,,,Cynops orphicus,Dayang Newt,,,EN,"B1ab(iii,v)+2ab(iii,v)",3.1,2004,decreasing,N
+59445,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Hypselotriton,wolterstorffi,"(Boulenger, 1905)",,,,,Cynops wolterstorffi,Yunnan Lake Newt,,,EX,,3.1,2004,,N
+59472,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Ichthyosaura,alpestris,"(Laurenti, 1768)",,,,,Mesotriton alpestris|Triturus alpestris  |Triturus alpestris  ,Alpine Newt,,Tritón Alpino,LC,,3.1,2009,decreasing,N
+19892108,PLANTAE,TRACHEOPHYTA,MAGNOLIOPSIDA,FABALES,LEGUMINOSAE,Indigofera,caudata,Dunn,,,,,"",,,,LC,,3.1,2012,unknown,N
+22733120,ANIMALIA,CHORDATA,AVES,PASSERIFORMES,TYRANNIDAE,Inezia,caudata,"(Salvin, 1897)",,,,,"","Pale-tipped Tyrannulet, Pale-tipped Inezia",,,LC,,3.1,2012,stable,N
+38315,PLANTAE,TRACHEOPHYTA,MAGNOLIOPSIDA,FABALES,LEGUMINOSAE,Inga,caudata,Killip,,,,,"",,,,VU,D2,2.3,1998,,N
+2666,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Iranodon,gorganensis,"(Clergue-Gazeau & Thorn, 1979)",,,,,Batrachuperus gorganensis|Paradactylodon gorganensis,,,,CR,B1ab(iii)+2ab(iii),3.1,2009,decreasing,N
+2665,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Iranodon,persicus,"(Eiselt & Steiner, 1970)",,,,,Batrachuperus persicus  |Batrachuperus persicus  |Paradactylodon persicus,Persian Mountain Salamander,,,NT,,3.1,2016,unknown,N
+59371,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Isthmura,bellii,"(Gray, 1850)",,,,,Pseudoeurycea bellii|Spelerpes bellii,Bell's False Brook Salamander,,,VU,A2ace,3.1,2016,decreasing,N
+61906,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Isthmura,boneti,"Alvarez and Martín, 1967",,,,,Pseudoeurycea boneti,Oaxacan False Brook Salamander,,,VU,A2a,3.1,2016,decreasing,N
+59380,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Isthmura,gigantea,"(Taylor, 1939)",,,,,Oedipus giganteus|Pseudoeurycea gigantea,Giant False Brook Salamander ,,,CR,A4ac,3.1,2016,decreasing,N
+61907,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Isthmura,maxima,"Parra-Olea, García-París, Papenfuss and Wake, 2005",,,,,Pseudoeurycea maxima,Southern Giant Salamander,,Salamandra Gigante De Putla,DD,,3.1,2008,unknown,N
+59389,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Isthmura,naucampatepetl,"(Parra-Olea, Papenfuss & Wake, 2001)",,,,,Pseudoeurycea naucampatepetl,Cofre de Perote Salamander,,,CR,B1ab(iii),3.1,2016,decreasing,N
+59287,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Ixalotriton,niger,"Wake & Johnson, 1989",,,,,Pseudoeurycea niger|Pseudoeurycea nigra,Jumping Salamander,,,EN,B1ab(iii),3.1,2016,decreasing,N
+59288,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Ixalotriton,parvus,"(Lynch & Wake, 1989)",,,,,Ixalotriton parva|Pseudoeurycea parva,Dwarf False Brook Salamander,,,CR,B1ab(iii)+2ab(iii),3.1,2016,decreasing,N
+61903,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Karsenia,koreana,"Min, Yang, Bonett, Vieites, Brandon and Wake, 2005",,,,,"",,,,LC,,3.1,2006,unknown,N
+59461,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Laotriton,laoensis,"(Stuart & Papenfuss, 2002)",,,,,Paramesotriton laoensis,,,,EN,"B1ab(iii,v)",3.1,2014,decreasing,N
+59486,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Liangshantriton,taliangensis,"(Liu, 1950)",,,,,Tylototriton taliangensis,Taliang Knobby Newt,,,NT,,3.1,2004,decreasing,N
+59473,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Lissotriton,boscai,"(Lataste, 1879)",,,,,Triturus boscai  |Triturus boscai  ,"Bosca's Newt, Iberian Newt",,Tritón Ibérico,LC,,3.1,2009,stable,N
+59475,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Lissotriton,helveticus,"(Razoumowsky, 1789)",,,,,Triturus helveticus  |Triturus helveticus  ,Palmate Newt,,Tritón Palmeado,LC,,3.1,2009,stable,N
+59476,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Lissotriton,italicus,"(Peracca, 1898)",,,,,Triturus italicus  |Triturus italicus  ,Italian Newt,,,LC,,3.1,2009,decreasing,N
+59478,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Lissotriton,montandoni,"(Boulenger, 1860)",,,,,Triturus montandoni,Carpathian Newt,,,LC,,3.1,2016,decreasing,N
+59481,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Lissotriton,vulgaris,"(Linnaeus, 1758)",,,,,Triturus vulgaris  ,Smooth Newt,,,LC,,3.1,2009,stable,N
+59112,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Liua,shihi,"(Liu, 1950)",,,,,Ranodon shihi  ,Wushan Salamander,,,NT,,3.1,2004,decreasing,N
+59113,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Liua,tsinpaensis,"(Liu and Hu in Hu, Zhao and Liu, 1966)",,,,,Ranodon tsinpaensis  ,Tsinpa Salamander,,,VU,"B1ab(iii,v)+2ab(iii,v)",3.1,2004,decreasing,N
+61913,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Lyciasalamandra,antalyana,"(Basoglu & Baran, 1976)",,,,,"",,,,EN,B1ab(iii),3.1,2016,decreasing,N
+61914,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Lyciasalamandra,atifi,"(Basoglu, 1967)",,,,,"",,,,EN,B1ab(iii),3.1,2009,stable,N
+61915,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Lyciasalamandra,billae,"(Franzen & Klewen, 1987)",,,,,"",,,,CR,B1ab(iii),3.1,2009,decreasing,N
+61916,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Lyciasalamandra,fazilae,"(Basoglu and Atatür, 1974)",,,,,"",,,,EN,B1ab(iii),3.1,2009,stable,N
+61917,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Lyciasalamandra,flavimembris,"(Mutz and Steinfartz, 1995)",,,,,"",,,,EN,B1ab(iii),3.1,2009,decreasing,N
+61918,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Lyciasalamandra,helverseni,"(Pieper, 1963)",,,,,"",,,,VU,D2,3.1,2009,stable,N
+41241,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Lyciasalamandra,luschani,"(Steindachner, 1891)",,,,,"",,,,VU,B1ab(iii),3.1,2016,stable,N
+12825,ANIMALIA,CHORDATA,MAMMALIA,RODENTIA,SCIURIDAE,Marmota,caudata,"(Geoffroy, 1844)",,,,,"",Long-tailed Marmot,,Marmota De Cola Larga,LC,,3.1,2016,unknown,N
+13198,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Mertensiella,caucasica,"(Waga, 1876)",,,,,"",Caucasian Salamander,,,VU,"B2ab(ii,iii)",3.1,2009,decreasing,N
+35629,PLANTAE,TRACHEOPHYTA,MAGNOLIOPSIDA,EBENALES,SAPOTACEAE,Micropholis,caudata,T.D.Penn.,,,,,"",,,,CR,"B1+2d, D",2.3,1998,,N
+34237,PLANTAE,TRACHEOPHYTA,MAGNOLIOPSIDA,MAGNOLIALES,ANNONACEAE,Mitrephora,caudata,Merr.,,,,,"",,,,VU,B1+2c,2.3,1998,,N
+59430,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PROTEIDAE,Necturus,alabamensis,"Viosca, 1937",,,,,Necturus lödingi  ,Alabama Waterdog,,,EN,B2ab(iii),3.1,2004,decreasing,N
+59431,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PROTEIDAE,Necturus,beyeri,"Viosca, 1937",,,,,Necturus punctatus,Gulf Coast Waterdog,,,LC,,3.1,2014,unknown,N
+59432,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PROTEIDAE,Necturus,lewisi,"(Brimley, 1924)",,,,,Necturus maculosus  ,Neuse River Waterdog,,,NT,,3.1,2004,decreasing,N
+59433,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PROTEIDAE,Necturus,maculosus,"(Rafinesque, 1818)",,,,,Sirena maculosa  ,Mudpuppy,,,LC,,3.1,2015,stable,N
+59434,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PROTEIDAE,Necturus,punctatus,"(Gibbes, 1850)",,,,,Menobranchus punctatus  ,Dwarf Waterdog,,,LC,,3.1,2014,unknown,N
+14734,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Neurergus,crocatus,"Cope, 1862",,,,,"","Lake Urmia Newt, Azerbaijan Newt",,,VU,B2ab(iii),3.1,2016,decreasing,N
+59450,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Neurergus,kaiseri,"Schmidt, 1952",,,,,Neurergus crocatus subspecies kaiseri,"Luristan Newt, Lorestan Mountain Newt, Kaiser's Mountain Newt, Emperor Newt",,,CR,"A2d; B2ab(iii,v)",3.1,2009,decreasing,N
+59451,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Neurergus,microspilotus,"(Nesterov, 1916)",,,,,Rhithrotriton derjugini variety derjugini|Rhithrotriton derjugini variety microspilotus,Kurdistan Newt,,,CR,"A3cde+4cde; B2ab(iii,iv,v)",3.1,2016,decreasing,N
+14735,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Neurergus,strauchii,"(Steindachner, 1887)",,,,,"",,,,VU,B1ab(iii),3.1,2009,decreasing,N
+59452,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Notophthalmus,meridionalis,"(Cope, 1880)",,,,,Diemyctylus kallerti|Diemyctylus  miniatus  subspecies meridionalis |Molge  meridionalis|Notophthalmus kallerti|Triturus  kallerti|Triturus  meridionalis ,"Black-spotted Newt, Texas Newt, Texas Triton",,,EN,"B2ab(iii,iv,v)",3.1,2008,decreasing,N
+14872,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Notophthalmus,perstriatus,"(Bishop, 1941)",,,,,"",Striped Newt,,,NT,,3.1,2004,decreasing,N
+59453,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Notophthalmus,viridescens,"(Rafinesque, 1820)",,,,,"",Eastern Newt,,,LC,,3.1,2015,stable,N
+59292,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Nototriton,abscondens,"(Taylor, 1948)",,,,,Chiropterotriton  abscondens ,,,,LC,,3.1,2008,stable,N
+59293,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Nototriton,barbouri,"(K. Schmidt, 1936)",,,,,Chiropterotriton  barbouri|Oedipus  barbouri ,Yoro Salamander,,,EN,B1ab(iii),3.1,2008,decreasing,N
+29426,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Nototriton,brodiei,"Campbell & Smith, 1998",,,,,"",,,,EN,B1ab(iii),3.1,2014,unknown,N
+59294,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Nototriton,gamezi,"García-París & Wake, 2000",,,,,"",Monteverde Moss Salamander,,,VU,D2,3.1,2008,stable,N
+59295,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Nototriton,guanacaste,"Good & Wake, 1993",,,,,"",,,,VU,D2,3.1,2008,stable,N
+59296,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Nototriton,lignicola,"McCranie & Wilson, 1997",,,,,"",,,,CR,B1ab(iii),3.1,2008,decreasing,N
+59297,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Nototriton,limnospectator,"McCranie, Wilson & Polisar, 1998",,,,,"",,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59298,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Nototriton,major,"Good & Wake, 1993",,,,,"",,,,CR,B1ab(iii),3.1,2008,decreasing,N
+59299,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Nototriton,picadoi,"(Stejneger, 1911)",,,,,Chiropterotriton  picadoi |Oedipus  picadoi |Spelerpes  picadoi ,La Estrella Salamander,,,NT,,3.1,2008,stable,N
+59300,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Nototriton,richardi,"(Taylor, 1949)",,,,,Chiropterotriton  richardi|Parvimolge  richardi ,Richard's Salamander,,,NT,,3.1,2008,stable,N
+59301,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Nototriton,saslaya,"Köhler, 2002",,,,,"",,,,VU,D2,3.1,2008,stable,N
+59302,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Nototriton,stuarti,"Wake & Campbell, 2000",,,,,"",Stuart's Moss Salamander,,,DD,,3.1,2008,unknown,N
+59303,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Nototriton,tapanti,"Good & Wake, 1993",,,,,"",,,,VU,D2,3.1,2008,unknown,N
+59304,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Nyctanolis,pernix,"Elias & Wake, 1983",,,,,"",Nimble Long-limbed Salamander,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59305,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,alfaroi,"Dunn, 1921",,,,,Oedipus  alfaroi,Limon Worm Salamander,,,VU,B1ab(iii),3.1,2010,unknown,N
+59306,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,alleni,"Taylor, 1954",,,,,"",,,,LC,,3.1,2008,stable,N
+59307,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,altura,"Brame, 1968",,,,,"",Cartago Worm Salamander,,,CR,B1ab(iii),3.1,2008,decreasing,N
+59308,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,carablanca,"Brame, 1968",,,,,"",Los Diamantes Worm Salamander ,,,EN,B1ab(iii),3.1,2008,unknown,N
+59309,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,collaris,"(Stejneger, 1907)",,,,,Oedipina serpens|Oedipus  collaris|Spelerpes  collaris ,Collared Worm Salamander,,,DD,,3.1,2008,unknown,N
+59310,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,complex,"(Dunn, 1924)",,,,,Oedipus  complex|Oedopinola  complex ,Gamboa Worm Salamander,,,LC,,3.1,2008,decreasing,N
+59311,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,cyclocauda,"Taylor, 1952",,,,,"",Costa Rica Worm Salamander,,,LC,,3.1,2008,decreasing,N
+59312,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,elongata,"(Schmidt, 1936)",,,,,Oedipus elongatus ,"Central American Worm Salamander, Galliwasp , White-crowned Worm Salamander",,,LC,,3.1,2008,decreasing,N
+59313,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,gephyra,"McCranie, Wilson & Williams, 1993",,,,,"",La Fortuna Worm Salamander,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59314,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,gracilis,"Taylor, 1952",,,,,"",,,,EN,A2ac,3.1,2008,decreasing,N
+59315,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,grandis,"Brame & Duellman, 1970",,,,,"",Cerro Pando Worm Salamander ,,,EN,"B1ab(iii,v)",3.1,2008,decreasing,N
+59316,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,ignea,"Stuart, 1952",,,,,"",Chimaltenango Worm Salamander,,,DD,,3.1,2008,unknown,N
+59317,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,maritima,"García-París & Wake, 2000",,,,,"",Maritime Worm Salamander,,,CR,B1ab(iii)+2ab(iii),3.1,2008,decreasing,N
+59318,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,pacificensis,"Taylor, 1952",,,,,"",,,,LC,,3.1,2008,stable,N
+59319,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,parvipes,"(Peters, 1879)",,,,,Oedipus  parvipes|Spelerpes  parvipes ,Colombian Worm Salamander,,,LC,,3.1,2008,decreasing,N
+59320,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,paucidentata,"Brame, 1968",,,,,"",El Empalme Worm Salamander,,,CR,B1ab(iii),3.1,2008,decreasing,N
+59321,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,poelzi,"Brame, 1963",,,,,"",Quarry Worm Salamander ,,,EN,A2ace; B1ab(iii),3.1,2008,decreasing,N
+59322,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,pseudouniformis,"Brame, 1968",,,,,"",,,,EN,"B1ab(iii,v)",3.1,2008,decreasing,N
+59323,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,savagei,"García-París & Wake, 2000",,,,,"",Savage's Worm Salamander,,,DD,,3.1,2008,unknown,N
+59324,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,stenopodia,"Brodie & Campbell, 1993",,,,,"",,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59325,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,stuarti,"Brame, 1968",,,,,"",Stuart's Worm Salamander,,,DD,,3.1,2008,unknown,N
+59326,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,taylori,"Stuart, 1952",,,,,"",Taylor's Worm Salamander,,,LC,,3.1,2010,unknown,N
+136010,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,tomasi,"McCranie, 2006",,,,,"",,,,CR,B2ab(iii),3.1,2008,decreasing,N
+59327,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Oedipina,uniformis,"Keferstein, 1868",,,,,Oedipina bonitaensis|Oedipina inusitata|Oedipina longicauda  |Oedipina longissima|Oedipina syndactyla|Oedipina  vermicularis|Oedipus  uniformis|Ophiobatrachus vermicularis|Spelerpes  uniformis|Spelerpes  vermicularis,Cienega Colorado Worm Salamander,,,NT,,3.1,2008,decreasing,N
+136019,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Ommatotriton,ophryticus,"(Berthold, 1846)",,,,,"",Northern Banded Newt,,,NT,,3.1,2009,decreasing,N
+59480,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Ommatotriton,vittatus,"(Gray, 1835)",,,,,Molge  syriacus |Molge  vittatus|Triton  vittatus|Triturus vittatus,"Southern Banded Newt, Banded Newt, Striped Eft",,,LC,,3.1,2009,decreasing,N
+39419,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Onychodactylus,fischeri,"(Boulenger, 1886)",,,,,Onychodactylus rossicus  ,"Fischer's Clawed Salamander, Long-tailed Clawed Salamander",,,LC,,3.1,2004,decreasing,N
+59108,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Onychodactylus,japonicus,"(Houttuyn, 1782)",,,,,"",Japanese Clawed Salamander,,,LC,,3.1,2004,stable,N
+59109,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Pachyhynobius,shangchengensis,"Fei, Qu and Wu, 1983",,,,,"",,,,VU,"B1ab(iii,v)",3.1,2004,decreasing,N
+59107,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Pachyhynobius,yunanicus,"(Chen, Qu and Niu, 2001)",,,,,Hynobius yunanicus  ,,,,EN,B1ab(iii),3.1,2004,decreasing,N
+59454,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Pachytriton,brevipes,"(Sauvage, 1876)",,,,,"",Black-spotted Stout Newt,,,LC,,3.1,2004,decreasing,N
+59455,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Pachytriton,labiatus,"(Unterstein, 1930)",,,,,"",Spotless Stout Newt,,,LC,,3.1,2004,decreasing,N
+59456,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Paramesotriton,caudopunctatus,"(Liu and Hu, 1973)",,,,,"",Spot-tailed Warty Newt,,,NT,,3.1,2004,decreasing,N
+59457,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Paramesotriton,chinensis,"(Gray, 1859)",,,,,"",Chinese Warty Newt,,,LC,,3.1,2004,decreasing,N
+16129,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Paramesotriton,deloustali,"(Bourret, 1934)",,,,,"","Vietnam Warty Newt, Tam Dao Salamander",,,VU,"B2ab(iii,v)",3.1,2004,decreasing,N
+59458,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Paramesotriton,fuzhongensis,"Wen, 1989",,,,,"",Wanggao Warty Newt,,,VU,"B1ab(iii,v)",3.1,2004,decreasing,N
+59459,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Paramesotriton,guanxiensis,"(Huang, Tang and Tang, 1983)",,,,,"",Guangxi Warty Newt,,,EN,B1ab(iii)+2ab(iii),3.1,2004,decreasing,N
+59460,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Paramesotriton,hongkongensis,"(Myers & Leviton, 1962)",,,,,Paramesotriton chinensis subspecies hongkongensis,Hong Kong Warty Newt,,,NT,,3.1,2004,decreasing,N
+59328,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Parvimolge,townsendi,"(Dunn, 1922)",,,,,"",Townsend's Salamander,,,CR,A2ac+4ac,3.1,2008,decreasing,N
+16801,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Phaeognathus,hubrichti,"Highton, 1961",,,,,"",Red Hills Salamander,,,EN,B1ab(iii)+2ab(iii),3.1,2004,decreasing,N
+29488,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,ainsworthi,"Lazell, 1998",,,,,"",Ainsworth's Salamander,,,EX,,3.1,2004,,N
+59329,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,albagula,"Grobman, 1944",,,,,Plethodon  glutinosus  subspecies albagula ,"White-throated Slimy Salamander, Western Slimy Salamander, Whitethroat Slimy Salamander",,,LC,,3.1,2008,stable,N
+59330,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,amplus,"Highton and Peabody, 2000",,,,,"",Blue Ridge Gray-cheeked Salamander,,,VU,D2,3.1,2004,unknown,N
+59331,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,angusticlavius,"Grobman, 1944",,,,,"",Ozark Zigzag Salamander,,,LC,,3.1,2014,stable,N
+61904,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,asupak,"Mead, Clayton, Nauman, Olson and Pfrender, 2005",,,,,"",Scottbar Salamander,,,VU,D2,3.1,2006,unknown,N
+59332,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,aureolus,"Highton, 1983",,,,,"",Tellico Salamander,,,DD,,3.1,2004,unknown,N
+17630,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,caddoensis,"Pope and Pope, 1951",,,,,"",Caddo Mountain Salamander,,,NT,,3.1,2004,unknown,N
+59333,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,cheoah,"Highton and Peabody, 2000",,,,,"",Cheoah Bald Salamander,,,VU,D2,3.1,2004,stable,N
+59334,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,cinereus,"(Green, 1818)",,,,,"","Eastern Red-backed Salamander, Redback Salamander",,,LC,,3.1,2015,stable,N
+59335,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,cylindraceus,"(Harlan, 1825)",,,,,"",White-spotted Slimy Salamander,,,LC,,3.1,2014,stable,N
+59336,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,dorsalis,"Cope, 1889",,,,,"",Northern Zigzag Salamander,,,LC,,3.1,2014,stable,N
+59337,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,dunni,"Bishop, 1934",,,,,"",Dunn's Salamander,,,LC,,3.1,2014,stable,N
+59338,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,electromorphus,"Highton, 1999",,,,,"",Northern Ravine Salamander,,,LC,,3.1,2014,stable,N
+59339,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,elongatus,"Van Denburgh, 1916",,,,,"",Del Norte Salamander,,,NT,,3.1,2004,decreasing,N
+17631,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,fourchensis,"Duncan and Highton, 1979",,,,,"",Fourche Mountain Salamander,,,VU,D2,3.1,2004,unknown,N
+59340,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,glutinosus,"(Green, 1818)",,,,,"",Slimy Salamander,,,LC,,3.1,2014,stable,N
+59341,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,hoffmani,"Highton, 1971 [1972]",,,,,"",Valley And Ridge Salamander,,,LC,,3.1,2014,stable,N
+17632,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,hubrichti,"Thurow, 1957",,,,,"",Peaks Of Otter Salamander,,,VU,D2,3.1,2004,unknown,N
+59342,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,idahoensis,"Slater & Slipp, 1940",,,,,"",Coeur D'Alene Salamander,,,LC,,3.1,2015,unknown,N
+59343,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,jordani,"Blatchley, 1901",,,,,"",Red-cheeked Salamander,,,NT,,3.1,2004,stable,N
+59344,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,kentucki,"Mittleman, 1951",,,,,"",Cumberland Plateau Salamander,,,LC,,3.1,2014,stable,N
+59345,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,kiamichi,"Highton, 1989",,,,,"",Kiamichi Slimy Salamander,,,DD,,3.1,2004,unknown,N
+59346,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,kisatchie,"Highton, 1989",,,,,"",Louisiana Slimy Salamander,,,LC,,3.1,2004,unknown,N
+17625,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,larselli,"Burns, 1953",,,,,"",Larch Mountain Salamander,,,NT,,3.1,2004,stable,N
+59347,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,meridianus,"Highton and Peabody, 2000",,,,,"",South Mountain Gray-cheeked Salamander,,,VU,D2,3.1,2004,stable,N
+59348,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,metcalfi,"Brimley, 1912",,,,,"",Southern Gray-cheeked Salamander,,,LC,,3.1,2014,stable,N
+59349,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,montanus,"Highton & Peabody, 2000",,,,,"",Northern Gray-cheeked Salamander,,,LC,,3.1,2014,stable,N
+17626,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,neomexicanus,"Stebbins & Riemer, 1950",,,,,"",Jemez Mountains Salamander,,,NT,,3.1,2004,stable,N
+17627,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,nettingi,"Green, 1938",,,,,"",Cheat Mountain Salamander,,,NT,,3.1,2004,stable,N
+17633,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,ouachitae,"Dunn and Heinze, 1933",,,,,"",Rich Mountain Salamander,,,NT,,3.1,2004,stable,N
+59350,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,petraeus,"Wynn, Highton and Jacobs, 1988",,,,,"",Pigeon Mountain Salamander,,,VU,D2,3.1,2004,stable,N
+59351,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,punctatus,"Highton, 1971 [1972]",,,,,"",White-spotted Salamander,,,NT,,3.1,2004,stable,N
+59352,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,richmondi,"Netting & Mittleman, 1938",,,,,"",Ravine Salamander,,,LC,,3.1,2014,stable,N
+59353,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,sequoyah,"Highton, 1989",,,,,"",Sequoyah Slimy Salamander,,,DD,,3.1,2004,unknown,N
+59354,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,serratus,"Grobman, 1944",,,,,"",Southern Redback Salamander,,,LC,,3.1,2014,stable,N
+17629,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,shenandoah,"Highton & Worthington, 1967",,,,,"",Shenandoah Salamander,,,VU,D2,3.1,2004,stable,N
+61905,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,sherando,"Highton, 2004",,,,,"",Big Levels Salamander,,,VU,D2,3.1,2006,unknown,N
+59355,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,shermani,"Stejneger, 1906",,,,,"",Red-legged Salamander,,,VU,D2,3.1,2004,stable,N
+17628,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,stormi,"Highton and Brame, 1965",,,,,"",Siskiyou Mountains Salamander,,,EN,B1ab(iii),3.1,2004,decreasing,N
+59356,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,teyahalee,"Hairston, 1950",,,,,Plethodon oconaluftee  ,Southern Appalachian Salamander,,,LC,,3.1,2014,stable,N
+59357,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,vandykei,"Van Denburgh, 1906",,,,,"",Van Dyke's Salamander,,,LC,,3.1,2014,stable,N
+59358,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,vehiculum,"(Cooper, 1860)",,,,,"",Western Redback Salamander,,,LC,,3.1,2015,stable,N
+59359,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,ventralis,"Highton, 1997",,,,,"",Southern Zigzag Salamander,,,LC,,3.1,2014,stable,N
+59360,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,virginia,"Highton, 1999",,,,,"",Shenandoah Mountain Salamander,,,NT,,3.1,2004,unknown,N
+59361,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,websteri,"Highton, 1979",,,,,"",Webster's Salamander,,,LC,,3.1,2014,decreasing,N
+59362,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,wehrlei,"Fowler & Dunn, 1917",,,,,"",Wehrle's Salamander,,,LC,,3.1,2014,stable,N
+59363,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,welleri,"Walker, 1931",,,,,"",Weller's Salamander,,,EN,B1ab(iii),3.1,2004,decreasing,N
+59364,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Plethodon,yonahlossee,"Dunn, 1917",,,,,Plethodon longicrus  ,Yonahlossee Salamander,,,LC,,3.1,2014,stable,N
+61919,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Pleurodeles,nebulosus,"(Guichenot, 1850)",,,,,"",Algerian Ribbed Newt,Triton D'Algerie,,VU,B2ab(iii),3.1,2016,decreasing,N
+59462,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Pleurodeles,poireti,"(Gervais, 1836)",,,,,"","Edough Ribbed Newt, Poiret's Newt",Triton De Poiret,,EN,B1ab(iii)+2ab(iii),3.1,2006,decreasing,N
+59463,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Pleurodeles,waltl,"Michahelles, 1830",,,,,"","Sharp-ribbed Salamander, Spanish Ribbed Newt","Pleurodèles De Waltl, Triton D'espagne, Triton De Waltl",Gallipato,NT,,3.1,2009,decreasing,N
+179321,PLANTAE,TRACHEOPHYTA,LILIOPSIDA,ORCHIDALES,ORCHIDACEAE,Polystachya,caudata,Summerh.,,,,,"",,,,EN,"B1ab(i,ii,iii,iv)+2ab(i,ii,iii,iv)",3.1,2013,unknown,N
+18377,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PROTEIDAE,Proteus,anguinus,"Laurenti, 1768",,,,,Siren anguina  ,"Olm, Proteus",,,VU,"B2ab(ii,iii,v)",3.1,2009,decreasing,N
+59489,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SIRENIDAE,Pseudobranchus,axanthus,"(Netting and Goin, 1942)",,,,,Pseudobranchus  striatus  ,Narrow-striped Dwarf Siren,,,LC,,3.1,2014,,N
+59490,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SIRENIDAE,Pseudobranchus,striatus,"(LeConte, 1824)",,,,,Siren  striata  ,Dwarf Siren,,,LC,,3.1,2014,stable,N
+59365,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,ahuitzotl,"Adler, 1996",,,,,"",Imperial Salamander,,Tlaconete,CR,A2a+4a,3.1,2008,decreasing,N
+59366,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,altamontana,"(Taylor, 1939)",,,,,Bolitoglossa  altamontana|Oedipus altamontanus ,"Morelos False Brook Salamander, Morelos Salamander",,,EN,"B1ab(ii,iii,iv,v)",3.1,2008,decreasing,N
+59367,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,amuzga,"Pérez-Ramos and Saldaña-de la Riva, 2003",,,,,"",Sierra de Malinaltepec Salamander,,,DD,,3.1,2008,unknown,N
+59368,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,anitae,"Bogert, 1967",,,,,"",Anita's False Brook Salamander,,,CR,B1ab(iii),3.1,2008,unknown,N
+59369,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,aquatica,"Wake & Campbell, 2001",,,,,"",Aquatic Salamander,,,CR,B1ab(iii)+2ab(iii),3.1,2016,decreasing,N
+59370,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,aurantia,"Canseco-Máquez & Parra-Olea, 2003",,,,,"",Peña Verde Salamander,,,CR,B1ab(iii),3.1,2016,decreasing,N
+59372,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,brunnata,"Bumzahem & Smith, 1955",,,,,"",Brown False Brook Salamander,,,CR,A2ac,3.1,2008,decreasing,N
+59374,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,cochranae,"(Taylor, 1943)",,,,,"",Cochran's False Brook Salamander ,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59375,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,conanti,"Bogert, 1967",,,,,"",,,,EN,B1ab(iii)+2ab(iii),3.1,2008,unknown,N
+59376,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,exspectata,"Stuart, 1954",,,,,"",Jalpa False Brook Salamander,,,CR,"B1ab(iii,v)",3.1,2008,decreasing,N
+59377,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,firscheini,"Shannon and Werler, 1955",,,,,"",Firschein's False Brook Salamander,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59378,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,gadovii,"(Dunn, 1926)",,,,,Bolitoglossa  gadovii|Oedipus  gadovii ,"Gadow's False Brook Salamander, Gadow's Salamander",,,EN,B1ab(iii),3.1,2008,decreasing,N
+59381,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,goebeli,"(Schmidt, 1936)",,,,,Oedipus  goebeli ,Goebel's False Brook Salamander,,,CR,A2ac,3.1,2008,decreasing,N
+59382,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,juarezi,"Regal, 1966",,,,,"",Sierra Juarez False Brook Salamander,,,CR,A2a+4a,3.1,2008,decreasing,N
+59383,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,leprosa,"(Cope, 1869)",,,,,Bolitoglossa  leprosa|Eurycea  leprosus|Geotriton  laticeps|Geotriton  leprosus|Oedipus  leprosus|Oedipus  orizabensis|Spelerpes orizabensis |Spelerpes  gibbicaudus |Spelerpes  laticeps |Spelerpes  leprosus ,Leprous False Brook Salamander,,,VU,"B1ab(iii,v)",3.1,2008,decreasing,N
+59289,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,lineola,"(Cope, 1865)",,,,,Lineatriton lineolus  |Pseudoeurycea lineolus  ,Veracruz Worm Salamander,,,EN,"B1ab(iii,v)",3.1,2008,decreasing,N
+59384,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,longicauda,"Lynch, Wake & Yang, 1983",,,,,"",Longtail False Brook Salamander,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59385,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,lynchi,"Parra-Olea, Papenfuss and Wake, 2001",,,,,"",Veracruz Green Salamander,,,CR,"B1ab(iii,v)",3.1,2008,decreasing,N
+59386,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,melanomolga,"(Taylor, 1941)",,,,,Bolitoglossa melanomolga,Black False Brook Salamander ,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59387,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,mixcoatl,"Adler, 1996",,,,,"",Brown-streaked Salamander,,Tlaconete,DD,,3.1,2008,decreasing,N
+61908,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,mixteca,"Canseco-Márquez and Gutiérrez-Mayén, 2005",,,,,"",,,,LC,,3.1,2008,stable,N
+59388,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,mystax,"Bogert, 1967",,,,,"","Mustache False Brook Salamander, Mustached False Brook Salamander",,,EN,B1ab(iii),3.1,2008,decreasing,N
+59390,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,nigromaculata,"(Taylor, 1941)",,,,,"","Black-spotted False Brook Salamander, Black-spotted Salamander",,,CR,"B1ab(iii,v)",3.1,2008,decreasing,N
+61909,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,obesa,"Parra-Olea, García-París, Hanken and Wake, 2005",,,,,"",Ridge Tail Salamander,,Salamandra De Cola Estriada,DD,,3.1,2008,unknown,N
+59291,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,orchileucos,"(Brodie, Mendelson & Campbell, 2002)",,,,,Lineatriton orchileucos,Sierra de Juárez Worm Salamander,,,CR,B1ab(iii),3.1,2016,decreasing,N
+59290,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,orchimelas,"(Brodie, Mendelson & Campbell, 2002)",,,,,Lineatriton orchimelas,San Martin Worm Salamander ,,,EN,B1ab(iii),3.1,2016,decreasing,N
+61910,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,papenfussi,"Parra-Olea, García-París, Hanken & Wake, 2005",,,,,"",Muscular Salamander,,Salamandra Escaladora,EN,B1ab(iii),3.1,2016,decreasing,N
+59392,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,rex,"(Dunn, 1921)",,,,,Oedipus  rex ,Royal False Brook Salamander,,,CR,A2ac,3.1,2008,decreasing,N
+59393,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,robertsi,"(Taylor, 1938)",,,,,"",Roberts' False Brook Salamander ,,,CR,B1ab(iii),3.1,2008,stable,N
+59394,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,ruficauda,"Parra-Olea, García-París, Hanken and Wake, 2004",,,,,"",Orange-tailed Agile Salamander,,,DD,,3.1,2008,unknown,N
+59395,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,saltator,"Lynch and Wake, 1989",,,,,"",Leaping False Brook Salamander,,,CR,B1ab(iii),3.1,2008,decreasing,N
+59397,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,smithi,"(Taylor, 1938)",,,,,"","Smith's False Brook Salamander, Smith's Salamander",,,CR,A2ace,3.1,2008,decreasing,N
+59398,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,tenchalli,"Adler, 1996",,,,,"",Bearded Salamander,,Tlaconete Con Barba,EN,A2ac+4ac,3.1,2008,decreasing,N
+59399,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,teotepec,"Adler, 1996",,,,,"",Teotepec Salamander,,Tlaconete,EN,A4a,3.1,2008,decreasing,N
+59400,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,tlahcuiloh,"Adler, 1996",,,,,"",Green-flecked Salamander,,Tlaconete,CR,A2ac+4ac,3.1,2008,decreasing,N
+61912,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,tlilicxitl,"Lara-Góngora, 2003",,,,,"",Black-footed Salamander,,,DD,,3.1,2008,unknown,N
+59401,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,unguidentis,"(Taylor, 1941)",,,,,"",Claw-toothed Salamander,,,CR,"B1ab(iii,v)",3.1,2008,decreasing,N
+59402,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudoeurycea,werleri,"Darling and Smith, 1954",,,,,"",Werler's Salamander,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59111,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Pseudohynobius,flavomaculatus,"Hu and Fei in Hu, Fei and Ye, 1978",,,,,Ranodon flavomaculatus  ,Yellow-spotted Salamander,,,VU,B2ab(iii),3.1,2004,decreasing,N
+135870,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Pseudohynobius,kuankuoshuiensis,"Xu and Zeng, in Xu, Zeng and Fu, 2007",,,,,"",,,,DD,,3.1,2008,unknown,N
+59110,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Pseudohynobius,puxiongensis,"Fei and Ye, 2000",,,,,Protohynobius puxiongensis,,,,DD,,3.1,2004,unknown,N
+136191,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Pseudohynobius,shuichengensis,"Tian, Gu, Sun and Li, 1998",,,,,"",,,,VU,B1ab(iii),3.1,2008,decreasing,N
+59403,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudotriton,montanus,"Baird, 1850",,,,,Pseudotriton diastictus|Pseudotriton  flavissimus |Spelerpes  flavissimus|Spelerpes  montana|Spelerpes  ruber  subspecies sticticeps ,"Mud Salamander, Mountain Triton, Eastern Mud Salamander",,,LC,,3.1,2008,unknown,N
+59404,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Pseudotriton,ruber,"(Sonnini de Manoncourt & Latreille, 1801)",,,,,"",Red Salamander,,,LC,,3.1,2014,stable,N
+19304,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Ranodon,sibiricus,"Kessler, 1866",,,,,"",Semirechensk Salamander,,,EN,"B2ab(iii,iv,v)",3.1,2004,decreasing,N
+59435,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,RHYACOTRITONIDAE,Rhyacotriton,cascadae,"Good & Wake, 1992",,,,,"",Cascade Torrent Salamander,,,NT,,3.1,2004,decreasing,N
+59436,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,RHYACOTRITONIDAE,Rhyacotriton,kezeri,"Good and Wake, 1992",,,,,"",Columbia Torrent Salamander,,,NT,,3.1,2004,stable,N
+59437,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,RHYACOTRITONIDAE,Rhyacotriton,olympicus,"(Gaige, 1917)",,,,,Ranodon olympicus  ,Olympic Torrent Salamander,,,VU,B1ab(iii),3.1,2004,decreasing,N
+59438,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,RHYACOTRITONIDAE,Rhyacotriton,variegatus,"(Stebbins and Lowe, 1951)",,,,,Ranodon  olympicus  ,Southern Torrent Salamander,,,LC,,3.1,2004,stable,N
+59464,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Salamandra,algira,"Bedriaga, 1883",,,,,"",North African Fire Salamander,"Salamandre Algire, Salamandre Tachetée",Salamandra Norteafricana,VU,B1ab(iii)+2ab(iii),3.1,2009,decreasing,N
+19843,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Salamandra,atra,"Laurenti, 1768",,,,,"","Alpine Salamander, Golden Salamander",,,LC,,3.1,2009,decreasing,N
+59465,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Salamandra,corsica,"Savi, 1838",,,,,Salamandra salamandra subspecies corsica,Corsican Fire Salamander,,,LC,,3.1,2009,stable,N
+59466,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Salamandra,infraimmaculata,"(Mertens, 1948)",,,,,Salamandra salamandra subspecies infraimmaculata|Salamandra semenovi  ,Arouss Al Ayn,,,NT,,3.1,2009,decreasing,N
+19845,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Salamandra,lanzai,"Nascetti, Capula & Bullini, 1988",,,,,"",Lanza's Alpine Salamander,,,VU,D2,3.1,2016,stable,N
+59467,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Salamandra,salamandra,"(Linnaeus, 1758)",,,,,Salamandra maculosa  ,"Common Fire Salamander, Fire Salamander",,Salamandra Común,LC,,3.1,2009,decreasing,N
+59114,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,HYNOBIIDAE,Salamandrella,keyserlingii,"Dybowski, 1870",,,,,Hynobius michnoi|Hynobius  cristatus|Hynobius  doii |Hynobius  keyserlingii|Isodactylium schrenckii  |Isodactylium wosnessenskyi  |Salamandrella  cristata |Salamandrella  schrenckii |Salamandrella  skvorzovii |Salamandrella  wosnessenskyi ,"Siberian Salamander, Siberian Newt, Manchurian Salamander, Dybowski's Salamander ",,,LC,,3.1,2008,stable,N
+136135,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Salamandrina,perspicillata,"(Savi, 1821)",,,,,"",,,,LC,,3.1,2009,stable,N
+59468,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Salamandrina,terdigitata,"(Bonnaterre, 1789)",,,,,Molge  tridactyla|Salamandra  ter-digitata |Salamandra  tridactyla |Triton  tridactylus,Spectacled Salamander,,,LC,,3.1,2009,stable,N
+32662,PLANTAE,TRACHEOPHYTA,MAGNOLIOPSIDA,FABALES,LEGUMINOSAE,Senna,caudata,(Standl.) H.S.Irwin & Barneby,,,,,Cassia caudata  |Chamaefistula caudata  ,,,,NT,,3.1,2012,decreasing,N
+20187,ANIMALIA,CHORDATA,MAMMALIA,RODENTIA,DIPODIDAE,Sicista,caudata,"Thomas, 1907",,,,,"",Long-tailed Birch Mouse,,,DD,,3.1,2016,unknown,N
+59491,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SIRENIDAE,Siren,intermedia,"Barnes, 1826",,,,,"","Lesser Siren, Intermediate Siren, Eastern Lesser Siren, Dwarf Siren ",,,LC,,3.1,2008,unknown,N
+59492,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SIRENIDAE,Siren,lacertina,"Österdam, 1766",,,,,Muraena  siren|Phanerobranchus  dipus ,"Greater Siren, Mud Eel, Great Siren, Common Siren, Mud Iguana, Siren",,,LC,,3.1,2008,unknown,N
+20454,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Speleomantes,ambrosii,"(Lanza, 1954)",,,,,"","Ambrosi's Cave Salamander, Spezia Cave Salamander",,,NT,,3.1,2009,stable,N
+20455,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Speleomantes,flavus,"(Stefani, 1969)",,,,,"","Monte Albo Cave Salamander, Stefani's Salamander",,,VU,D2,3.1,2009,stable,N
+20456,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Speleomantes,genei,"(Temminck and Schlegel, 1838)",,,,,Atylodes genei|Speleomantes genei  |Speleomantes genei  ,"Gene's Cave Salamander, Sardinian Cave Salamander",,,VU,B1ab(iii),3.1,2009,decreasing,N
+20457,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Speleomantes,imperialis,"(Stefani, 1969)",,,,,"","Imperial Cave Salamander, Scented Cave Salamander",,,NT,,3.1,2009,stable,N
+20458,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Speleomantes,italicus,"(Dunn, 1923)",,,,,"",Italian Cave Salamander,,,NT,,3.1,2009,stable,N
+135825,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Speleomantes,sarrabusensis,"Lanza, Leo, Forti, Cimmaruta, Caputo & Nascetti, 2001",,,,,"",,,,VU,D2,3.1,2009,stable,N
+59405,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Speleomantes,strinatii,"(Aellen, 1958)",,,,,"","French Cave Salamander, North-west Italian Cave Salamander",,,NT,,3.1,2009,stable,N
+20459,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Speleomantes,supramontis,"(Lanza, Nascetti & Bullini, 1986)",,,,,"",Supramonte Cave Salamander,,,EN,"B1ab(iii,v)",3.1,2009,decreasing,N
+59406,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Stereochilus,marginatus,"(Hallowell, 1856)",,,,,"",Many-lined Salamander,,,LC,,3.1,2014,unknown,N
+59469,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Taricha,granulosa,"(Skilton, 1849)",,,,,"",Roughskin Newt,,,LC,,3.1,2015,stable,N
+59470,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Taricha,rivularis,"(Twitty, 1935)",,,,,"",Redbelly Newt,,,LC,,3.1,2014,stable,N
+136023,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Taricha,sierra,"Twitty, 1942",,,,,"",Sierra Newt,,,LC,,3.1,2008,unknown,N
+59471,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Taricha,torosa,"(Rathke, 1833)",,,,,"",Coast Range Newt,,,LC,,3.1,2008,unknown,N
+59233,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,adelos,"(Papenfuss and Wake, 1987)",,,,,Cryptotriton adelos,,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59407,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,arboreus,"Hanken and Wake, 1994",,,,,"",Arboreal Thorius,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59408,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,aureus,"Hanken and Wake, 1994",,,,,"",Golden Thorius,,,CR,"B1ab(iii,v)",3.1,2008,decreasing,N
+59409,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,boreas,"Hanken and Wake, 1994",,,,,"",Boreal Thorius,,,EN,"B1ab(iii,v)",3.1,2008,decreasing,N
+59410,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,dubitus,"Taylor, 1941",,,,,"",Acultzingo Pigmy Salamander,,,EN,"B1ab(iii,v)",3.1,2008,decreasing,N
+59411,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,grandis,"Hanken, Wake and Freeman, 1999",,,,,"",Grand Minute Salamander,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59412,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,infernalis,"Hanken, Wake & Freeman, 1999",,,,,"",Atoyac Minute Salamander,,,CR,B1ab(iii),3.1,2008,decreasing,N
+59413,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,insperatus,"Hanken & Wake, 1994",,,,,"",Surprise Thorius,,,CR,B1ab(iii),3.1,2016,decreasing,N
+59414,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,lunaris,"Hanken and Wake, 1998",,,,,"",,,,EN,"B1ab(iii,v)",3.1,2008,decreasing,N
+59415,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,macdougalli,"Taylor, 1949",,,,,"",MacDougall's Pigmy Salamander,,,VU,D2,3.1,2008,stable,N
+59416,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,magnipes,"Hanken & Wake, 1998",,,,,"",Big-footed Thorius,,,CR,"B1ab(iii,v)",3.1,2008,decreasing,N
+59417,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,minutissimus,"Taylor, 1949",,,,,"",Oaxacan Pigmy Salamander,,,CR,B1ab(iii),3.1,2008,decreasing,N
+59418,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,minydemus,"Hanken & Wake, 1998",,,,,"",,,,EN,B1ab(iii),3.1,2016,decreasing,N
+59419,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,munificus,"Hanken & Wake, 1998",,,,,"",McDiarmid Thorius,,,CR,"A4ac; B1ab(i,iii,v)",3.1,2008,unknown,N
+59420,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,narismagnus,"Shannon & Werler, 1955",,,,,"",San Martin Pigmy Salamander,,,CR,"B1ab(iii,v)",3.1,2016,decreasing,N
+59421,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,narisovalis,"Taylor, 1939",,,,,"","Cerro San Felipe Pigmy Salamander, Upper Cerro Pigmy Salamander",,,CR,"A2ab+4ab; B1ab(ii,v)",3.1,2008,decreasing,N
+59422,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,omiltemi,"Hanken, Wake and Freeman, 1999",,,,,"",Omiltemi Minute Salamander,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59423,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,papaloae,"Hanken and Wake, 2001",,,,,"",Papalo Minute Salamander,,,EN,B1ab(iii),3.1,2015,decreasing,N
+59424,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,pennatulus,"Cope, 1869",,,,,"",Veracruz Pigmy Salamander,,,CR,A2ac+4ac,3.1,2008,decreasing,N
+59425,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,pulmonaris,"Taylor, 1939",,,,,"",Lower Cerro Pigmy Salamander,,,EN,"B1ab(iii,v)",3.1,2008,decreasing,N
+59426,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,schmidti,"Gehlbach, 1959",,,,,"",Schmidt's Pigmy Salamander,,,EN,B1ab(iii),3.1,2008,decreasing,N
+59427,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,smithi,"Hanken and Wake, 1994",,,,,"",Smith's Thorius,,,CR,B1ab(iii),3.1,2008,unknown,N
+59428,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,spilogaster,"Hanken and Wake, 1998",,,,,"",,,,CR,"B1ab(iii,v)",3.1,2008,decreasing,N
+59429,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Thorius,troglodytes,"Taylor, 1941",,,,,"",Taylor's Pigmy Salamander,,,EN,"B1ab(iii,v)+2ab(iii,v)",3.1,2016,decreasing,N
+59474,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Triturus,carnifex,"(Laurenti, 1768)",,,,,"",Italian Crested Newt,,,LC,,3.1,2009,decreasing,N
+22212,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Triturus,cristatus,"(Laurenti, 1768)",,,,,Turanomolge mensbieri  ,"Great Crested Newt, Northern Crested Newt",,,LC,,3.1,2009,decreasing,N
+22216,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Triturus,dobrogicus,"(Kiritzescu, 1903)",,,,,"",Danube Crested Newt,,,NT,,3.1,2009,decreasing,N
+39420,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Triturus,karelinii,"(Strauch, 1870)",,,,,Triturus cristatus subspecies karelini,Southern Crested Newt,,,LC,,3.1,2016,decreasing,N
+59477,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Triturus,marmoratus,"(Latreille, 1800)",,,,,"",Marbled Newt,,Tritón Jaspeado,LC,,3.1,2009,decreasing,N
+59479,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Triturus,pygmaeus,"(Wolterstorff, 1905)",,,,,"",Southern Marbled Newt,,Tritón Pigmeo,NT,,3.1,2016,decreasing,N
+22716344,ANIMALIA,CHORDATA,AVES,PASSERIFORMES,TIMALIIDAE,Turdoides,caudata,"(Dumont, 1823)",,,,,Turdoides caudatus |Turdoides caudatus |Turdoides caudatus ,Common Babbler,,,LC,,3.1,2012,stable,N
+59482,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Tylototriton,asperrimus,"Unterstein, 1930",,,,,Echinotriton  asperrimus|Pleurodeles  asperrimus|Yaotriton  asperrimus,"Black Knobby Newt, Granular Newt, Mount Yao Newt",,,NT,,3.1,2008,decreasing,N
+59483,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Tylototriton,hainanensis,"Fei, Ye & Yang, 1984",,,,,Pleurodeles hainanensis|Yaotriton  hainanensis ,Hainan Knobby Newt,,,EN,B1ab(iii)+2ab(iii),3.1,2008,decreasing,N
+59484,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Tylototriton,kweichowensis,"Fang and Chang, 1932",,,,,"",Red-tailed Knobby Newt,,,VU,"B2ab(iii,v)",3.1,2004,decreasing,N
+47144426,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Tylototriton,notialis,"Stuart, Phimmachak, Sivongxay & Robichaud, 2010",,,,,"",,,,VU,B1ab(iii),3.1,2015,unknown,N
+59485,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Tylototriton,shanjing,"Nussbaum, Brodie & Yang, 1995",,,,,"",,,,NT,,3.1,2004,decreasing,N
+59487,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Tylototriton,verrucosus,"Anderson, 1871",,,,,"","Crocodile Newt, Crocodile Salamander, Himalayan Newt, Himalayan Salamander, Red Knobby Newt",,,LC,,3.1,2009,unknown,N
+135868,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Tylototriton,vietnamensis,"Böhme, Schöttler, Truong and Köhler, 2005",,,,,"",,,,NT,,3.1,2008,decreasing,N
+59488,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,SALAMANDRIDAE,Tylototriton,wenxianensis,"Fei, Ye and Yang, 1984",,,,,"",Wenxian Knobby Newt,,,VU,B2ab(iii),3.1,2004,decreasing,N
+185664,ANIMALIA,CHORDATA,AMPHIBIA,CAUDATA,PLETHODONTIDAE,Urspelerpes,brucei,"Camp, Peterman, Milanovich, Lamb, Maerz & Wake, 2009",,,,,"",Patch-nosed Salamander,,,LC,,3.1,2011,unknown,N

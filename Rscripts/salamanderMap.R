@@ -51,6 +51,9 @@ for (i in 1:length(spList)) {
 	spList[[i]] <- spTransform(spList[[i]], CRS(EAproj))
 }
 
+Areas <- sapply(spList, gArea)
+Area_mat <- matrix(Areas, ncol=1, dimnames=list(names(Areas)))
+write.table(Area_mat, file=paste(Path_base, "datafiles/areas.txt", sep=""), quote=F, col.names=F, sep="\t")
 # -----------------------------------------------------------------------
 listExtent <- getExtentOfList(spList)
 template <- raster(xmn = listExtent$minLong, xmx = listExtent$maxLong, ymn = listExtent$minLat, ymx = listExtent$maxLat, res = c(50000, 50000), crs=proj4string(spList[[1]]))

@@ -45,13 +45,17 @@ brlen_prob_tenpres <- sapply(ds, function(x) probDel(x, lam=rates$par[1], mu=rat
 
 setwd(paste(Path_base, "figures", sep=""))
 pdf("brProb.pdf", height=5, width=5)
-par(mar=c(4,4,1,1), mgp=c(2.5,0.3,0), tck=-0.005, las=1)
-plot(ds, brlen_prob, type='l', ylim=c(0,0.08), xlim=c(0,100), axes=F, xlab=expression(paste("missing time (" %~~% "fossil branch length)", sep="")), ylab="probability")
-lines(ds, brlen_prob_nopres, col='red', lty=3)
-lines(ds, brlen_prob_tenpres, col='blue', lty=2)
+par(mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, bty="n", las=1, cex.lab=1.5)
+Alpha <- 1
+exCol <- rgb(217/255, 95/255, 2/255, Alpha)
+hiCol <- rgb(27/255, 158/255, 119/255, Alpha)
+loCol <- rgb(117/255, 112/255, 179/255, Alpha)
+plot(ds, brlen_prob, type='l', ylim=c(0,0.08), xlim=c(0,100), axes=F, xlab=expression(paste("missing time (" %~~% "fossil branch length)", sep="")), ylab="probability", col=loCol, lwd=2)
+lines(ds, brlen_prob_nopres, col=exCol, lty=3, lwd=2)
+lines(ds, brlen_prob_tenpres, col=hiCol, lty=2, lwd=2)
 axis(1, at=c(-10, 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100))
 axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08))
-legend("topright", legend=c(expression(paste(psi, " = 0")), expression(paste(psi, " = est.")), expression(paste(psi, " = 10X est."))), col=c('red', 'black', 'blue'), lty=c(3,1,2), bty='n')
+legend("right", legend=c(expression(paste(psi, " = 0")), expression(paste(psi, " = est.")), expression(paste(psi, " = 10X est."))), col=c(exCol, loCol, hiCol), lty=c(3,1,2), bty='n', lwd=2)
 dev.off()
 
 # Keep one frog and caecillian b/c some fossil salamanders are stem to sal clade
@@ -172,11 +176,18 @@ pdf("missingTree.pdf", height=10, width=10)
 plot(onlySal, tip.color=c('black', 'red')[tipCols], cex=0.15)
 dev.off()
 
+
+setwd(paste(Path_base, "datafiles", sep=""))
+salTree <- read.tree("fossilTree.tre")
+exTree <- read.tree("modernSal.tre")
+missing <- setdiff(salTree$tip.label, exTree$tip.label)
+setwd(paste(Path_base, "check_tree_files", sep=""))
 pdf("fossilTree.pdf", height=10, width=10)
-missing <- setdiff(salTree$tip.label, unique(fossilSp))
 tipCols <- rep(1, Ntip(salTree))
 tipCols[salTree$tip.label%in%missing] <- 2
-plot(salTree, tip.color=c('red', 'black')[tipCols], cex=0.15)
+#plot(salTree, tip.color=c('red', 'black')[tipCols], cex=0.15)
+plot(salTree, show.tip.label=F)
+tiplabels(pch=16, col=c(rgb(0,0,0,0), rgb(1,0,0,1))[tipCols], cex=1.1)
 dev.off()
 
 

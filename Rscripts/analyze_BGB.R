@@ -1,5 +1,5 @@
 Path_base <- "~/Documents/Salamanders/"
-Name <- "softFos"
+Name <- "hardFos"
 
 setwd(paste(Path_base, "output", sep=""))
 load(paste("sal_dec*_", Name, ".Rdata", sep=""))
@@ -10,11 +10,14 @@ tree <- read.tree("fossilTree.tre")
 
 #################################################
 pdf(paste(Path_base, "figures/sal_dec*_", Name, ".pdf", sep=""), height=10, width=10)
-plot_BGB(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=FALSE, tr=read.tree(z_dec$trfn), plotlegend=T)
+plot_BGB(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.01, statecex=0.5, splitcex=0.5, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=FALSE, tr=read.tree(z_dec$trfn), plotlegend=F)
 dev.off()
 
 pdf(paste(Path_base, "figures/sal_dec*jv_", Name, ".pdf",sep=""), height=10, width=10)
-plot_BGB(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=FALSE, tr=read.tree(z_decjv$trfn), plotlegend=T)
+plot_BGB(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.01, statecex=0.5, splitcex=0.5, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=FALSE, tr=read.tree(z_decjv$trfn), plotlegend=F)
+if (Name == "hardFos")	{
+	legend("bottomleft", legend=c("East NA", "West NA", "SA+CA", "Eur", "CAsia", "EAsia"), text.col=Cols, bty="n", cex=1.25)
+}
 dev.off()
 
 #################################################
@@ -54,7 +57,7 @@ pbdb_Eur <- read.csv("raw_curve_dataEur.csv", stringsAsFactors=F)
 pbdb_Asia <- read.csv("raw_curve_dataAsia.csv", stringsAsFactors=F)
 
 pdf(paste(Path_base, "figures/sal_dec*jv_LTT_", Name, ".pdf", sep=""), height=5, width=5)
-par(las=1, bty="n", mar=c(4,4,1,1), mgp=c(2,0.5,0), tck=-0.01)
+par(las=1, bty="n", mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, cex.lab=1.5)
 plot(1, 1, xlab="age (Ma)", ylab="log number of lineages", xlim=c(0, max(Heights)), ylim=c(-3, 5), type="n", axes=F)
 Cols <- c('blue', "cyan", "chartreuse3", "goldenrod3", "red", "orchid1")
 Times <- c(-100, 0, 63, 120, 199, 240, 265) + 0.8339
@@ -69,12 +72,15 @@ lines(Inc, log(apply(gMat[,sapply(states_list_areaLetters, function(x) "S" %in% 
 lines(Inc, log(apply(gMat[,sapply(states_list_areaLetters, function(x) "Er" %in% x)],1,sum)), col=Cols[4], lwd=2)
 lines(Inc, log(apply(gMat[,sapply(states_list_areaLetters, function(x) "C" %in% x)],1,sum)), col=Cols[5], lwd=2)
 lines(Inc, log(apply(gMat[,sapply(states_list_areaLetters, function(x) "E" %in% x)],1,sum)), col=Cols[6], lwd=2)
+if (Name == "hardFos")	{
+	legend("topleft", legend=c("East NA", "West NA", "SA+CA", "Eur", "CAsia", "EAsia"), col=Cols, lty=1, lwd=1.5, bty="n", cex=0.75)
+}
 dev.off()
 
 
 pdf(paste(Path_base, "figures/sal_dec*jv_LTT_", Name, "_focused_fos.pdf", sep=""), height=5, width=5)
-par(las=1, bty="n", mar=c(4,4,1,1), mgp=c(2,0.5,0), tck=-0.01)
-plot(1, 1, xlab="age (Ma)", ylab="number of lineages", xlim=c(0, max(Heights)), ylim=c(-3, 5), type="n", axes=F)
+par(las=1, bty="n", mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, cex.lab=1.5)
+plot(1, 1, xlab="age (Ma)", ylab="log number of lineages", xlim=c(0, max(Heights)), ylim=c(-3, 5), type="n", axes=F)
 Cols <- c('blue', "cyan", "chartreuse3", "goldenrod3", "red", "orchid1")
 Times <- c(-100, 0, 63, 120, 199, 240, 265) + 0.8339
 axis(1, at=Times, labels=sapply(Times, function(x) as.character(round(max(Heights)-x))))
@@ -95,12 +101,15 @@ lines(Inc, Y, col=Cols[6], lwd=2)
 points(max(Heights)-pbdb_NA$Midpoint_Ma, log(pbdb_NA$X3T_rich), pch=16, col='blue', cex=1.5, lwd=1.5)
 points(max(Heights)-pbdb_Eur$Midpoint_Ma, log(pbdb_Eur$X3T_rich), pch=16, col='goldenrod3', cex=1.5, lwd=1.5)
 points(max(Heights)-pbdb_Asia$Midpoint_Ma, log(pbdb_Asia$X3T_rich), pch=16, col='orchid1', cex=1.5, lwd=1.5)
+if (Name == "hardFos")	{
+	legend("topleft", legend=c("East NA", "Eur", "EAsia"), col=Cols[c(1,4,6)], lty=1, lwd=1.5, bty="n", cex=0.75)
+}
 dev.off()
 
 
 pdf(paste(Path_base, "figures/sal_dec*jv_LTT_", Name, "_focused_nofos.pdf", sep=""), height=5, width=5)
-par(las=1, bty="n", mar=c(4,4,1,1), mgp=c(2,0.5,0), tck=-0.01)
-plot(1, 1, xlab="age (Ma)", ylab="number of lineages", xlim=c(0, max(Heights)), ylim=c(-3, 5), type="n", axes=F)
+par(las=1, bty="n", mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, cex.lab=1.5)
+plot(1, 1, xlab="age (Ma)", ylab="log number of lineages", xlim=c(0, max(Heights)), ylim=c(-3, 5), type="n", axes=F)
 Cols <- c('blue', "cyan", "chartreuse3", "goldenrod3", "red", "orchid1")
 Times <- c(-100, 0, 63, 120, 199, 240, 265) + 0.8339
 axis(1, at=Times, labels=sapply(Times, function(x) as.character(round(max(Heights)-x))))
@@ -118,6 +127,9 @@ lines(Inc, Y, col=Cols[4], lwd=2)
 Y <- log(apply(gMat[,sapply(states_list_areaLetters, function(x) "E" %in% x)],1,sum))
 Y[Y < -3] <- NA
 lines(Inc, Y, col=Cols[6], lwd=2)
+if (Name == "hardFos")	{
+	legend("topleft", legend=c("East NA", "Eur", "EAsia"), col=Cols[c(1,4,6)], lty=1, lwd=1.5, bty="n", cex=0.75)
+}
 dev.off()
 #################################################
 # Region of each node vs. proportion of all descendents still in that region
