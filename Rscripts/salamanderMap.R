@@ -39,6 +39,28 @@ for (i in 1:length(nameVec)) {
 
 names(spList) <- gsub(' ', '_', names(spList))
 
+# Get lat ranges for all sp:
+latRange <- sapply(spList, function(x) x@bbox["y",])
+latBins <- seq(from=-20, to=74, by=1)
+Richness <- c()
+latMid <- c()
+for (count in 2:length(latBins))	{
+	bin_min <- latBins[count-1]
+	bin_max <- latBins[count]
+	keep_min <- which(latRange[1,] <= bin_max & latRange[1,] >= bin_min)
+	keep_max <- which(latRange[2,] <= bin_max & latRange[2,] >= bin_min)
+	Richness[count-1] <- length(unique(c(keep_min, keep_max)))
+	latMid[count-1] <- mean(c(bin_min, bin_max))
+}
+
+setwd(paste(Path_base, "figures", sep=""))
+pdf("ldg.pdf", height=5, width=5)
+par(mar=c(4,4,1,1), mgp=c(2.2,0.5,0), las=1, bty="n", cex.lab=1.5, tck=-0.005)
+plot(latMid, Richness, type='b', col='black', pch=21, bg='gray70', lwd=1, cex=1.5, axes=F, xlim=c(-80, 80), ylim=c(0, 60), xlab="latitude", ylab="richness")
+axis(1, at=c(-120, -80, -60, -40, -20, 0, 20, 40, 60, 80))
+axis(2, at=c(-100, 0, 10, 20, 30, 40, 50, 60))
+dev.off()
+
 
 # -----------------------------------------------------------------------
 # project these ranges to equal area projections

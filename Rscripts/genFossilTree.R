@@ -50,12 +50,12 @@ Alpha <- 1
 exCol <- rgb(217/255, 95/255, 2/255, Alpha)
 hiCol <- rgb(27/255, 158/255, 119/255, Alpha)
 loCol <- rgb(117/255, 112/255, 179/255, Alpha)
-plot(ds, brlen_prob, type='l', ylim=c(0,0.08), xlim=c(0,100), axes=F, xlab=expression(paste("missing time (" %~~% "fossil branch length)", sep="")), ylab="probability", col=loCol, lwd=2)
-lines(ds, brlen_prob_nopres, col=exCol, lty=3, lwd=2)
-lines(ds, brlen_prob_tenpres, col=hiCol, lty=2, lwd=2)
+plot(ds, brlen_prob, type='l', ylim=c(0,0.08), xlim=c(0,100), axes=F, xlab=expression(paste("missing time (" %~~% "fossil branch length)", sep="")), ylab="probability", col=loCol, lwd=3)
+lines(ds, brlen_prob_nopres, col=exCol, lty=3, lwd=3)
+lines(ds, brlen_prob_tenpres, col=hiCol, lty=2, lwd=3)
 axis(1, at=c(-10, 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100))
 axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08))
-legend("right", legend=c(expression(paste(psi, " = 0")), expression(paste(psi, " = est.")), expression(paste(psi, " = 10X est."))), col=c(exCol, loCol, hiCol), lty=c(3,1,2), bty='n', lwd=2)
+legend("right", legend=c(expression(paste(psi, " = 0")), expression(paste(psi, " = est.")), expression(paste(psi, " = 10X est."))), col=c(exCol, loCol, hiCol), lty=c(3,1,2), bty='n', lwd=3, cex=2)
 dev.off()
 
 # Keep one frog and caecillian b/c some fossil salamanders are stem to sal clade
