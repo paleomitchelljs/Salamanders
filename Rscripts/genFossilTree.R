@@ -149,9 +149,20 @@ for (count in 1:length(unique(fossilSp)))	{
 	if (sim >= 1)	{
 		Stop <- TRUE
 		break;
-	}å
+	}
 }
 
+setwd(paste(Path_base, "datafiles", sep=""))
+tree <- read.tree("fossilTree.tre")
+Save <- c("Plethodon_cinereus", "Ambystoma_tigrinum", "Amphiuma_means", "Andrias_japonicus", "Rhyacotriton_cascadae", "Necturus_maculosus", "Bolitoglossa_stuarti", "Dicamptodon_copei", "Siren_lacertina", "Hynobius_katoi", "Neurergus_kaiseri", "Karaurus_sharovi", "Celtedens_ibericus", "Piceoerpeton_wilwoodense", "Peratosauroides_problematica")
+newtree <- drop.tip(tree, setdiff(tree$tip.label, Save))
+newtree$edge.length[28] <- newtree$edge.length[28] + 122.5 #push Albanerpetontidae to Pliocene
+newtree$tip.label <- c("Cryptobranchidae", "Hynobiidae", "Batrachosauroididae", "Sirenidae", "Dicamptodontidae", "Ambystomatidae", "Salamandridae", "Proteidae", "Rhyacotritonidae", "Amphiumidae", "Plethodontinae", "Bolitoglossinae", "Scapherpetonidae", "Karauridae", "Albanerpetontidae")
+setwd(paste(Path_base, "figures", sep=""))
+pdf("skeletontree_fossils.pdf", height=10, width=10)
+par(mar=c(0,0,0,0), oma=c(0,0,0,5))
+plot(newtree, cex=2, font=1)
+dev.off()
 
 
 ### Post-generation addition of files
