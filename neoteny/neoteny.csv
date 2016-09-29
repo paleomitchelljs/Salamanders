@@ -63,7 +63,7 @@ Phosphotriton,sigei,0,
 Amphiuma,jepseni,2,
 Proamphiuma,cretacea,2,
 Ambystoma,rivulare,1,Bille 2009
-Ambystoma,gfs,0,
+Ambystoma,gfs,1,Boardman reports about half of verts are neotenous
 Ambystoma,minshalli,0,
 Kokartus,honorarius,2,
 Karaurus,sharovi,2,
@@ -143,7 +143,7 @@ Pseudobranchus,axanthus,2,
 Pseudobranchus,striatus,2,
 Siren,intermedia,2,
 Siren,lacertina,2,
-Dicamptodon,tenebrosus,0,
+Dicamptodon,tenebrosus,1,Ferguson 1995
 Dicamptodon,ensatus,1,
 Dicamptodon,copei,2,
 Dicamptodon,aterrimus,1,
@@ -194,12 +194,12 @@ Tylototriton,kweichowensis,0,
 Tylototriton,verrucosus,0,
 Notophthalmus,meridionalis,0,
 Notophthalmus,viridescens,1,
-Notophthalmus,perstriatus,0,
+Notophthalmus,perstriatus,1,Wakahara 1996
 Taricha,rivularis,0,
 Taricha,granulosa,1,
 Taricha,torosa,0,
 Ichthyosaura,alpestris,1,
-Cynops,wolterstorffi,1,
+Cynops,wolterstorffi,1,Wu et al ZooTaxa 2010
 Cynops,pyrrhogaster,0,
 Cynops,ensicauda,1,report from husbandry (caudata.org)
 Cynops,cyanurus,0,
@@ -217,14 +217,14 @@ Paramesotriton,hongkongensis,0,
 Paramesotriton,deloustali,0,
 Paramesotriton,guangxiensis,0,
 Paramesotriton,fuzhongensis,0,
-Euproctus,platycephalus,1,
+Euproctus,platycephalus,1,Voesenek et al 1987 Some autoecological data on the Urodeles of Sardinia
 Euproctus,montanus,0,
-Lissotriton,helveticus,1,
+Lissotriton,helveticus,1,Gelder 72
 Lissotriton,italicus,1,
-Lissotriton,boscai,0,
+Lissotriton,boscai,1,Ceacero et al 2010
 Lissotriton,vulgaris,1,Stanescu et al 2014
 Lissotriton,montandoni,0,
-Ommatotriton,ophryticus,0,
+Ommatotriton,ophryticus,1,Skorinov et al 2009
 Ommatotriton,vittatus,0,
 Neurergus,strauchii,0,
 Neurergus,kaiseri,0,
@@ -232,11 +232,11 @@ Neurergus,crocatus,0,
 Neurergus,microspilotus,0,
 Calotriton,asper,1,
 Calotriton,arnoldi,0,
-Triturus,pygmaeus,1,
+Triturus,pygmaeus,1,Fuentes et al 2011 Bol Asoc Herpetol Esp
 Triturus,marmoratus,0,
 Triturus,dobrogicus,0,
-Triturus,macedonicus,0,
-Triturus,cristatus,0,
+Triturus,macedonicus,1,Denoel et al 2009 Biological Conservation
+Triturus,cristatus,1,Wakahara 1996
 Triturus,carnifex,1,
 Triturus,karelinii,0,
 Proteus,anguinus,2,

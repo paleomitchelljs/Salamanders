@@ -26,13 +26,18 @@ spNames <- apply(neoteny, 1, function(x) paste(x[1], x[2], sep="_", collapse="")
 neoteny <- neoteny[,3]
 names(neoteny) <- spNames
 
+Alpha <- 1
+Cols <- c(rgb(254/255,232/255,200/255,Alpha), rgb(253/255,187/255,132/255,Alpha), rgb(227/255, 74/255, 51/255, Alpha))
+names(Cols) <- c("0", "1", "2")
+
 # Load trees
 trees <- list()
 for (count in 1:5)	{
 	setwd(paste(Path_base, "bamm/output-", count, sep=""))
 	tree <- read.tree("fossilTree.tre")
 	trees[[count]] <- tree
-	ACE <- ancThresh(tree, neoteny[tree$tip.label], ngen=1e6, control=list(sample=1e4, burnin=2e5))
+	Ngen <- 1e6
+	ACE <- ancThresh(tree, neoteny[tree$tip.label], ngen=Ngen, control=list(sample=Ngen/1e3, burnin=Ngen*0.2, piecol=Cols))
 	setwd(paste(Path_base, "output", sep=""))
 	save(ACE, file=paste(Path_base, "output/neotAnc/neotAnc", count, ".RData", sep=""))
 }
@@ -41,9 +46,6 @@ setwd(paste(Path_base, "bamm/output-1", sep=""))
 tree <- read.tree("fossilTree.tre")
 load(file=paste(Path_base, "output/neotAnc/neotAnc1.RData", sep=""))
 
-Alpha <- 1
-Cols <- c(rgb(254/255,232/255,200/255,Alpha), rgb(253/255,187/255,132/255,Alpha), rgb(227/255, 74/255, 51/255, Alpha))
-names(Cols) <- c("0", "1", "2")
 
 setwd(paste(Path_base, "check_tree_files", sep=""))
 pdf("neoteny_check.pdf", height=10, width=10)
