@@ -22,6 +22,11 @@ whereas the ambystomatids are primarily Nearctic with a recent (presumably overl
 Divergence between the Nearctic dicamptodontid + ambystomatid clade and the primarily Palearctic salamandrids (Salamandroidea) is also consistent with a vicariant origin while Laurasia was fragmenting. 
 The salamandrids show movement between the Western and Eastern Palearctic and the Eastern Palearctic and Southeast Asia frequently throughout the Cenozoic, presumably"
 
+
+Salamandroidea: Plethodon + Salamandra
+Treptobranchia/Ambystomatoidea = Salamandra + Ambystoma
+Plethosalamandroidei = Proteidae+Amphiumidae+Plethodontidae
+
 Pyron regions:
 Tropical South America (S)
 Tropical Middle America (S)

@@ -37,6 +37,16 @@ rates <- optim(c(0.01, 0.005), tree_rates)
 psi_rate <- sum(fossil$numOcc) / sum(onlySal$edge.length)
 
 
+Save <- c("Plethodon_cinereus", "Ambystoma_tigrinum", "Amphiuma_means", "Andrias_japonicus", "Rhyacotriton_cascadae", "Necturus_maculosus", "Bolitoglossa_stuarti", "Dicamptodon_copei", "Siren_lacertina", "Hynobius_katoi", "Neurergus_kaiseri")
+newtree <- drop.tip(onlySal, setdiff(onlySal$tip.label, Save))
+newtree$tip.label <- c("Cryptobranchidae", "Hynobiidae", "Sirenidae", "Dicamptodontidae", "Ambystomatidae", "Salamandridae", "Proteidae", "Rhyacotritonidae", "Amphiumidae", "Plethodontinae", "Bolitoglossinae")
+setwd(paste(Path_base, "figures", sep=""))
+pdf("skeletontree.pdf", height=10, width=10)
+par(mar=c(0,0,0,0), oma=c(0,0,0,5))
+plot(newtree, cex=2, font=1)
+dev.off()
+
+
 ### Plot showing probability of different fossil branch lengths
 ds <- seq(from=0,to=100,by=0.1)
 brlen_prob <- sapply(ds, function(x) probDel(x, lam=rates$par[1], mu=rates$par[2], psi=psi_rate))

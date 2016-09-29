@@ -1,20 +1,57 @@
 Path_base <- "~/Documents/Salamanders/"
-Name <- "hardFos"
-
+Name <- "softFos"
+addFamily <- function(Taxa, Family, Cex=2, centering=T, Top=T)	{
+	Names <- unique(c(tree$tip.label[grep(Taxa[1], tree$tip.label)], tree$tip.label[grep(Taxa[2], tree$tip.label)], tree$tip.label[grep(Taxa[3], tree$tip.label)]))
+	allNames <- na.omit(tree$tip.label[getDescendants(tree, findMRCA(tree, tips=Names))])
+	if (centering == T)		{
+		Center <- allNames[round(mean(1:length(allNames)))]
+		tiplabels(Family, tip=which(tree$tip.label == Center), bg='white', frame='none', xpd=NA, adj=-0.05, cex=Cex)
+	}
+	else	 if (centering == F){
+		if (Top == T)	{
+			Center <- rev(allNames)[1]
+		}
+		else	{
+			Center <- allNames[1]
+		}
+		tiplabels(Family, tip=which(tree$tip.label == Center), bg='white', frame='none', xpd=NA, adj=-0.05, cex=Cex)
+	}
+}
 setwd(paste(Path_base, "output", sep=""))
 load(paste("sal_dec*_", Name, ".Rdata", sep=""))
 load(paste("sal_dec*jv_", Name, ".Rdata", sep=""))
 
 setwd(paste(Path_base, "datafiles", sep=""))
 tree <- read.tree("fossilTree.tre")
+Cols <- c('blue', "cyan", "chartreuse3", "goldenrod3", "red", "orchid1")
 
 #################################################
 pdf(paste(Path_base, "figures/sal_dec*_", Name, ".pdf", sep=""), height=10, width=10)
-plot_BGB(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.01, statecex=0.5, splitcex=0.5, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=FALSE, tr=read.tree(z_dec$trfn), plotlegend=F)
+par(mar=c(0,0,0,0), oma=c(0,0,0,8))
+plot_BGB(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.01, statecex=0.75, splitcex=0.75, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=FALSE, tr=read.tree(z_dec$trfn), plotlegend=F)
+addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=F)
+#addFamily(c("Dicamptodon", "Dicamptodon", "Dicamptodon"), "Dicamptodontidae")
+addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T)
+addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T)
+addFamily(c("Bolito", "Plethodon", "Desmognathus"), "Plethodontidae")
+addFamily(c("Notophthalmus", "Neurergus", "Taricha"), "Salamandridae")
+addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae")
+addFamily(c("Hynobius", "Onychodactylus", "Liua"), "Hynobiidae")
+#addFamily(c("Necturus", "Necturus", "Necturus"), "Proteidae", centering=T, Top=F)
 dev.off()
 
 pdf(paste(Path_base, "figures/sal_dec*jv_", Name, ".pdf",sep=""), height=10, width=10)
+par(mar=c(0,0,0,0), oma=c(0,0,0,8))
 plot_BGB(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.01, statecex=0.5, splitcex=0.5, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=FALSE, tr=read.tree(z_decjv$trfn), plotlegend=F)
+addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=F)
+#addFamily(c("Dicamptodon", "Dicamptodon", "Dicamptodon"), "Dicamptodontidae")
+addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T)
+addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T)
+addFamily(c("Bolito", "Plethodon", "Desmognathus"), "Plethodontidae")
+addFamily(c("Notophthalmus", "Neurergus", "Taricha"), "Salamandridae")
+addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae")
+addFamily(c("Hynobius", "Onychodactylus", "Liua"), "Hynobiidae")
+#addFamily(c("Necturus", "Necturus", "Necturus"), "Proteidae", centering=T, Top=F)
 if (Name == "hardFos")	{
 	legend("bottomleft", legend=c("East NA", "West NA", "SA+CA", "Eur", "CAsia", "EAsia"), text.col=Cols, bty="n", cex=1.25)
 }
