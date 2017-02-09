@@ -20,4 +20,6 @@ fi
 export OMP_NUM_THREADS=${PBS_NP}
 
 cd /scratch/drabosky_flux/jonsmitc/Salamanders/bamm/extant_only/
-~/fossil/build/bamm -c control.txt --outName ex --lambdaIsTimeVariablePrior 1 --minCladeSizeForShift 5 --numberOfChains 2
+~/fossilBAMM/build/bamm -c control.txt --outName np --treefile no_pleth.tre --sampleProbsFilename no_pleth_sampling.txt --lambdaIsTimeVariablePrior 1 --minCladeSizeForShift 1 --numberOfChains 2  --updateRateEventPosition 0.5 --numberOfGenerations 100000000
+~/fossilBAMM/build/bamm -c control.txt --outName ex --lambdaIsTimeVariablePrior 1 --minCladeSizeForShift 1 --numberOfChains 2 --updateRateEventPosition 0.5 --numberOfGenerations 100000000
+

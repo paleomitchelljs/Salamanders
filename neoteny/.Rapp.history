@@ -1,0 +1,2673 @@
+par(mar=c(2,4,1,1), mgp=c(2.5, 0.25, 0), las=1, tck=-0.005)#
+plot(z[,1], z[,2], type="n", yaxt="n", xaxt="n", ylim=c(0,0.3), ylab="proportion surviving")#
+lines(z[,1], z[,2], lwd=5)#
+axis(2, at=c(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3))
+par(mar=c(2,4,1,1), mgp=c(2.5, 0.25, 0), las=1, tck=-0.005, cex.axis=0.75, cex.lab=1.75)#
+plot(z[,1], z[,2], type="n", yaxt="n", xaxt="n", ylim=c(0,0.3), ylab="proportion surviving")#
+lines(z[,1], z[,2], lwd=5)#
+axis(2, at=c(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3))
+pdf("~/Documents/Talks/Job/Kenyon/Teaching/dietGraph.pdf", height=5, width=10)#
+par(mar=c(2,4,1,1), mgp=c(2.5, 0.25, 0), las=1, tck=-0.005, cex.axis=0.75, cex.lab=1.75)#
+plot(z[,1], z[,2], type="n", yaxt="n", xaxt="n", ylim=c(0,0.3), ylab="proportion surviving")#
+lines(z[,1], z[,2], lwd=5)#
+axis(2, at=c(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3))#
+dev.off()
+z <- read.csv("~/Documents/Talks/Job/Kenyon/Teaching/durphageData.csv", header=F)#
+#
+pdf("~/Documents/Talks/Job/Kenyon/Teaching/dietGraph.pdf", height=5, width=10)#
+par(mar=c(2,7,1,1), mgp=c(2.5, 0.25, 0), las=1, tck=-0.005, cex.axis=1.75, cex.lab=2.75)#
+plot(z[,1], z[,2], type="n", yaxt="n", xaxt="n", ylim=c(0,0.3), ylab="proportion surviving")#
+lines(z[,1], z[,2], lwd=5)#
+axis(2, at=c(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3))#
+dev.off()
+pdf("~/Documents/Talks/Job/Kenyon/Teaching/dietGraph.pdf", height=5, width=10)#
+par(mar=c(2,7,1,1), mgp=c(3.5, 0.25, 0), las=1, tck=-0.005, cex.axis=1.75, cex.lab=2.75)#
+plot(z[,1], z[,2], type="n", yaxt="n", xaxt="n", ylim=c(0,0.3), ylab="proportion surviving")#
+lines(z[,1], z[,2], lwd=5)#
+axis(2, at=c(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3))#
+dev.off()
+pdf("~/Documents/Talks/Job/Kenyon/Teaching/dietGraph.pdf", height=5, width=10)#
+par(mar=c(2,7,1,1), mgp=c(4.5, 0.25, 0), las=1, tck=-0.005, cex.axis=1.75, cex.lab=2.75)#
+plot(z[,1], z[,2], type="n", yaxt="n", xaxt="n", ylim=c(0,0.3), ylab="proportion surviving")#
+lines(z[,1], z[,2], lwd=5)#
+axis(2, at=c(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3))#
+dev.off()
+pdf("~/Documents/Talks/Job/Kenyon/Teaching/dietGraph.pdf", height=5, width=15)#
+par(mar=c(2,7,1,1), mgp=c(4.5, 0.25, 0), las=1, tck=-0.005, cex.axis=1.75, cex.lab=2.75)#
+plot(z[,1], z[,2], type="n", yaxt="n", xaxt="n", ylim=c(0,0.3), ylab="proportion surviving")#
+lines(z[,1], z[,2], lwd=5)#
+axis(2, at=c(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3))#
+dev.off()
+data <- read.csv("~/Documents/BirdBM_jump/fossilBirdRefs/tarso_fossilExtant.csv", stringsAsFactors=F)#
+data <- data[order(data$age_min),]#
+Spnames <- apply(data,1,function(x) paste(x[1], x[2], sep="_"))
+data <- read.csv("~/Documents/BirdBM_jump/fossilBirdRefs/fossilExtant.csv", stringsAsFactors=F)#
+data <- data[order(data$age_min),]#
+Spnames <- apply(data,1,function(x) paste(x[1], x[2], sep="_"))
+spMeans <- tapply(data$mean_tmt_L, Spnames, mean)
+spMeans
+Cols <- rainbow(length(spMeans))#
+plot(0, 0, xlim=c(50000,0), ylim=c(0,1.5), type="n", xlab="", ylab="")#
+for (count in 1:length(spMeans))	{#
+	Mean <- spMeans[count]#
+	Vals <- which(Spnames == names(spMeans)[count])#
+	points(data$age_min[Vals], data$mean_tmt_L[Vals] / Mean, pch=16, type="b", col=Cols[count])#
+}
+head(data)
+library(paleoTS)
+install.packages("paleoTS")
+library(paleoTS)
+help(paleoTS)
+?fit3models
+?as.paleoTS
+Spnames
+Spnames_uni <- unique(Spnames)
+head(data)
+Spnames_uni <- unique(Spnames)
+sp <- Spnames_uni[1]
+sp
+Subset <- data[which(Spnames == sp),]
+Subset
+Obj <- as.paleoTS(Subset[,"mean_tmt_L"], Subset[,"sd_tmt_L"], Subset[,"n_tmt_L"], Subset[,"age_min"])
+Obj
+Models <- fit3models(Obj)
+Models
+counter <- 1#
+Spnames_uni <- unique(Spnames)#
+for (sp in Spnames_uni)	{#
+	Subset <- data[which(Spnames == sp),]#
+	Obj <- as.paleoTS(Subset[,"mean_tmt_L"], Subset[,"sd_tmt_L"], Subset[,"n_tmt_L"], Subset[,"age_min"])#
+	Models <- try(fit3models(Obj))#
+	if (class(Models) != "try-error")	{#
+		Models$NAME <- sp#
+		Out[[counter]] <- Models#
+		counter <- counter + 1#
+	}#
+}
+counter <- 1#
+Spnames_uni <- unique(Spnames)#
+Out <- list()#
+for (sp in Spnames_uni)	{#
+	Subset <- data[which(Spnames == sp),]#
+	Obj <- as.paleoTS(Subset[,"mean_tmt_L"], Subset[,"sd_tmt_L"], Subset[,"n_tmt_L"], Subset[,"age_min"])#
+	Models <- try(fit3models(Obj))#
+	if (class(Models) != "try-error")	{#
+		Models$NAME <- sp#
+		Out[[counter]] <- Models#
+		counter <- counter + 1#
+	}#
+}
+Out
+help(paleoTS)
+counter <- 1#
+Spnames_uni <- unique(Spnames)#
+Out <- list()#
+for (sp in Spnames_uni)	{#
+	Subset <- data[which(Spnames == sp),]#
+	Obj <- as.paleoTS(Subset[,"mean_tmt_L"], Subset[,"sd_tmt_L"], Subset[,"n_tmt_L"], Subset[,"age_min"])#
+	Models <- try(mle.URW(Obj))#
+	if (class(Models) != "try-error")	{#
+		Models$NAME <- sp#
+		Out[[counter]] <- Models#
+		counter <- counter + 1#
+	}#
+}
+library(paleoTS)#
+#
+### Fossil Rates#
+Path_base <- "~/Documents/BirdBM_jump/"#
+#
+data <- read.csv("~/Documents/BirdBM_jump/fossilBirdRefs/fossilExtant.csv", stringsAsFactors=F)#
+data <- data[order(data$age_min),]#
+Spnames <- apply(data,1,function(x) paste(x[1], x[2], sep="_"))#
+#
+spMeans <- tapply(data$mean_tmt_L, Spnames, mean)
+spMeans
+counter <- 1#
+Spnames_uni <- unique(Spnames)
+Spnames_uni
+Out <- list()#
+for (sp in Spnames_uni)	{#
+	Subset <- data[which(Spnames == sp),]#
+	Obj <- as.paleoTS(Subset[,"mean_tmt_L"], Subset[,"sd_tmt_L"], Subset[,"n_tmt_L"], Subset[,"age_min"])#
+	Models <- try(mle.URW(Obj))#
+	if (class(Models) != "try-error")	{#
+		Models$NAME <- sp#
+		Out[[counter]] <- Models#
+		counter <- counter + 1#
+	}#
+}
+Subset
+counter <- 1#
+Spnames_uni <- unique(Spnames)#
+Out <- list()#
+for (sp in Spnames_uni)	{#
+	Subset <- data[which(Spnames == sp),]#
+	Subset <- Subset[order(Subset[,"age_min"]),]#
+	Obj <- as.paleoTS(Subset[,"mean_tmt_L"], Subset[,"sd_tmt_L"], Subset[,"n_tmt_L"], Subset[,"age_min"])#
+	Models <- try(mle.URW(Obj))#
+	if (class(Models) != "try-error")	{#
+		Models$NAME <- sp#
+		Out[[counter]] <- Models#
+		counter <- counter + 1#
+	}#
+}
+Spnames
+Spnames_uni
+counter <- 1#
+Spnames_uni <- unique(Spnames)#
+Out <- list()#
+for (sp in Spnames_uni)	{#
+	Subset <- data[which(Spnames == sp),]#
+	if (nrow(Subset) > 1)	{#
+		Subset <- Subset[order(Subset[,"age_min"]),]#
+		Obj <- as.paleoTS(Subset[,"mean_tmt_L"], Subset[,"sd_tmt_L"], Subset[,"n_tmt_L"], Subset[,"age_min"])#
+		Models <- try(mle.URW(Obj))#
+		if (class(Models) != "try-error")	{#
+			Models$NAME <- sp#
+			Out[[counter]] <- Models#
+			counter <- counter + 1#
+		}#
+	}#
+}
+Out
+Subset
+head(data)
+data2 <- data[which(data$mean_tmt_L != NA),]
+nrow(data)
+nrow(data2)
+data$mean_tmt_L
+data$sd_tmt_L
+data2 <- data[!is.na(data$sd_tmt_L),]
+nrow(data2)
+data2 <- data[!is.na(data$sd_tmt_L),]#
+counter <- 1#
+Spnames_uni <- unique(Spnames)#
+Out <- list()#
+for (sp in Spnames_uni)	{#
+	Subset <- data2[which(Spnames == sp),]#
+	if (nrow(Subset) > 1)	{#
+		Subset <- Subset[order(Subset[,"age_min"]),]#
+		Obj <- as.paleoTS(Subset[,"mean_tmt_L"], Subset[,"sd_tmt_L"], Subset[,"n_tmt_L"], Subset[,"age_min"])#
+		Models <- try(mle.URW(Obj))#
+		if (class(Models) != "try-error")	{#
+			Models$NAME <- sp#
+			Out[[counter]] <- Models#
+			counter <- counter + 1#
+		}#
+	}#
+}
+Out
+sp <- "Lagopus_lagopus"
+Subset <- data2[which(Spnames == sp),]
+Subset
+data2 <- data[!is.na(data$sd_tmt_L),]#
+Spnames <- apply(data2,1,function(x) paste(x[1], x[2], sep="_"))#
+counter <- 1#
+Spnames_uni <- unique(Spnames)#
+Out <- list()#
+for (sp in Spnames_uni)	{#
+	Subset <- data2[which(Spnames == sp),]#
+	if (nrow(Subset) > 1)	{#
+		Subset <- Subset[order(Subset[,"age_min"]),]#
+		Obj <- as.paleoTS(Subset[,"mean_tmt_L"], Subset[,"sd_tmt_L"], Subset[,"n_tmt_L"], Subset[,"age_min"])#
+		Models <- try(mle.URW(Obj))#
+		if (class(Models) != "try-error")	{#
+			Models$NAME <- sp#
+			Out[[counter]] <- Models#
+			counter <- counter + 1#
+		}#
+	}#
+}
+Out
+Out[[1]]
+do.call(unlist, Out)
+Mat <- sapply(Out, function(x) data.frame(x$NAME, x$vstep))
+Mat
+Mat <- sapply(Out, function(x) data.frame(as.character(x$NAME), x$vstep))
+Mat
+Mat <- sapply(Out, function(x) x$vstep)
+Mat
+Rates <- sapply(Out, function(x) x$vstep)#
+names(Rates) <- sapply(Out, function(x) as.character(x$NAME))
+Rates
+extantRates <- read.csv("~/Documents/BirdBM_jump/output/tars_tipRates.csv")
+head(extantRates)
+mean_extantRates <- tapply(extantRates$V2, extantRates$V3, mean)
+mean_extantRates
+intersect(names(Rates), names(mean_extantRates))
+extantRates <- read.csv("~/Documents/BirdBM_jump/output/tars_tipRates.csv")#
+mean_extantRates <- tapply(extantRates$V2, extantRates$V3, mean)#
+Int <- intersect(names(Rates), names(mean_extantRates))#
+plot(Rates[Int], mean_extantRates[Int])
+extantRates <- read.csv("~/Documents/BirdBM_jump/output/tars_tipRates.csv")#
+mean_extantRates <- tapply(extantRates$V2, extantRates$V3, median)#
+Int <- intersect(names(Rates), names(mean_extantRates))#
+plot(Rates[Int], mean_extantRates[Int])
+plot(Rates[Int], mean_extantRates[Int], xlim=c(0,0.008), ylim=c(0, 0.008))
+data2 <- data[!is.na(data$sd_tmt_L),]#
+Spnames <- apply(data2,1,function(x) paste(x[1], x[2], sep="_"))#
+counter <- 1#
+Spnames_uni <- unique(Spnames)#
+Out <- list()#
+for (sp in Spnames_uni)	{#
+	Subset <- data2[which(Spnames == sp),]#
+	if (nrow(Subset) > 1)	{#
+		Subset <- Subset[order(Subset[,"age_min"]),]#
+		Obj <- as.paleoTS(Subset[,"mean_tmt_L"], Subset[,"sd_tmt_L"], Subset[,"n_tmt_L"], Subset[,"age_min"])#
+		Models <- try(opt.URW(Obj))#
+		if (class(Models) != "try-error")	{#
+			Models$NAME <- sp#
+			Out[[counter]] <- Models#
+			counter <- counter + 1#
+		}#
+	}#
+}#
+#
+Rates <- sapply(Out, function(x) x$vstep)#
+names(Rates) <- sapply(Out, function(x) as.character(x$NAME))#
+extantRates <- read.csv("~/Documents/BirdBM_jump/output/tars_tipRates.csv")#
+mean_extantRates <- tapply(extantRates$V2, extantRates$V3, median)#
+Int <- intersect(names(Rates), names(mean_extantRates))#
+plot(Rates[Int], mean_extantRates[Int], xlim=c(0,0.008), ylim=c(0, 0.008))
+Rates
+Out
+Out[[1]]$parameters
+Rates <- sapply(Out, function(x) x$parameters)#
+names(Rates) <- sapply(Out, function(x) as.character(x$NAME))#
+extantRates <- read.csv("~/Documents/BirdBM_jump/output/tars_tipRates.csv")#
+mean_extantRates <- tapply(extantRates$V2, extantRates$V3, median)#
+Int <- intersect(names(Rates), names(mean_extantRates))#
+plot(Rates[Int], mean_extantRates[Int], xlim=c(0,0.008), ylim=c(0, 0.008))
+fit3models(Obj)
+z <- fit3models(Obj)
+str(z)
+z$Akaike.wt
+z$Akaike.wt[2]
+data2 <- data[!is.na(data$sd_tmt_L),]#
+Spnames <- apply(data2,1,function(x) paste(x[1], x[2], sep="_"))#
+counter <- 1#
+Spnames_uni <- unique(Spnames)#
+Out <- list()#
+Wt <- c()#
+for (sp in Spnames_uni)	{#
+	Subset <- data2[which(Spnames == sp),]#
+	if (nrow(Subset) > 1)	{#
+		Subset <- Subset[order(Subset[,"age_min"]),]#
+		Obj <- as.paleoTS(Subset[,"mean_tmt_L"], Subset[,"sd_tmt_L"], Subset[,"n_tmt_L"], Subset[,"age_min"])#
+		Models <- try(opt.URW(Obj))#
+		if (class(Models) != "try-error")	{#
+			Models$NAME <- sp#
+			Out[[counter]] <- Models#
+			counter <- counter + 1#
+			Wt[counter] <- fit3models(Obj)$Akaike.wt[2]#
+		}#
+	}#
+}#
+#
+Rates <- sapply(Out, function(x) x$parameters)#
+names(Rates) <- sapply(Out, function(x) as.character(x$NAME))
+Rates
+Wt
+plot(Rates[Int], mean_extantRates[Int], xlim=c(0,0.008), ylim=c(0, 0.008), cex=Wt)
+sort(Rates)
+max(Rates)
+max(mean_extantRates[Int])
+max(Rates[Int])
+Rates <- sapply(Out, function(x) x$parameters)#
+names(Rates) <- sapply(Out, function(x) as.character(x$NAME))#
+names(Wt) <- names(Rates)#
+#
+extantRates <- read.csv("~/Documents/BirdBM_jump/output/tars_tipRates.csv")#
+mean_extantRates <- tapply(extantRates$V2, extantRates$V3, median)#
+Int <- intersect(names(Rates), names(mean_extantRates))#
+plot(Rates[Int], mean_extantRates[Int], xlim=c(0,0.008), ylim=c(0, 0.008), cex=Wt[Int])
+cor(Rates[Int], cor(mean_extantRates[Int]))
+Rates[Int]
+mean_extantRates[Int]
+hi <- read.csv("~/Documents/BAMM_fossilBAMM_description/results/hi_Marg.csv", stringsAsFactors=F)
+hi <- read.csv("~/Documents/BAMM_fossilBAMM_description/results/hi_Marg.csv", stringsAsFactors=F, row.names=1)
+lo <- read.csv("~/Documents/BAMM_fossilBAMM_description/results/lo_Marg.csv", stringsAsFactors=F, row.names=1)
+head(lo)
+plot(lo[,"Ntips"], lo[,"obs_marginal_prob"])
+unique(lo[,"tree"])
+length(unique(lo[,"tree"]))
+lo <- read.csv("~/Documents/BAMM_fossilBAMM_description/results/mid_Marg.csv", stringsAsFactors=F, row.names=1)
+length(unique(lo[,"tree"]))
+lo <- read.csv("~/Documents/BAMM_fossilBAMM_description/results/stg_Marg.csv", stringsAsFactors=F, row.names=1)
+length(unique(lo[,"tree"]))
+load('~/Documents/BAMM_fossilBAMM_description/results/extant.RData')
+300 / 50
+6 * 50
+library(paleoTS)#
+#
+### Fossil Rates#
+Path_base <- "~/Documents/BirdBM_jump/"#
+#
+data <- read.csv("~/Documents/BirdBM_jump/fossilBirdRefs/fossilExtant.csv", stringsAsFactors=F)#
+data <- data[order(data$age_min),]#
+Spnames <- apply(data,1,function(x) paste(x[1], x[2], sep="_"))#
+#
+SpnamesGeo <- apply(cbind(Spnames, data[,"country"]), 1, paste, collapse="_")#
+spMeans <- tapply(data$mean_tmt_L, SpnamesGeo, mean)#
+#
+Cols <- rainbow(length(spMeans))#
+plot(0, 0, xlim=c(50000,0), ylim=c(0,1.5), type="n", xlab="", ylab="")#
+for (count in 1:length(spMeans))	{#
+	Mean <- spMeans[count]#
+	Vals <- which(Spnames == names(spMeans)[count])#
+	points(data$age_min[Vals], data$mean_tmt_L[Vals] / Mean, pch=16, type="b", col=Cols[count])#
+}#
+legend("bottomleft", legend=names(spMeans), col=Cols, pch=16, bty="n", cex=1)#
+#
+data2 <- data[!is.na(data$sd_tmt_L),]#
+Spnames <- apply(data2,1,function(x) paste(x[1], x[2], x[13], sep="_"))#
+counter <- 1#
+Spnames_uni <- unique(Spnames)#
+Out <- list()#
+Wt <- c()#
+Ns <- c()#
+Ages <- c()#
+urwRates <- c()#
+statRates <- c()#
+for (sp in Spnames_uni)	{#
+	Subset <- data2[which(Spnames == sp),]#
+	if (nrow(Subset) > 1)	{#
+		cat(sp)#
+		Subset <- Subset[order(Subset[,"age_min"]),]#
+		if (sum(duplicated(Subset[,"age_min"])) == 0)	{#
+			Obj <- as.paleoTS(Subset[,"mean_tmt_L"], Subset[,"sd_tmt_L"], Subset[,"n_tmt_L"], Subset[,"age_min"])#
+			Obj <- ln.paleoTS(Obj)#
+			Models <- try(opt.URW(Obj, pool=F))#
+			if (class(Models) != "try-error")	{#
+				Models$NAME <- sp#
+				Out[[counter]] <- Models#
+				Ns[counter] <- nrow(Subset)#
+				urwRates[counter] <- Models$parameters["vstep"]#
+				statRates[counter] <- opt.Stasis(Obj)$parameters["omega"]#
+				Ages[counter] <- max(diff(Subset[,"age_min"]))#
+				Wt[counter] <- fit3models(Obj, pool=FALSE)$Akaike.wt[2]#
+				counter <- counter + 1#
+			}#
+		}#
+	}#
+}#
+#
+Rates <- sapply(Out, function(x) x$parameters)#
+names(Rates) <- sapply(Out, function(x) as.character(x$NAME))#
+names(statRates) <- names(Rates)#
+NameGuide <- sapply(names(Rates), function(x) paste(strsplit(x, "_")[[1]][1:2], collapse="_"))#
+Rates_red <- tapply(Rates, NameGuide, mean)
+extantRates <- read.csv("~/Documents/BirdBM_jump/output/tars_tipRates.csv")#
+mean_extantRates <- tapply(extantRates$V2, extantRates$V3, median)#
+Int <- intersect(names(Rates_red), names(mean_extantRates))#
+Guide <- NameGuide %in% Int#
+par(mfrow=c(1,1), mar=c(4,5,1,1), bty="n", las=1, tck=-0.01, mgp=c(2,0.25,0))#
+plot(Rates[Guide], mean_extantRates[NameGuide[Guide]], xlim=c(1e-9,1e-2), ylim=c(1e-9,1e-2), log="xy", xlab="fossil occurrence rates", ylab="extant phylogeny rates", pch=21, bg='gray80', cex=1.25)#
+abline(0,1)#
+text(Rates[Guide], mean_extantRates[NameGuide[Guide]], gsub("_", " ", NameGuide[Guide]), pos=sample(c(1,3), size=sum(Guide), replace=T), cex=0.5, font=3)
+tree <- read.tree("~/Documents/BirdBM_jump/output/trees/tree-1/aves_mass_tree.tre")
+library(BAMMtools)
+tree <- read.tree("~/Documents/BirdBM_jump/output/trees/tree-1/aves_mass_tree.tre")
+Ntip(tree)
+edata <- getEventData(tree, "~/Documents/BirdBM_jump/output/trees/tree-1/full_jump_event_data.txt", burnin=0.1, nsamples=200)
+tree <- read.tree("~/Documents/BirdBM_jump/output/trees/tree-1/dinosauria_tree.tre")
+edata <- getEventData(tree, "~/Documents/BirdBM_jump/output/trees/tree-1/full_jump_event_data.txt", burnin=0.1, nsamples=200)
+edata <- getEventData(tree, "~/Documents/BirdBM_jump/output/trees/tree-1/full_jump_event_data.txt", burnin=0.1, nsamples=200, type="trait")
+plot(edata, breaks="quantile")
+RTT <- getRateThroughTimeMatrix(edata, nslices=250)
+str(RTT)
+Beta <- apply(RTT$beta, 2, mean)
+plot(RTT$times, RTT$beta, type="l")
+plot(RTT$times, Beta, type="l")
+max(RTT$times)
+246 - 66
+abline(v=180, col='red')
+z <- read.csv("~/Documents/BirdBM_jump/output/trees/tree-1/full_jump_event_data.txt")
+head(z)
+Jumps <- z[,"jump"]
+hist(Jumps[which(abs(Jumps)>0.001)])
+noS <- read.csv("~/Downloads/recompute_no_survival_condition_mcmc_out.txt", stringsAsFactors=F)
+S <- read.csv("~/Downloads/recompute_mcmc_out.txt", stringsAsFactors=F)
+head(noS)
+plot(noS[,1], noS[,2], type='l')
+plot(S[,1], S[,2], type='l')
+plot(S[,1], S[,4], type='l')
+plot(noS[,1], noS[,4], type='l')
+Base <- "~/Documents/BAMM_fossilBAMM_description/simulations/trueOneRateTrees-Hi/sim-"#
+#
+par(mfrow=c(5,5), mar=c(0,0,0,0))#
+for (count in 1:200)		{#
+	if (count %in% 25)	{#
+		dev.new()#
+		par(mfrow=c(5,5), mar=c(0,0,0,0))#
+	}#
+	mcmc <- read.csv(paste(Base, count, "hi_mcmc_out.txt", sep=""))#
+	plot(mcmc[,1], mcmc[,4], type='l')#
+}
+Base <- "~/Documents/BAMM_fossilBAMM_description/simulations/trueOneRateTrees-Hi/sim-"#
+#
+par(mfrow=c(5,5), mar=c(0,0,0,0))#
+for (count in 1:200)		{#
+	if (count %in% 25)	{#
+		dev.new()#
+		par(mfrow=c(5,5), mar=c(0,0,0,0))#
+	}#
+	mcmc <- read.csv(paste(Base, count, "/hi_mcmc_out.txt", sep=""))#
+	plot(mcmc[,1], mcmc[,4], type='l')#
+}
+Base <- "~/Documents/BAMM_fossilBAMM_description/simulations/trueOneRateTrees-Hi/sim-"#
+#
+par(mfrow=c(5,5), mar=c(0,0,0,0))#
+for (count in 1:200)		{#
+	if (count %in% 25)	{#
+		dev.new()#
+		par(mfrow=c(5,5), mar=c(0,0,0,0))#
+	}#
+	mcmc <- read.csv(paste(Base, count, "/hi_mcmc_out.txt", sep=""))#
+	plot(mcmc[,1], mcmc[,2], type='l')#
+}
+Base <- "~/Documents/BAMM_fossilBAMM_description/simulations/trueOneRateTrees-Hi/sim-"#
+#
+par(mfrow=c(5,5), mar=c(0,0,0,0))#
+for (count in 1:200)		{#
+	if (count %in% 25)	{#
+		dev.new()#
+		par(mfrow=c(5,5), mar=c(0,0,0,0))#
+	}#
+	mcmc <- read.csv(paste(Base, count, "/hi_mcmc_out.txt", sep=""))#
+	plot(mcmc[,1], mcmc[,2], type='l')#
+	legend("center", legend=count, col='red', bty="n")#
+}
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+library(BAMMtools)#
+#
+Trees <- read.csv(paste(Base, "/summary_data/trees.csv", sep=""), stringsAsFactors=F)#
+Regimes <- read.csv(paste(Base, "/summary_data/regimes.csv", sep=""), stringsAsFactors=F)#
+#
+Versions <- c("v1.0", "v2.0", "v2.3.1", "v2.5")	# Version of BAMM used#
+Priors <- c("p0.1", "p1", "p100")	# Prior for the expected number of shifts used#
+eventRates <- c("_0.001", "_0.01", "_0.1")	# Event rate tree was simulated under#
+#
+vCols <- c(rgb(166/255, 206/255, 227/255, 1), rgb(31/255, 120/255, 180/255, 1), rgb(178/255, 223/255, 138/255, 1), rgb(51/255, 160/255, 44/255, 1))#
+vCEX <- c(1.2, 1, 0.8, 0.6)#
+LABCEX <- 1#
+legCEX <- 1.5#
+lineY <- 2.5#
+lineX <- 2#
+lineLab <- 2.75#
+Opt <- "infBF"#
+#
+customHist <- function(Vec, Width=0.2, xadj=0, yadj=0, xoff=0.1, yoff=0.025, Xmin=0, Xmax=0, Ymin=0, Ymax=1, Xstart=0, Xend=0, setAxes=c(F,F), xlabs=F, Col='black', Border='black', axisCex=1)	{#
+	Minmax <- max(abs(range(Vec)))#
+	Yheight <- 0#
+	for (Value in unique(Vec))	{#
+		YH <- length(which(Vec==Value))/length(Vec)#
+		Yheight <- c(Yheight, YH)#
+		polygon(x=c(-1 * Width + Value, -1 * Width + Value, Width + Value, Width + Value), y=c(yadj, yadj + YH, yadj + YH, yadj), col=Col, border=Border)#
+	}#
+	if (setAxes[1])	{#
+		segments(xadj, yadj, Xmax, yadj)#
+#
+		BY <- 1#
+		if (Xend - Xstart > 10)	{#
+			BY <- 2#
+		}#
+#
+		if (Xend - Xstart > 20)	{#
+			BY <- 5#
+		}#
+		tckVec <- seq(from=Xstart, to=Xend, by=BY)#
+		silent <- sapply(tckVec, function(tck) segments(tck, yadj, tck, yadj-yoff))#
+		if (xlabs)	{#
+			silent <- sapply(tckVec, function(tck) text(tck, yadj, labels=tck, pos=1, cex=axisCex, xpd=NA))#
+		}#
+	}#
+	if (setAxes[2])	{#
+		Pts <- pretty(c(0, Ymax), n=4)#
+		segments(xadj, yadj, xadj, yadj+Ymax)#
+		silent <- sapply(Pts, function(pt) segments(xadj, yadj+pt, xadj-xoff, yadj+pt))#
+		silent <- sapply(Pts, function(PT) text(xadj-xoff, yadj+PT, labels=PT, pos=2, cex=axisCex, xpd=NA))#
+	}#
+}
+eventRate <- "_0.01"
+Prior <- "p1"
+minN <- 1#
+	maxN <- 100#
+	Vec <- seq(from=minN, to=maxN, by=1)#
+	for (count3 in 1:length(Versions))	{#
+		Version <- Versions[count3]#
+		Retained <- intersect(which(Regimes$X==Version), which(Regimes$eventRate==eventRate))#
+		Retained <-  intersect(Retained, which(Regimes$prior==Prior))#
+		Regimes_retained <- Regimes[Retained,]#
+#
+		Ntips <- Regimes_retained$N_taxa#
+		Slopes <- c()#
+		counter <- 1#
+		for (count4 in Vec)	{#
+			Rows <- which(Ntips > count4)#
+			Slopes[counter] <- lm(Regimes_retained[Rows,"inferred_lambda_mid"]~Regimes_retained[Rows, "true_lambda"])$coefficients[2]#
+			counter <- counter + 1#
+		}#
+		points(Vec, Slopes, col=vCols[count3], pch=16, type="b")#
+	}
+Vec
+Slopes
+mean(Slopes)
+for (count3 in 1:length(Versions))	{#
+		Version <- Versions[count3]#
+		Retained <- intersect(which(Regimes$X==Version), which(Regimes$eventRate==eventRate))#
+		Retained <-  intersect(Retained, which(Regimes$prior==Prior))#
+		Regimes_retained <- Regimes[Retained,]#
+#
+		Ntips <- Regimes_retained$N_taxa#
+		Slopes <- c()#
+		counter <- 1#
+		for (count4 in Vec)	{#
+			Rows <- which(Ntips > count4)#
+			Slopes[counter] <- lm(Regimes_retained[Rows,"inferred_lambda_mid"]~Regimes_retained[Rows, "true_lambda"]+0)$coefficients[2]#
+			counter <- counter + 1#
+		}#
+		points(Vec, Slopes, col=vCols[count3], pch=16, type="b")#
+	}
+mean(Slopes)
+Slopes
+for (count3 in 1:length(Versions))	{#
+		Version <- Versions[count3]#
+		Retained <- intersect(which(Regimes$X==Version), which(Regimes$eventRate==eventRate))#
+		Retained <-  intersect(Retained, which(Regimes$prior==Prior))#
+		Regimes_retained <- Regimes[Retained,]#
+#
+		Ntips <- Regimes_retained$N_taxa#
+		Slopes <- c()#
+		counter <- 1#
+		for (count4 in Vec)	{#
+			Rows <- which(Ntips > count4)#
+			Slopes[counter] <- lm(Regimes_retained[Rows,"inferred_lambda_mid"]~Regimes_retained[Rows, "true_lambda"]+0)$coefficients[1]#
+			counter <- counter + 1#
+		}#
+		points(Vec, Slopes, col=vCols[count3], pch=16, type="b")#
+	}
+mean(Slopes)
+Slopes
+# Set up plot for lambda cor by regime#
+	plot(1, 1, type="n", xlim=c(0, 100), ylim=c(0, 1.25), axes=F, xlab="", ylab="")#
+	axis(1, at=c(-1000, 0, 25, 50, 75, 100))#
+	axis(2, at=c(-1000, 0, 0.25, 0.5, 0.75, 1, 1.25), labels=c("", "0", "0.25", "0.5", "0.75", "1", "1.25"))#
+	mtext("minimum regime size", side=1, line=lineX, cex=LABCEX)#
+	mtext("regime speciation slope", side=2, line=lineY, las=0, cex=LABCEX)#
+	mtext(bquote(gamma == .(strsplit(Prior, "p")[[1]][2])), side=2, line=2*lineY, las=0, cex=1.5*LABCEX, las=0)#
+#
+	mtext(paste(letters[letter_counter], ")", sep=""), side=2, at=1.25, line=lineLab, xpd=NA)#
+	letter_counter <- letter_counter + 1#
+#
+	minN <- 1#
+	maxN <- 200#
+	Vec <- seq(from=minN, to=maxN, by=1)#
+	for (count3 in 1:length(Versions))	{#
+		Version <- Versions[count3]#
+		Retained <- intersect(which(Regimes$X==Version), which(Regimes$eventRate==eventRate))#
+		Retained <-  intersect(Retained, which(Regimes$prior==Prior))#
+		Regimes_retained <- Regimes[Retained,]#
+#
+		Ntips <- Regimes_retained$N_taxa#
+		Slopes <- c()#
+		counter <- 1#
+		for (count4 in Vec)	{#
+			Rows <- which(Ntips > count4)#
+			Slopes[counter] <- lm(Regimes_retained[Rows,"inferred_lambda_mid"]~Regimes_retained[Rows, "true_lambda"])$coefficients[2]#
+			counter <- counter + 1#
+		}#
+		points(Vec, Slopes, col=vCols[count3], pch=16, type="b")#
+	}
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+#
+library(BAMMtools)#
+#
+Trees <- read.csv(paste(Base, "/summary_data/trees.csv", sep=""), stringsAsFactors=F)#
+Regimes <- read.csv(paste(Base, "/summary_data/regimes.csv", sep=""), stringsAsFactors=F)#
+#
+Versions <- c("v1.0", "v2.0", "v2.3.1", "v2.5")	# Version of BAMM used#
+Priors <- c("p0.1", "p1", "p100")	# Prior for the expected number of shifts used#
+eventRates <- c("_0.001", "_0.01", "_0.1")	# Event rate tree was simulated under#
+#
+# Need: #
+# Number of shifts inferred by v2.5#
+# Number of shifts inferred by v1.0, v2.0, v2.3.1#
+#
+for (eventRate in eventRates)	{#
+	## Matrix of version, prior, true and inferred # of shift values#
+	eNs <- c(0.1, 1, 100)#
+	Mat <- NA#
+	for (count4 in 1:length(Versions))	{#
+		for (count5 in 1:length(Priors))	{#
+			Prior <- Priors[count5]#
+			eN <- eNs[count5]#
+			Version <- Versions[count4]#
+			Retained <- intersect(which(Trees$X==Version), which(Trees$eventRate==eventRate))#
+			Retained <-  intersect(Retained, which(Trees$prior==Prior))#
+			Trees_sub <- Trees[Retained,]#
+#
+			infBF <- c()#
+			MAP <- c()#
+			trueK <- c()#
+			TREE <- c()#
+			for (count6 in 1:nrow(Trees_sub))	{#
+				Cols <- which(colnames(Trees_sub) == "X0")#
+				Vec <- Trees_sub[count6, Cols:ncol(Trees_sub)]#
+				Post <- as.numeric(Vec / sum(Vec))#
+				Keeps <- which(Post > 0)#
+				Post <- Post[Keeps]#
+				names(Post) <- c(0:200)[Keeps]#
+				if (length(Post)==1)	{#
+					infBF[count6] <- as.numeric(names(Post))#
+					MAP[count6] <- as.numeric(names(Post))#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]	#
+					TREE[count6] <- count6					#
+				}#
+				else if (length(Post) > 1)	{	#
+					infBF[count6] <- stepBF(Post, step.size=20, expectedNumberOfShifts=eN, calc=T)[1]#
+					MAP[count6] <- as.numeric(names(Post)[which(Post==max(Post))])#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]#
+					TREE[count6] <- count6#
+				}#
+			}#
+			Vers <- rep(Version, length(infBF))#
+			PRIOR <- rep(Prior, length(infBF))#
+			Mat_test <- cbind(Vers, PRIOR, TREE, trueK, infBF, MAP)#
+			if (is.na(Mat))	{#
+				Mat <- Mat_test#
+			}#
+			else	{#
+				Mat <- rbind(Mat, Mat_test)#
+			}#
+	}#
+}
+}
+library(BAMMtools)
+update.packages("BAMMtools")
+library(BAMMtools)
+?stepBF
+update.packages("BAMMtools")
+update.packages(BAMMtools)
+library(BAMMtools)
+?stepBF
+library(devtools)
+install_github("macroevolution/bammtools/BAMMtools")
+?stepBF
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+#
+library(BAMMtools)#
+#
+Trees <- read.csv(paste(Base, "/summary_data/trees.csv", sep=""), stringsAsFactors=F)#
+Regimes <- read.csv(paste(Base, "/summary_data/regimes.csv", sep=""), stringsAsFactors=F)#
+#
+Versions <- c("v1.0", "v2.0", "v2.3.1", "v2.5")	# Version of BAMM used#
+Priors <- c("p0.1", "p1", "p100")	# Prior for the expected number of shifts used#
+eventRates <- c("_0.001", "_0.01", "_0.1")	# Event rate tree was simulated under#
+#
+# Need: #
+# Number of shifts inferred by v2.5#
+# Number of shifts inferred by v1.0, v2.0, v2.3.1#
+#
+Mat <- NA#
+for (eventRate in eventRates)	{#
+	## Matrix of version, prior, true and inferred # of shift values#
+	eNs <- c(0.1, 1, 100)#
+	for (count4 in 1:length(Versions))	{#
+		for (count5 in 1:length(Priors))	{#
+			Prior <- Priors[count5]#
+			eN <- eNs[count5]#
+			Version <- Versions[count4]#
+			Retained <- intersect(which(Trees$X==Version), which(Trees$eventRate==eventRate))#
+			Retained <-  intersect(Retained, which(Trees$prior==Prior))#
+			Trees_sub <- Trees[Retained,]#
+#
+			infBF <- c()#
+			MAP <- c()#
+			trueK <- c()#
+			TREE <- c()#
+			for (count6 in 1:nrow(Trees_sub))	{#
+				Cols <- which(colnames(Trees_sub) == "X0")#
+				Vec <- Trees_sub[count6, Cols:ncol(Trees_sub)]#
+				Post <- as.numeric(Vec / sum(Vec))#
+				Keeps <- which(Post > 0)#
+				Post <- Post[Keeps]#
+				names(Post) <- c(0:200)[Keeps]#
+				if (length(Post)==1)	{#
+					infBF[count6] <- as.numeric(names(Post))#
+					MAP[count6] <- as.numeric(names(Post))#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]	#
+					TREE[count6] <- count6					#
+				}#
+				else if (length(Post) > 1)	{	#
+					infBF[count6] <- stepBF(Post, step.size=20, expectedNumberOfShifts=eN, calc=T)[1]#
+					MAP[count6] <- as.numeric(names(Post)[which(Post==max(Post))])#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]#
+					TREE[count6] <- count6#
+				}#
+			}#
+			Vers <- rep(Version, length(infBF))#
+			PRIOR <- rep(Prior, length(infBF))#
+			Mat_test <- cbind(Vers, PRIOR, TREE, trueK, infBF, MAP)#
+			if (is.na(Mat))	{#
+				Mat <- Mat_test#
+			}#
+			else	{#
+				Mat <- rbind(Mat, Mat_test)#
+			}#
+		}#
+	}#
+}#
+#
+write.table(Mat, file=paste(Base, "summary_data/Shifts_by_version.csv"), sep=",", quote=F, row.names=F)#
+verShiftMat <- Mat
+?stepBF
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+#
+library(BAMMtools)#
+#
+Trees <- read.csv(paste(Base, "/summary_data/trees.csv", sep=""), stringsAsFactors=F)#
+Regimes <- read.csv(paste(Base, "/summary_data/regimes.csv", sep=""), stringsAsFactors=F)#
+#
+Versions <- c("v1.0", "v2.0", "v2.3.1", "v2.5")	# Version of BAMM used#
+Priors <- c("p0.1", "p1", "p100")	# Prior for the expected number of shifts used#
+eventRates <- c("_0.001", "_0.01", "_0.1")	# Event rate tree was simulated under#
+#
+# Need: #
+# Number of shifts inferred by v2.5#
+# Number of shifts inferred by v1.0, v2.0, v2.3.1#
+#
+Mat <- NA#
+for (eventRate in eventRates)	{#
+	## Matrix of version, prior, true and inferred # of shift values#
+	eNs <- c(0.1, 1, 100)#
+	for (count4 in 1:length(Versions))	{#
+		for (count5 in 1:length(Priors))	{#
+			Prior <- Priors[count5]#
+			eN <- eNs[count5]#
+			Version <- Versions[count4]#
+			Retained <- intersect(which(Trees$X==Version), which(Trees$eventRate==eventRate))#
+			Retained <-  intersect(Retained, which(Trees$prior==Prior))#
+			Trees_sub <- Trees[Retained,]#
+#
+			infBF <- c()#
+			MAP <- c()#
+			trueK <- c()#
+			TREE <- c()#
+			for (count6 in 1:nrow(Trees_sub))	{#
+				Cols <- which(colnames(Trees_sub) == "X0")#
+				Vec <- Trees_sub[count6, Cols:ncol(Trees_sub)]#
+				Post <- as.numeric(Vec / sum(Vec))#
+				Keeps <- which(Post > 0)#
+				Post <- Post[Keeps]#
+				names(Post) <- c(0:200)[Keeps]#
+				if (length(Post)==1)	{#
+					infBF[count6] <- as.numeric(names(Post))#
+					MAP[count6] <- as.numeric(names(Post))#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]	#
+					TREE[count6] <- count6					#
+				}#
+				else if (length(Post) > 1)	{	#
+					infBF[count6] <- stepBF(Post, step.size=20, expectedNumberOfShifts=eN, inputType="postProb")[1]#
+					MAP[count6] <- as.numeric(names(Post)[which(Post==max(Post))])#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]#
+					TREE[count6] <- count6#
+				}#
+			}#
+			Vers <- rep(Version, length(infBF))#
+			PRIOR <- rep(Prior, length(infBF))#
+			Mat_test <- cbind(Vers, PRIOR, TREE, trueK, infBF, MAP)#
+			if (is.na(Mat))	{#
+				Mat <- Mat_test#
+			}#
+			else	{#
+				Mat <- rbind(Mat, Mat_test)#
+			}#
+		}#
+	}#
+}#
+#
+write.table(Mat, file=paste(Base, "summary_data/Shifts_by_version.csv"), sep=",", quote=F, row.names=F)
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+#
+library(BAMMtools)#
+#
+Trees <- read.csv(paste(Base, "/summary_data/trees.csv", sep=""), stringsAsFactors=F)#
+Regimes <- read.csv(paste(Base, "/summary_data/regimes.csv", sep=""), stringsAsFactors=F)#
+#
+Versions <- c("v1.0", "v2.0", "v2.3.1", "v2.5")	# Version of BAMM used#
+Priors <- c("p0.1", "p1", "p100")	# Prior for the expected number of shifts used#
+eventRates <- c("_0.001", "_0.01", "_0.1")	# Event rate tree was simulated under#
+#
+# Need: #
+# Number of shifts inferred by v2.5#
+# Number of shifts inferred by v1.0, v2.0, v2.3.1#
+#
+Mat <- NA#
+for (eventRate in eventRates)	{#
+	## Matrix of version, prior, true and inferred # of shift values#
+	eNs <- c(0.1, 1, 100)#
+	for (count4 in 1:length(Versions))	{#
+		for (count5 in 1:length(Priors))	{#
+			Prior <- Priors[count5]#
+			eN <- eNs[count5]#
+			Version <- Versions[count4]#
+			Retained <- intersect(which(Trees$X==Version), which(Trees$eventRate==eventRate))#
+			Retained <-  intersect(Retained, which(Trees$prior==Prior))#
+			Trees_sub <- Trees[Retained,]#
+#
+			infBF <- c()#
+			MAP <- c()#
+			trueK <- c()#
+			TREE <- c()#
+			for (count6 in 1:nrow(Trees_sub))	{#
+				Cols <- which(colnames(Trees_sub) == "X0")#
+				Vec <- Trees_sub[count6, Cols:ncol(Trees_sub)]#
+				Post <- as.numeric(Vec / sum(Vec))#
+				Keeps <- which(Post > 0)#
+				Post <- Post[Keeps]#
+				names(Post) <- c(0:200)[Keeps]#
+				if (length(Post)==1)	{#
+					infBF[count6] <- as.numeric(names(Post))#
+					MAP[count6] <- as.numeric(names(Post))#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]	#
+					TREE[count6] <- count6					#
+				}#
+				else if (length(Post) > 1)	{	#
+					infBF[count6] <- stepBF(Post, step.size=20, expectedNumberOfShifts=eN, inputType="postProb")[1]#
+					MAP[count6] <- as.numeric(names(Post)[which(Post==max(Post))])#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]#
+					TREE[count6] <- count6#
+				}#
+			}#
+			Vers <- rep(Version, length(infBF))#
+			PRIOR <- rep(Prior, length(infBF))#
+			Mat_test <- cbind(Vers, PRIOR, TREE, trueK, infBF, MAP)#
+			if (!file.exists(paste(Base, "/summary_data/Shifts_by_version.csv", sep="")))	{#
+				Mat <- Mat_test#
+				write.table(Mat, file=paste(Base, "/summary_data/Shifts_by_version.csv", sep=""), sep=",", quote=F, row.names=F)#
+			}#
+			else	{#
+				Mat <- read.csv(paste(Base, "/summary_data/Shifts_by_version.csv", sep=""))#
+				Mat <- rbind(Mat, Mat_test)#
+				write.table(Mat, file=paste(Base, "/summary_data/Shifts_by_version.csv", sep=""), sep=",", quote=F, row.names=F)#
+			}#
+		}#
+	}#
+}
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+#
+library(BAMMtools)#
+#
+Trees <- read.csv(paste(Base, "/summary_data/trees.csv", sep=""), stringsAsFactors=F)#
+Regimes <- read.csv(paste(Base, "/summary_data/regimes.csv", sep=""), stringsAsFactors=F)#
+#
+Versions <- c("v1.0", "v2.0", "v2.3.1", "v2.5")	# Version of BAMM used#
+Priors <- c("p0.1", "p1", "p100")	# Prior for the expected number of shifts used#
+eventRates <- c("_0.001", "_0.01", "_0.1")	# Event rate tree was simulated under#
+#
+# Need: #
+# Number of shifts inferred by v2.5#
+# Number of shifts inferred by v1.0, v2.0, v2.3.1#
+#
+Mat <- NA#
+for (eventRate in eventRates)	{#
+	## Matrix of version, prior, true and inferred # of shift values#
+	eNs <- c(0.1, 1, 100)#
+	for (count4 in 1:length(Versions))	{#
+		for (count5 in 1:length(Priors))	{#
+			Prior <- Priors[count5]#
+			eN <- eNs[count5]#
+			Version <- Versions[count4]#
+			Retained <- intersect(which(Trees$X==Version), which(Trees$eventRate==eventRate))#
+			Retained <-  intersect(Retained, which(Trees$prior==Prior))#
+			Trees_sub <- Trees[Retained,]#
+#
+			infBF <- c()#
+			MAP <- c()#
+			trueK <- c()#
+			TREE <- c()#
+			for (count6 in 1:nrow(Trees_sub))	{#
+				Cols <- which(colnames(Trees_sub) == "X0")#
+				Vec <- Trees_sub[count6, Cols:ncol(Trees_sub)]#
+				Post <- as.numeric(Vec / sum(Vec))#
+				Keeps <- which(Post > 0)#
+				Post <- Post[Keeps]#
+				names(Post) <- c(0:200)[Keeps]#
+				if (length(Post)==1)	{#
+					infBF[count6] <- as.numeric(names(Post))#
+					MAP[count6] <- as.numeric(names(Post))#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]	#
+					TREE[count6] <- count6					#
+				}#
+				else if (length(Post) > 1)	{	#
+					infBF[count6] <- stepBF(Post, step.size=20, expectedNumberOfShifts=eN, inputType="postProb")[1]#
+					MAP[count6] <- as.numeric(names(Post)[which(Post==max(Post))])#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]#
+					TREE[count6] <- count6#
+				}#
+			}#
+			Vers <- rep(Version, length(infBF))#
+			PRIOR <- rep(Prior, length(infBF))#
+			Mat_test <- cbind(Vers, PRIOR, TREE, trueK, infBF, MAP)#
+			if (is.na(Mat))	{#
+				Mat <- rbind(Mat, Mat_test)#
+			}#
+			else	{#
+				Mat <- rbind(Mat, Mat_test)#
+			}#
+		}#
+	}#
+}#
+write.table(Mat, file=paste(Base, "/summary_data/Shifts_by_version.csv", sep=""), sep=",", quote=F, row.names=F)
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+#
+library(BAMMtools)#
+#
+Trees <- read.csv(paste(Base, "/summary_data/trees.csv", sep=""), stringsAsFactors=F)#
+Regimes <- read.csv(paste(Base, "/summary_data/regimes.csv", sep=""), stringsAsFactors=F)#
+#
+Versions <- c("v1.0", "v2.0", "v2.3.1", "v2.5")	# Version of BAMM used#
+Priors <- c("p0.1", "p1", "p100")	# Prior for the expected number of shifts used#
+eventRates <- c("_0.001", "_0.01", "_0.1")	# Event rate tree was simulated under#
+#
+# Need: #
+# Number of shifts inferred by v2.5#
+# Number of shifts inferred by v1.0, v2.0, v2.3.1#
+#
+Mat <- NA#
+for (eventRate in eventRates)	{#
+	## Matrix of version, prior, true and inferred # of shift values#
+	eNs <- c(0.1, 1, 100)#
+	for (count4 in 1:length(Versions))	{#
+		for (count5 in 1:length(Priors))	{#
+			Prior <- Priors[count5]#
+			eN <- eNs[count5]#
+			Version <- Versions[count4]#
+			Retained <- intersect(which(Trees$X==Version), which(Trees$eventRate==eventRate))#
+			Retained <-  intersect(Retained, which(Trees$prior==Prior))#
+			Trees_sub <- Trees[Retained,]#
+#
+			infBF <- c()#
+			MAP <- c()#
+			trueK <- c()#
+			TREE <- c()#
+			for (count6 in 1:nrow(Trees_sub))	{#
+				Cols <- which(colnames(Trees_sub) == "X0")#
+				Vec <- Trees_sub[count6, Cols:ncol(Trees_sub)]#
+				Post <- as.numeric(Vec / sum(Vec))#
+				Keeps <- which(Post > 0)#
+				Post <- Post[Keeps]#
+				names(Post) <- c(0:200)[Keeps]#
+				if (length(Post)==1)	{#
+					infBF[count6] <- as.numeric(names(Post))#
+					MAP[count6] <- as.numeric(names(Post))#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]	#
+					TREE[count6] <- count6					#
+				}#
+				else if (length(Post) > 1)	{	#
+					infBF[count6] <- stepBF(Post, step.size=20, expectedNumberOfShifts=eN, inputType="postProb")[1]#
+					MAP[count6] <- as.numeric(names(Post)[which(Post==max(Post))])#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]#
+					TREE[count6] <- count6#
+				}#
+			}#
+			Vers <- rep(Version, length(infBF))#
+			PRIOR <- rep(Prior, length(infBF))#
+			Mat_test <- cbind(Vers, PRIOR, TREE, trueK, infBF, MAP)#
+			if (is.na(Mat))	{#
+				Mat <- Mat_test#
+			}#
+			else	{#
+				Mat <- rbind(Mat, Mat_test)#
+			}#
+		}#
+	}#
+}#
+write.table(Mat, file=paste(Base, "/summary_data/Shifts_by_version.csv", sep=""), sep=",", quote=F, row.names=F)
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+#
+Mat <- read.csv(paste(Base, "/summary_data/Shifts_by_version.csv", sep=""))
+head(Mat)
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+#
+library(BAMMtools)#
+#
+Trees <- read.csv(paste(Base, "/summary_data/trees.csv", sep=""), stringsAsFactors=F)#
+Regimes <- read.csv(paste(Base, "/summary_data/regimes.csv", sep=""), stringsAsFactors=F)#
+#
+Versions <- c("v1.0", "v2.0", "v2.3.1", "v2.5")	# Version of BAMM used#
+Priors <- c("p0.1", "p1", "p100")	# Prior for the expected number of shifts used#
+eventRates <- c("_0.001", "_0.01", "_0.1")	# Event rate tree was simulated under#
+#
+# Need: #
+# Number of shifts inferred by v2.5#
+# Number of shifts inferred by v1.0, v2.0, v2.3.1#
+#
+Mat <- NA#
+for (eventRate in eventRates)	{#
+	## Matrix of version, prior, true and inferred # of shift values#
+	eNs <- c(0.1, 1, 100)#
+	for (count4 in 1:length(Versions))	{#
+		for (count5 in 1:length(Priors))	{#
+			Prior <- Priors[count5]#
+			eN <- eNs[count5]#
+			Version <- Versions[count4]#
+			Retained <- intersect(which(Trees$X==Version), which(Trees$eventRate==eventRate))#
+			Retained <-  intersect(Retained, which(Trees$prior==Prior))#
+			Trees_sub <- Trees[Retained,]#
+#
+			infBF <- c()#
+			MAP <- c()#
+			trueK <- c()#
+			TREE <- c()#
+			for (count6 in 1:nrow(Trees_sub))	{#
+				Cols <- which(colnames(Trees_sub) == "X0")#
+				Vec <- Trees_sub[count6, Cols:ncol(Trees_sub)]#
+				Post <- as.numeric(Vec / sum(Vec))#
+				Keeps <- which(Post > 0)#
+				Post <- Post[Keeps]#
+				names(Post) <- c(0:200)[Keeps]#
+				if (length(Post)==1)	{#
+					infBF[count6] <- as.numeric(names(Post))#
+					MAP[count6] <- as.numeric(names(Post))#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]	#
+					TREE[count6] <- count6					#
+				}#
+				else if (length(Post) > 1)	{	#
+					infBF[count6] <- stepBF(Post, step.size=20, expectedNumberOfShifts=eN, inputType="postProb")[1]#
+					MAP[count6] <- as.numeric(names(Post)[which(Post==max(Post))])#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]#
+					TREE[count6] <- count6#
+				}#
+			}#
+			Vers <- rep(Version, length(infBF))#
+			PRIOR <- rep(Prior, length(infBF))#
+			eventrate <- rep(eventRate, length(infBF))#
+			Mat_test <- cbind(Vers, PRIOR, eventrate, TREE, trueK, infBF, MAP)#
+			if (is.na(Mat))	{#
+				Mat <- Mat_test#
+			}#
+			else	{#
+				Mat <- rbind(Mat, Mat_test)#
+			}#
+		}#
+	}#
+}#
+write.table(Mat, file=paste(Base, "/summary_data/Shifts_by_version.csv", sep=""), sep=",", quote=F, row.names=F)
+entropy <- function(x)	{#
+	z <- x * log(x)#
+	y <- sum(z)#
+	out <- -1 * y#
+	return(out)#
+}
+entropy(c(0.25,0.25,0.25,0.25))
+entropy(c(0,0,0,1))
+entropy(c(0.001,0.001,0.001,0.997))
+sum(c(0.001,0.001,0.001,0.997))
+entropy(c(0.0001,0.0001,0.0001,0.9997))
+0.25 / 3
+entropy(c(0.0833, 0.0833, 0.0833, 0.75))
+0.21 / 3
+entropy(c(0.07, 0.07, 0.07, 0.79))
+entropy(c(0.1, 0.1, 0.1, 0.70))
+entropy(c(0.06, 0.06, 0.06, 0.82))
+entropy(c(0.12, 0.12, 0.12, 0.64))
+revEntropy <- function(H)	{#
+	y <- -1 * H#
+	y <- y / 4#
+	x <- exp(y)#
+	y <- y / x#
+	return(y)#
+}
+revEntropy(1.386294)
+exp(revEntropy(1.386294))
+Path_base <- "~/Documents/BAMM_fossilBAMM_description/"#
+setwd(paste(Path_base, "results", sep=""))#
+totalMat <- read.csv("regimesSummary.csv", stringsAsFactors=FALSE)#
+#
+treeMat <- read.csv("treesSummary.csv", stringsAsFactors=FALSE)#
+Conv <- treeMat[,"eN_N_shifts"]#
+names(Conv) <- treeMat[,"tree"]#
+regConv <- Conv[as.character(totalMat[,"tree"])]#
+#
+Include <- intersect(which(totalMat[,"N_taxa"]>=1), which(regConv >= 0))#
+#
+regMat_rec <- totalMat[Include,]#
+Names_rec <- apply(regMat_rec[,c("tree", "psi_class", "true_mu")], 1, paste, collapse="_")#
+rownames(regMat_rec) <- Names_rec#
+#
+setwd(paste(Path_base, "results/no_recompute", sep=""))#
+totalMat <- read.csv("regimesSummary.csv", stringsAsFactors=FALSE)#
+#
+treeMat <- read.csv("treesSummary.csv", stringsAsFactors=FALSE)#
+Conv <- treeMat[,"eN_N_shifts"]#
+names(Conv) <- treeMat[,"tree"]#
+regConv <- Conv[as.character(totalMat[,"tree"])]#
+#
+Include <- intersect(which(totalMat[,"N_taxa"]>=1), which(regConv >= 0))#
+#
+regMat_nr <- totalMat[Include,]#
+Names_nr <- apply(regMat_nr[,c("tree", "psi_class", "true_mu")], 1, paste, collapse="_")#
+rownames(regMat_nr) <- Names_nr#
+#
+Inter <- intersect(Names_nr, Names_rec)
+head(regMat_nr)
+Roots <- which(regMat_nr[Inter,"time"] < 1e-6)
+head(Roots)
+length(Roots)
+BG <- 'gray70'#
+par(mfrow=c(2,2), mgp=c(0,0.5,0), tck=-0.01, las=0, mar=c(4,5,1,1))#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points(regMat_nr[Inter,"inferred_lambda_mid"], regMat_rec[Inter,"inferred_lambda_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", lambda, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", lambda, sep="")), side=2, line=2)#
+mtext("a)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)
+BG <- 'gray70'#
+par(mfrow=c(2,2), mgp=c(0,0.5,0), tck=-0.01, las=0, mar=c(4,5,1,1))#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points(regMat_nr[Inter,"inferred_lambda_mid"], regMat_rec[Inter,"inferred_lambda_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", lambda, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", lambda, sep="")), side=2, line=2)#
+mtext("a)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+points(regMat_nr[Inter[Roots],"inferred_lambda_mid"], regMat_rec[Inter[Roots],"inferred_lambda_mid"], pch=21, bg='red')
+BG <- 'gray70'#
+par(mfrow=c(2,2), mgp=c(0,0.5,0), tck=-0.01, las=0, mar=c(4,5,1,1))#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points(regMat_nr[Inter,"inferred_lambda_mid"], regMat_rec[Inter,"inferred_lambda_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", lambda, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", lambda, sep="")), side=2, line=2)#
+mtext("a)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+points(regMat_nr[Inter[Roots],"inferred_lambda_mid"], regMat_rec[Inter[Roots],"inferred_lambda_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2), ylim=c(0, 2), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2))#
+points(regMat_nr[Inter,"inferred_mu_mid"], regMat_rec[Inter,"inferred_mu_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", mu, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", mu, sep="")), side=2, line=2)#
+mtext("b)", side=2, at=2, line=2, las=1)#
+abline(0, 1)#
+points(regMat_nr[Inter[Roots],"inferred_mu_mid"], regMat_rec[Inter[Roots],"inferred_mu_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points((regMat_nr[Inter,"inferred_lambda_mid"] - regMat_nr[Inter,"true_lambda"])^2, (regMat_rec[Inter,"inferred_lambda_mid"] - regMat_rec[Inter,"true_lambda"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=2, line=2)#
+mtext("c)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+points((regMat_nr[Inter[Roots],"inferred_lambda_mid"] - regMat_nr[Inter[Roots],"true_lambda"])^2, (regMat_rec[Inter[Roots],"inferred_lambda_mid"] - regMat_rec[Inter[Roots],"true_lambda"])^2, pch=21, bg=BG)#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points((regMat_nr[Inter,"inferred_mu_mid"] - regMat_nr[Inter,"true_mu"])^2, (regMat_rec[Inter,"inferred_mu_mid"] - regMat_rec[Inter,"true_mu"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=2, line=2)#
+abline(0,1)#
+mtext("d)", side=2, at=2.5, line=2, las=1)#
+points((regMat_nr[Inter[Roots],"inferred_mu_mid"] - regMat_nr[Inter[Roots],"true_mu"])^2, (regMat_rec[Inter[Roots],"inferred_mu_mid"] - regMat_rec[Inter[Roots],"true_mu"])^2, pch=21, bg='red')
+sqrt(2)
+pdf(paste(Path_base, "figures/no_recompute/comparison_rootflag.pdf", sep=""), height=6, width=6)#
+BG <- 'gray70'#
+par(mfrow=c(2,2), mgp=c(0,0.5,0), tck=-0.01, las=0, mar=c(4,5,1,1))#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points(regMat_nr[Inter,"inferred_lambda_mid"], regMat_rec[Inter,"inferred_lambda_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", lambda, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", lambda, sep="")), side=2, line=2)#
+mtext("a)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+points(regMat_nr[Inter[Roots],"inferred_lambda_mid"], regMat_rec[Inter[Roots],"inferred_lambda_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2), ylim=c(0, 2), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2))#
+points(regMat_nr[Inter,"inferred_mu_mid"], regMat_rec[Inter,"inferred_mu_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", mu, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", mu, sep="")), side=2, line=2)#
+mtext("b)", side=2, at=2, line=2, las=1)#
+abline(0, 1)#
+points(regMat_nr[Inter[Roots],"inferred_mu_mid"], regMat_rec[Inter[Roots],"inferred_mu_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points((regMat_nr[Inter,"inferred_lambda_mid"] - regMat_nr[Inter,"true_lambda"])^2, (regMat_rec[Inter,"inferred_lambda_mid"] - regMat_rec[Inter,"true_lambda"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=2, line=2)#
+mtext("c)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+points((regMat_nr[Inter[Roots],"inferred_lambda_mid"] - regMat_nr[Inter[Roots],"true_lambda"])^2, (regMat_rec[Inter[Roots],"inferred_lambda_mid"] - regMat_rec[Inter[Roots],"true_lambda"])^2, pch=21, bg=BG)#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points((regMat_nr[Inter,"inferred_mu_mid"] - regMat_nr[Inter,"true_mu"])^2, (regMat_rec[Inter,"inferred_mu_mid"] - regMat_rec[Inter,"true_mu"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=2, line=2)#
+abline(0,1)#
+mtext("d)", side=2, at=2.5, line=2, las=1)#
+points((regMat_nr[Inter[Roots],"inferred_mu_mid"] - regMat_nr[Inter[Roots],"true_mu"])^2, (regMat_rec[Inter[Roots],"inferred_mu_mid"] - regMat_rec[Inter[Roots],"true_mu"])^2, pch=21, bg='red')#
+#
+dev.off()
+Roots <- which(regMat_nr[Inter,"time"] < 1e-9)
+length(Roots)
+head(regMat_nr[Inter[Roots],])
+tail(regMat_nr[Inter[Roots],])
+median(regMat_nr[Inter[Roots],"N_taxa"])
+quantile(regMat_nr[Inter[Roots],"N_taxa"])
+setwd("~/Documents/BAMM_fossilBAMM_description/results/no_recompute")#
+totalMat <- read.csv("regimesSummary.csv", stringsAsFactors=FALSE)#
+#
+treeMat <- read.csv("treesSummary.csv", stringsAsFactors=FALSE)#
+Conv <- treeMat[,"eN_N_shifts"]#
+names(Conv) <- treeMat[,"tree"]#
+regConv <- Conv[as.character(totalMat[,"tree"])]#
+#
+Include <- which(regConv >= 0)#
+#
+regMat <- totalMat[Include,]#
+#
+totalExtinct <- apply(regMat, 1, function(x) ifelse(x["N_taxa"]==x["N_fossils"], 2, 1))#
+Extinct <- apply(regMat, 1, function(x) ifelse(x["N_fossils"] > 0, 2, 1))#
+#
+spRates <- matrix(NA, nrow=4, ncol=50)#
+exRates <- matrix(NA, nrow=4, ncol=50)#
+for (counter in 1:50)	{#
+	Chosen <- intersect(which(regMat[,"psi_class"]==0), which(regMat[,"N_taxa"]>=counter))#
+	spRates[1,counter] <- cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], use="complete")#
+	exRates[1, counter] <- cor(regMat[Chosen, "true_mu"], regMat[Chosen, "inferred_mu_mid"], use="complete")#
+	Chosen <- intersect(which(regMat[,"psi_class"]==1), which(regMat[,"N_taxa"]>=counter))#
+	spRates[2,counter] <- cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], use="complete")#
+	exRates[2, counter] <- cor(regMat[Chosen, "true_mu"], regMat[Chosen, "inferred_mu_mid"], use="complete")#
+#
+	Chosen <- intersect(which(regMat[,"psi_class"]==2), which(regMat[,"N_taxa"]>=counter))#
+	spRates[3,counter] <- cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], use="complete")#
+	exRates[3, counter] <- cor(regMat[Chosen, "true_mu"], regMat[Chosen, "inferred_mu_mid"], use="complete")#
+#
+	Chosen <- intersect(which(regMat[,"psi_class"]==3), which(regMat[,"N_taxa"]>=counter))#
+	spRates[4,counter] <- cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], use="complete")#
+	exRates[4, counter] <- cor(regMat[Chosen, "true_mu"], regMat[Chosen, "inferred_mu_mid"], use="complete")#
+#
+}#
+#
+setwd("~/Documents/BAMM_fossilBAMM_description/figures/no_recompute")#
+pdf("corsBySize.pdf", height=3.25, width=6.5)#
+par(mfrow=c(1,2), las=1, mgp=c(1.75, 0.2, 0), mar=c(2.5,3,0.1,0.25), oma=c(0,0,0,0), bty="n", tck=-0.01, cex.axis=0.75, cex.lab=1.05)#
+COLS <- c("#fef0d9", "#fdcc8a", "#fc8d59", "#d7301f")#
+#
+YAX <- c(-10, 0, 0.25, 0.5, 0.75, 1)#
+XAX <- c(-100, 0, 10, 20, 30, 40, 50)#
+YLIM <- c(0, 1)#
+XLIM <- c(0, 50)#
+PCH <- 21#
+LWD <- 1.25#
+#
+# use word speciation in place of lambda#
+plot(1:ncol(spRates), spRates[1,], col=COLS[1], xlim=XLIM, ylim=YLIM, xaxt="n", yaxt="n", xlab="", ylab="Speciation correlation", lwd=LWD)#
+axis(1, at=XAX, labels=as.character(XAX))#
+axis(2, at=YAX, labels=as.character(YAX))#
+lines(1:ncol(spRates), spRates[2,], col=COLS[2], lwd=LWD)#
+lines(1:ncol(spRates), spRates[3,], col=COLS[3], lwd=LWD)#
+lines(1:ncol(spRates), spRates[4,], col=COLS[4], lwd=LWD)#
+#
+points(1:ncol(spRates), spRates[1,], bg=COLS[1], pch=PCH)#
+points(1:ncol(spRates), spRates[2,], bg=COLS[2], pch=PCH)#
+points(1:ncol(spRates), spRates[3,], bg=COLS[3], pch=PCH)#
+points(1:ncol(spRates), spRates[4,], bg=COLS[4], pch=PCH)#
+#
+## change to hi, med and lo pres, center it and make bigger#
+#legend(x=12, y=0.6, legend=c("high preservation", "med. preservation", "low preservation", "extant only"), pch=c(21, 21, 21, 21), pt.bg=rev(COLS), col='black', bty="n", cex=1.05, y.intersp=1.1)#
+legend(x=12, y=0.6, legend=c(expression(paste(psi, " = 1", sep="")), expression(paste(psi, " = 0.1", sep="")), expression(paste(psi, " = 0.01", sep="")), paste("extant-only")), pch=c(21, 21, 21, 21), pt.bg=rev(COLS), col='black', bty="n", cex=1.05, y.intersp=1.1)#
+#
+mtext("a", side=2, line=2, at=1)#
+mtext("regime size", side=1, line=1.4, cex=1.05)#
+#
+# use work extinction in place of mu#
+plot(1:ncol(exRates), exRates[1,], pch=PCH, col=COLS[1], xlim=XLIM, ylim=YLIM, xaxt="n", yaxt="n", xlab="", ylab="Extinction correlation", lwd=LWD)#
+axis(1, at=XAX, labels=as.character(XAX))#
+axis(2, at=YAX, labels=as.character(YAX))#
+lines(1:ncol(exRates), exRates[2,], col=COLS[2], lwd=LWD)#
+lines(1:ncol(exRates), exRates[3,], col=COLS[3], lwd=LWD)#
+lines(1:ncol(exRates), exRates[4,], col=COLS[4], lwd=LWD)#
+#
+points(1:ncol(exRates), exRates[1,], bg=COLS[1], pch=PCH)#
+points(1:ncol(exRates), exRates[2,], bg=COLS[2], pch=PCH)#
+points(1:ncol(exRates), exRates[3,], bg=COLS[3], pch=PCH)#
+points(1:ncol(exRates), exRates[4,], bg=COLS[4], pch=PCH)#
+mtext("b", side=2, line=2, at=1)#
+mtext("regime size", side=1, line=1.4, cex=1.05)#
+dev.off()
+Path_base <- "~/Documents/BAMM_fossilBAMM_description/"#
+setwd(paste(Path_base, "results", sep=""))#
+totalMat <- read.csv("regimesSummary.csv", stringsAsFactors=FALSE)#
+#
+treeMat <- read.csv("treesSummary.csv", stringsAsFactors=FALSE)#
+Conv <- treeMat[,"eN_N_shifts"]#
+names(Conv) <- treeMat[,"tree"]#
+regConv <- Conv[as.character(totalMat[,"tree"])]#
+#
+Include <- intersect(which(totalMat[,"N_taxa"]>=1), which(regConv >= 0))#
+#
+regMat_rec <- totalMat[Include,]#
+Names_rec <- apply(regMat_rec[,c("tree", "psi_class", "true_mu")], 1, paste, collapse="_")#
+rownames(regMat_rec) <- Names_rec#
+#
+setwd(paste(Path_base, "results/no_recompute", sep=""))#
+totalMat <- read.csv("regimesSummary.csv", stringsAsFactors=FALSE)#
+#
+treeMat <- read.csv("treesSummary.csv", stringsAsFactors=FALSE)#
+Conv <- treeMat[,"eN_N_shifts"]#
+names(Conv) <- treeMat[,"tree"]#
+regConv <- Conv[as.character(totalMat[,"tree"])]#
+#
+Include <- intersect(which(totalMat[,"N_taxa"]>=1), which(regConv >= 0))#
+#
+regMat_nr <- totalMat[Include,]#
+Names_nr <- apply(regMat_nr[,c("tree", "psi_class", "true_mu")], 1, paste, collapse="_")#
+rownames(regMat_nr) <- Names_nr#
+#
+Inter <- intersect(Names_nr, Names_rec)#
+Roots <- which(regMat_nr[Inter,"time"] < 1e-9)#
+#
+pdf(paste(Path_base, "figures/no_recompute/comparison_rootflag.pdf", sep=""), height=6, width=6)#
+BG <- 'gray70'#
+par(mfrow=c(2,2), mgp=c(0,0.5,0), tck=-0.01, las=0, mar=c(4,5,1,1))#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points(regMat_nr[Inter,"inferred_lambda_mid"], regMat_rec[Inter,"inferred_lambda_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", lambda, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", lambda, sep="")), side=2, line=2)#
+mtext("a)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+points(regMat_nr[Inter[Roots],"inferred_lambda_mid"], regMat_rec[Inter[Roots],"inferred_lambda_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2), ylim=c(0, 2), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2))#
+points(regMat_nr[Inter,"inferred_mu_mid"], regMat_rec[Inter,"inferred_mu_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", mu, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", mu, sep="")), side=2, line=2)#
+mtext("b)", side=2, at=2, line=2, las=1)#
+abline(0, 1)#
+points(regMat_nr[Inter[Roots],"inferred_mu_mid"], regMat_rec[Inter[Roots],"inferred_mu_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points((regMat_nr[Inter,"inferred_lambda_mid"] - regMat_nr[Inter,"true_lambda"])^2, (regMat_rec[Inter,"inferred_lambda_mid"] - regMat_rec[Inter,"true_lambda"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=2, line=2)#
+mtext("c)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+points((regMat_nr[Inter[Roots],"inferred_lambda_mid"] - regMat_nr[Inter[Roots],"true_lambda"])^2, (regMat_rec[Inter[Roots],"inferred_lambda_mid"] - regMat_rec[Inter[Roots],"true_lambda"])^2, pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points((regMat_nr[Inter,"inferred_mu_mid"] - regMat_nr[Inter,"true_mu"])^2, (regMat_rec[Inter,"inferred_mu_mid"] - regMat_rec[Inter,"true_mu"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=2, line=2)#
+abline(0,1)#
+mtext("d)", side=2, at=2.5, line=2, las=1)#
+points((regMat_nr[Inter[Roots],"inferred_mu_mid"] - regMat_nr[Inter[Roots],"true_mu"])^2, (regMat_rec[Inter[Roots],"inferred_mu_mid"] - regMat_rec[Inter[Roots],"true_mu"])^2, pch=21, bg='red')#
+#
+dev.off()
+Vec <- (regMat_rec[Inter[Roots],"inferred_mu_mid"] - regMat_rec[Inter[Roots],"true_mu"])^2
+which(Vec==max(Vec))
+Vec <- (regMat_rec[Inter,"inferred_mu_mid"] - regMat_rec[Inter,"true_mu"])^2
+which(Vec > 1.4)
+Vec <- (regMat_rec[Inter,"inferred_lambda_mid"] - regMat_rec[Inter,"true_lambda"])^2
+which(Vec > 1)
+regMat_rec[Inter[which(Vec > 1),]
+]
+regMat_rec[Inter[which(Vec > 1)],]
+head(regConv)
+Path_base <- "~/Documents/BAMM_fossilBAMM_description/"#
+setwd(paste(Path_base, "results", sep=""))#
+totalMat <- read.csv("regimesSummary.csv", stringsAsFactors=FALSE)#
+#
+treeMat <- read.csv("treesSummary.csv", stringsAsFactors=FALSE)#
+Conv <- treeMat[,"eN_N_shifts"]#
+names(Conv) <- treeMat[,"tree"]#
+regConv <- Conv[as.character(totalMat[,"tree"])]#
+#
+Include <- intersect(which(totalMat[,"N_taxa"]>=1), which(regConv >= 200))#
+#
+regMat_rec <- totalMat[Include,]#
+Names_rec <- apply(regMat_rec[,c("tree", "psi_class", "true_mu")], 1, paste, collapse="_")#
+rownames(regMat_rec) <- Names_rec#
+#
+setwd(paste(Path_base, "results/no_recompute", sep=""))#
+totalMat <- read.csv("regimesSummary.csv", stringsAsFactors=FALSE)#
+#
+treeMat <- read.csv("treesSummary.csv", stringsAsFactors=FALSE)#
+Conv <- treeMat[,"eN_N_shifts"]#
+names(Conv) <- treeMat[,"tree"]#
+regConv <- Conv[as.character(totalMat[,"tree"])]#
+#
+Include <- intersect(which(totalMat[,"N_taxa"]>=1), which(regConv >= 0))#
+#
+regMat_nr <- totalMat[Include,]#
+Names_nr <- apply(regMat_nr[,c("tree", "psi_class", "true_mu")], 1, paste, collapse="_")#
+rownames(regMat_nr) <- Names_nr#
+#
+Inter <- intersect(Names_nr, Names_rec)#
+Roots <- which(regMat_nr[Inter,"time"] < 1e-9)#
+#
+pdf(paste(Path_base, "figures/no_recompute/comparison_rootflag.pdf", sep=""), height=6, width=6)#
+BG <- 'gray70'#
+par(mfrow=c(2,2), mgp=c(0,0.5,0), tck=-0.01, las=0, mar=c(4,5,1,1))#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points(regMat_nr[Inter,"inferred_lambda_mid"], regMat_rec[Inter,"inferred_lambda_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", lambda, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", lambda, sep="")), side=2, line=2)#
+mtext("a)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+points(regMat_nr[Inter[Roots],"inferred_lambda_mid"], regMat_rec[Inter[Roots],"inferred_lambda_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2), ylim=c(0, 2), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2))#
+points(regMat_nr[Inter,"inferred_mu_mid"], regMat_rec[Inter,"inferred_mu_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", mu, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", mu, sep="")), side=2, line=2)#
+mtext("b)", side=2, at=2, line=2, las=1)#
+abline(0, 1)#
+points(regMat_nr[Inter[Roots],"inferred_mu_mid"], regMat_rec[Inter[Roots],"inferred_mu_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points((regMat_nr[Inter,"inferred_lambda_mid"] - regMat_nr[Inter,"true_lambda"])^2, (regMat_rec[Inter,"inferred_lambda_mid"] - regMat_rec[Inter,"true_lambda"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=2, line=2)#
+mtext("c)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+points((regMat_nr[Inter[Roots],"inferred_lambda_mid"] - regMat_nr[Inter[Roots],"true_lambda"])^2, (regMat_rec[Inter[Roots],"inferred_lambda_mid"] - regMat_rec[Inter[Roots],"true_lambda"])^2, pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points((regMat_nr[Inter,"inferred_mu_mid"] - regMat_nr[Inter,"true_mu"])^2, (regMat_rec[Inter,"inferred_mu_mid"] - regMat_rec[Inter,"true_mu"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=2, line=2)#
+abline(0,1)#
+mtext("d)", side=2, at=2.5, line=2, las=1)#
+points((regMat_nr[Inter[Roots],"inferred_mu_mid"] - regMat_nr[Inter[Roots],"true_mu"])^2, (regMat_rec[Inter[Roots],"inferred_mu_mid"] - regMat_rec[Inter[Roots],"true_mu"])^2, pch=21, bg='red')#
+#
+dev.off()
+Path_base <- "~/Documents/BAMM_fossilBAMM_description/"#
+setwd(paste(Path_base, "results", sep=""))#
+totalMat <- read.csv("regimesSummary.csv", stringsAsFactors=FALSE)#
+#
+treeMat <- read.csv("treesSummary.csv", stringsAsFactors=FALSE)#
+Conv <- treeMat[,"eN_N_shifts"]#
+names(Conv) <- treeMat[,"tree"]#
+regConv <- Conv[as.character(totalMat[,"tree"])]#
+#
+Include <- intersect(which(totalMat[,"N_taxa"]>=1), which(regConv >= 200))#
+#
+regMat_rec <- totalMat[Include,]#
+Names_rec <- apply(regMat_rec[,c("tree", "psi_class", "true_mu")], 1, paste, collapse="_")#
+rownames(regMat_rec) <- Names_rec#
+#
+setwd(paste(Path_base, "results/no_recompute", sep=""))#
+totalMat <- read.csv("regimesSummary.csv", stringsAsFactors=FALSE)#
+#
+treeMat <- read.csv("treesSummary.csv", stringsAsFactors=FALSE)#
+Conv <- treeMat[,"eN_N_shifts"]#
+names(Conv) <- treeMat[,"tree"]#
+regConv <- Conv[as.character(totalMat[,"tree"])]#
+#
+Include <- intersect(which(totalMat[,"N_taxa"]>=1), which(regConv >= 0))#
+#
+regMat_nr <- totalMat[Include,]#
+Names_nr <- apply(regMat_nr[,c("tree", "psi_class", "true_mu")], 1, paste, collapse="_")#
+rownames(regMat_nr) <- Names_nr#
+#
+Inter <- intersect(Names_nr, Names_rec)#
+Roots <- which(regMat_nr[Inter,"time"] < 1e-9)#
+#
+pdf(paste(Path_base, "figures/no_recompute/comparison_rootflag.pdf", sep=""), height=6, width=6)#
+BG <- 'gray70'#
+par(mfrow=c(2,2), mgp=c(0,0.5,0), tck=-0.01, las=0, mar=c(4,5,1,1))#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points(regMat_nr[Inter,"inferred_lambda_mid"], regMat_rec[Inter,"inferred_lambda_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", lambda, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", lambda, sep="")), side=2, line=2)#
+mtext("a)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+points(regMat_nr[Inter[Roots],"inferred_lambda_mid"], regMat_rec[Inter[Roots],"inferred_lambda_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2), ylim=c(0, 2), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2))#
+points(regMat_nr[Inter,"inferred_mu_mid"], regMat_rec[Inter,"inferred_mu_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", mu, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", mu, sep="")), side=2, line=2)#
+mtext("b)", side=2, at=2, line=2, las=1)#
+abline(0, 1)#
+points(regMat_nr[Inter[Roots],"inferred_mu_mid"], regMat_rec[Inter[Roots],"inferred_mu_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points((regMat_nr[Inter,"inferred_lambda_mid"] - regMat_nr[Inter,"true_lambda"])^2, (regMat_rec[Inter,"inferred_lambda_mid"] - regMat_rec[Inter,"true_lambda"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=2, line=2)#
+mtext("c)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+points((regMat_nr[Inter[Roots],"inferred_lambda_mid"] - regMat_nr[Inter[Roots],"true_lambda"])^2, (regMat_rec[Inter[Roots],"inferred_lambda_mid"] - regMat_rec[Inter[Roots],"true_lambda"])^2, pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 1.5), ylim=c(0, 1.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5))#
+axis(2, at=c(-10, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5))#
+points((regMat_nr[Inter,"inferred_mu_mid"] - regMat_nr[Inter,"true_mu"])^2, (regMat_rec[Inter,"inferred_mu_mid"] - regMat_rec[Inter,"true_mu"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=2, line=2)#
+abline(0,1)#
+mtext("d)", side=2, at=2.5, line=2, las=1)#
+points((regMat_nr[Inter[Roots],"inferred_mu_mid"] - regMat_nr[Inter[Roots],"true_mu"])^2, (regMat_rec[Inter[Roots],"inferred_mu_mid"] - regMat_rec[Inter[Roots],"true_mu"])^2, pch=21, bg='red')#
+#
+dev.off()
+Path_base <- "~/Documents/BAMM_fossilBAMM_description/"#
+setwd(paste(Path_base, "results", sep=""))#
+totalMat <- read.csv("regimesSummary.csv", stringsAsFactors=FALSE)#
+#
+treeMat <- read.csv("treesSummary.csv", stringsAsFactors=FALSE)#
+Conv <- treeMat[,"eN_N_shifts"]#
+names(Conv) <- treeMat[,"tree"]#
+regConv <- Conv[as.character(totalMat[,"tree"])]#
+#
+Include <- intersect(which(totalMat[,"N_taxa"]>=1), which(regConv >= 200))#
+#
+regMat_rec <- totalMat[Include,]#
+Names_rec <- apply(regMat_rec[,c("tree", "psi_class", "true_mu")], 1, paste, collapse="_")#
+rownames(regMat_rec) <- Names_rec#
+#
+setwd(paste(Path_base, "results/no_recompute", sep=""))#
+totalMat <- read.csv("regimesSummary.csv", stringsAsFactors=FALSE)#
+#
+treeMat <- read.csv("treesSummary.csv", stringsAsFactors=FALSE)#
+Conv <- treeMat[,"eN_N_shifts"]#
+names(Conv) <- treeMat[,"tree"]#
+regConv <- Conv[as.character(totalMat[,"tree"])]#
+#
+Include <- intersect(which(totalMat[,"N_taxa"]>=1), which(regConv >= 0))#
+#
+regMat_nr <- totalMat[Include,]#
+Names_nr <- apply(regMat_nr[,c("tree", "psi_class", "true_mu")], 1, paste, collapse="_")#
+rownames(regMat_nr) <- Names_nr#
+#
+Inter <- intersect(Names_nr, Names_rec)#
+Roots <- which(regMat_nr[Inter,"time"] < 1e-9)#
+#
+pdf(paste(Path_base, "figures/no_recompute/comparison_rootflag.pdf", sep=""), height=6, width=6)#
+BG <- 'gray70'#
+par(mfrow=c(2,2), mgp=c(0,0.5,0), tck=-0.01, las=0, mar=c(4,5,1,1))#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points(regMat_nr[Inter,"inferred_lambda_mid"], regMat_rec[Inter,"inferred_lambda_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", lambda, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", lambda, sep="")), side=2, line=2)#
+mtext("a)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+points(regMat_nr[Inter[Roots],"inferred_lambda_mid"], regMat_rec[Inter[Roots],"inferred_lambda_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2), ylim=c(0, 2), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2))#
+points(regMat_nr[Inter,"inferred_mu_mid"], regMat_rec[Inter,"inferred_mu_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", mu, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", mu, sep="")), side=2, line=2)#
+mtext("b)", side=2, at=2, line=2, las=1)#
+abline(0, 1)#
+points(regMat_nr[Inter[Roots],"inferred_mu_mid"], regMat_rec[Inter[Roots],"inferred_mu_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5))#
+points((regMat_nr[Inter,"inferred_lambda_mid"] - regMat_nr[Inter,"true_lambda"])^2, (regMat_rec[Inter,"inferred_lambda_mid"] - regMat_rec[Inter,"true_lambda"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=2, line=2)#
+mtext("c)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+points((regMat_nr[Inter[Roots],"inferred_lambda_mid"] - regMat_nr[Inter[Roots],"true_lambda"])^2, (regMat_rec[Inter[Roots],"inferred_lambda_mid"] - regMat_rec[Inter[Roots],"true_lambda"])^2, pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 1.5), ylim=c(0, 1.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5), labels=c("NA", "0", "0.25", "0.5", "0.75", "1", "1.25", "1.5"))#
+axis(2, at=c(-10, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5), labels=c("NA", "0", "0.25", "0.5", "0.75", "1", "1.25", "1.5"))#
+points((regMat_nr[Inter,"inferred_mu_mid"] - regMat_nr[Inter,"true_mu"])^2, (regMat_rec[Inter,"inferred_mu_mid"] - regMat_rec[Inter,"true_mu"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=2, line=2)#
+abline(0,1)#
+mtext("d)", side=2, at=1.5, line=2, las=1)#
+points((regMat_nr[Inter[Roots],"inferred_mu_mid"] - regMat_nr[Inter[Roots],"true_mu"])^2, (regMat_rec[Inter[Roots],"inferred_mu_mid"] - regMat_rec[Inter[Roots],"true_mu"])^2, pch=21, bg='red')#
+#
+dev.off()
+axcex <- 0.75#
+pdf(paste(Path_base, "figures/no_recompute/comparison_rootflag.pdf", sep=""), height=6, width=6)#
+BG <- 'gray70'#
+par(mfrow=c(2,2), mgp=c(0,0.5,0), tck=-0.01, las=0, mar=c(4,5,1,1))#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5), cex=axcex)#
+points(regMat_nr[Inter,"inferred_lambda_mid"], regMat_rec[Inter,"inferred_lambda_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", lambda, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", lambda, sep="")), side=2, line=2)#
+mtext("a)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+#points(regMat_nr[Inter[Roots],"inferred_lambda_mid"], regMat_rec[Inter[Roots],"inferred_lambda_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2), ylim=c(0, 2), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+points(regMat_nr[Inter,"inferred_mu_mid"], regMat_rec[Inter,"inferred_mu_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", mu, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", mu, sep="")), side=2, line=2)#
+mtext("b)", side=2, at=2, line=2, las=1)#
+abline(0, 1)#
+#points(regMat_nr[Inter[Roots],"inferred_mu_mid"], regMat_rec[Inter[Roots],"inferred_mu_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5), cex=axcex)#
+points((regMat_nr[Inter,"inferred_lambda_mid"] - regMat_nr[Inter,"true_lambda"])^2, (regMat_rec[Inter,"inferred_lambda_mid"] - regMat_rec[Inter,"true_lambda"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=2, line=2)#
+mtext("c)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+#points((regMat_nr[Inter[Roots],"inferred_lambda_mid"] - regMat_nr[Inter[Roots],"true_lambda"])^2, (regMat_rec[Inter[Roots],"inferred_lambda_mid"] - regMat_rec[Inter[Roots],"true_lambda"])^2, pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 1.5), ylim=c(0, 1.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5), cex=axcex)#
+axis(2, at=c(-10, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5), cex=axcex)#
+points((regMat_nr[Inter,"inferred_mu_mid"] - regMat_nr[Inter,"true_mu"])^2, (regMat_rec[Inter,"inferred_mu_mid"] - regMat_rec[Inter,"true_mu"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=2, line=2)#
+abline(0,1)#
+mtext("d)", side=2, at=1.5, line=2, las=1)#
+#points((regMat_nr[Inter[Roots],"inferred_mu_mid"] - regMat_nr[Inter[Roots],"true_mu"])^2, (regMat_rec[Inter[Roots],"inferred_mu_mid"] - regMat_rec[Inter[Roots],"true_mu"])^2, pch=21, bg='red')#
+#
+dev.off()
+axcex <- 0.75#
+pdf(paste(Path_base, "figures/no_recompute/comparison_rootflag.pdf", sep=""), height=6.5, width=6.5)#
+BG <- 'gray70'#
+par(mfrow=c(2,2), mgp=c(0,0.25,0), tck=-0.01, las=0, mar=c(4,5,0.5,0.5))#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5), cex=axcex)#
+points(regMat_nr[Inter,"inferred_lambda_mid"], regMat_rec[Inter,"inferred_lambda_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", lambda, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", lambda, sep="")), side=2, line=2)#
+mtext("a)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+#points(regMat_nr[Inter[Roots],"inferred_lambda_mid"], regMat_rec[Inter[Roots],"inferred_lambda_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2), ylim=c(0, 2), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+points(regMat_nr[Inter,"inferred_mu_mid"], regMat_rec[Inter,"inferred_mu_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", mu, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", mu, sep="")), side=2, line=2)#
+mtext("b)", side=2, at=2, line=2, las=1)#
+abline(0, 1)#
+#points(regMat_nr[Inter[Roots],"inferred_mu_mid"], regMat_rec[Inter[Roots],"inferred_mu_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2.5), ylim=c(0, 2.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2, 2.5), cex=axcex)#
+points((regMat_nr[Inter,"inferred_lambda_mid"] - regMat_nr[Inter,"true_lambda"])^2, (regMat_rec[Inter,"inferred_lambda_mid"] - regMat_rec[Inter,"true_lambda"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=2, line=2)#
+mtext("c)", side=2, at=2.5, line=2, las=1)#
+abline(0,1)#
+#points((regMat_nr[Inter[Roots],"inferred_lambda_mid"] - regMat_nr[Inter[Roots],"true_lambda"])^2, (regMat_rec[Inter[Roots],"inferred_lambda_mid"] - regMat_rec[Inter[Roots],"true_lambda"])^2, pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 1.5), ylim=c(0, 1.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5), cex=axcex)#
+axis(2, at=c(-10, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5), cex=axcex)#
+points((regMat_nr[Inter,"inferred_mu_mid"] - regMat_nr[Inter,"true_mu"])^2, (regMat_rec[Inter,"inferred_mu_mid"] - regMat_rec[Inter,"true_mu"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=2, line=2)#
+abline(0,1)#
+mtext("d)", side=2, at=1.5, line=2, las=1)#
+#points((regMat_nr[Inter[Roots],"inferred_mu_mid"] - regMat_nr[Inter[Roots],"true_mu"])^2, (regMat_rec[Inter[Roots],"inferred_mu_mid"] - regMat_rec[Inter[Roots],"true_mu"])^2, pch=21, bg='red')#
+#
+dev.off()
+axcex <- 0.75#
+pdf(paste(Path_base, "figures/no_recompute/comparison_rootflag.pdf", sep=""), height=6.5, width=6.5)#
+BG <- 'gray70'#
+par(mfrow=c(2,2), mgp=c(0,0.25,0), tck=-0.01, las=0, mar=c(4,5,0.5,0.5))#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2), ylim=c(0, 2), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+points(regMat_nr[Inter,"inferred_lambda_mid"], regMat_rec[Inter,"inferred_lambda_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", lambda, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", lambda, sep="")), side=2, line=2)#
+mtext("a)", side=2, at=2, line=2, las=1)#
+abline(0,1)#
+#points(regMat_nr[Inter[Roots],"inferred_lambda_mid"], regMat_rec[Inter[Roots],"inferred_lambda_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 1.5), ylim=c(0, 1.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5), cex=axcex)#
+points(regMat_nr[Inter,"inferred_mu_mid"], regMat_rec[Inter,"inferred_mu_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", mu, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", mu, sep="")), side=2, line=2)#
+mtext("b)", side=2, at=1.5, line=2, las=1)#
+abline(0, 1)#
+#points(regMat_nr[Inter[Roots],"inferred_mu_mid"], regMat_rec[Inter[Roots],"inferred_mu_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2), ylim=c(0, 2), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+points((regMat_nr[Inter,"inferred_lambda_mid"] - regMat_nr[Inter,"true_lambda"])^2, (regMat_rec[Inter,"inferred_lambda_mid"] - regMat_rec[Inter,"true_lambda"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=2, line=2)#
+mtext("c)", side=2, at=2, line=2, las=1)#
+abline(0,1)#
+#points((regMat_nr[Inter[Roots],"inferred_lambda_mid"] - regMat_nr[Inter[Roots],"true_lambda"])^2, (regMat_rec[Inter[Roots],"inferred_lambda_mid"] - regMat_rec[Inter[Roots],"true_lambda"])^2, pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 1.25), ylim=c(0, 1.25), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.25, 0.5, 0.75, 1, 1.25), cex=axcex)#
+axis(2, at=c(-10, 0, 0.25, 0.5, 0.75, 1, 1.25), cex=axcex)#
+points((regMat_nr[Inter,"inferred_mu_mid"] - regMat_nr[Inter,"true_mu"])^2, (regMat_rec[Inter,"inferred_mu_mid"] - regMat_rec[Inter,"true_mu"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=2, line=2)#
+abline(0,1)#
+mtext("d)", side=2, at=1.5, line=2, las=1)#
+#points((regMat_nr[Inter[Roots],"inferred_mu_mid"] - regMat_nr[Inter[Roots],"true_mu"])^2, (regMat_rec[Inter[Roots],"inferred_mu_mid"] - regMat_rec[Inter[Roots],"true_mu"])^2, pch=21, bg='red')#
+#
+dev.off()
+axcex <- 0.75#
+pdf(paste(Path_base, "figures/no_recompute/comparison_rootflag.pdf", sep=""), height=6.5, width=6.5)#
+BG <- 'gray80'#
+par(mfrow=c(2,2), mgp=c(0,0.25,0), tck=-0.01, las=0, mar=c(4,5,0.5,0.5))#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2), ylim=c(0, 2), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+points(regMat_nr[Inter,"inferred_lambda_mid"], regMat_rec[Inter,"inferred_lambda_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", lambda, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", lambda, sep="")), side=2, line=2)#
+mtext("a)", side=2, at=2, line=2, las=1)#
+abline(0,1)#
+#points(regMat_nr[Inter[Roots],"inferred_lambda_mid"], regMat_rec[Inter[Roots],"inferred_lambda_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 1.5), ylim=c(0, 1.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5), cex=axcex)#
+points(regMat_nr[Inter,"inferred_mu_mid"], regMat_rec[Inter,"inferred_mu_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", mu, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", mu, sep="")), side=2, line=2)#
+mtext("b)", side=2, at=1.5, line=2, las=1)#
+abline(0, 1)#
+#points(regMat_nr[Inter[Roots],"inferred_mu_mid"], regMat_rec[Inter[Roots],"inferred_mu_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2), ylim=c(0, 2), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+points((regMat_nr[Inter,"inferred_lambda_mid"] - regMat_nr[Inter,"true_lambda"])^2, (regMat_rec[Inter,"inferred_lambda_mid"] - regMat_rec[Inter,"true_lambda"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=2, line=2)#
+mtext("c)", side=2, at=2, line=2, las=1)#
+abline(0,1)#
+#points((regMat_nr[Inter[Roots],"inferred_lambda_mid"] - regMat_nr[Inter[Roots],"true_lambda"])^2, (regMat_rec[Inter[Roots],"inferred_lambda_mid"] - regMat_rec[Inter[Roots],"true_lambda"])^2, pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 1.25), ylim=c(0, 1.25), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.25, 0.5, 0.75, 1, 1.25), cex=axcex)#
+axis(2, at=c(-10, 0, 0.25, 0.5, 0.75, 1, 1.25), cex=axcex)#
+points((regMat_nr[Inter,"inferred_mu_mid"] - regMat_nr[Inter,"true_mu"])^2, (regMat_rec[Inter,"inferred_mu_mid"] - regMat_rec[Inter,"true_mu"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=2, line=2)#
+abline(0,1)#
+mtext("d)", side=2, at=1.25, line=2, las=1)#
+#points((regMat_nr[Inter[Roots],"inferred_mu_mid"] - regMat_nr[Inter[Roots],"true_mu"])^2, (regMat_rec[Inter[Roots],"inferred_mu_mid"] - regMat_rec[Inter[Roots],"true_mu"])^2, pch=21, bg='red')#
+#
+dev.off()
+axcex <- 0.75#
+pdf(paste(Path_base, "figures/no_recompute/comparison.pdf", sep=""), height=6.5, width=6.5)#
+BG <- 'gray80'#
+par(mfrow=c(2,2), mgp=c(0,0.25,0), tck=-0.01, las=0, mar=c(4,5,0.5,0.5))#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2), ylim=c(0, 2), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+points(regMat_nr[Inter,"inferred_lambda_mid"], regMat_rec[Inter,"inferred_lambda_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", lambda, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", lambda, sep="")), side=2, line=2)#
+mtext("a)", side=2, at=2, line=2, las=1)#
+abline(0,1)#
+#points(regMat_nr[Inter[Roots],"inferred_lambda_mid"], regMat_rec[Inter[Roots],"inferred_lambda_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 1.5), ylim=c(0, 1.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5), cex=axcex)#
+points(regMat_nr[Inter,"inferred_mu_mid"], regMat_rec[Inter,"inferred_mu_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", mu, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", mu, sep="")), side=2, line=2)#
+mtext("b)", side=2, at=1.5, line=2, las=1)#
+abline(0, 1)#
+#points(regMat_nr[Inter[Roots],"inferred_mu_mid"], regMat_rec[Inter[Roots],"inferred_mu_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2), ylim=c(0, 2), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+points((regMat_nr[Inter,"inferred_lambda_mid"] - regMat_nr[Inter,"true_lambda"])^2, (regMat_rec[Inter,"inferred_lambda_mid"] - regMat_rec[Inter,"true_lambda"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=2, line=2)#
+mtext("c)", side=2, at=2, line=2, las=1)#
+abline(0,1)#
+#points((regMat_nr[Inter[Roots],"inferred_lambda_mid"] - regMat_nr[Inter[Roots],"true_lambda"])^2, (regMat_rec[Inter[Roots],"inferred_lambda_mid"] - regMat_rec[Inter[Roots],"true_lambda"])^2, pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 1.25), ylim=c(0, 1.25), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.25, 0.5, 0.75, 1, 1.25), cex=axcex)#
+axis(2, at=c(-10, 0, 0.25, 0.5, 0.75, 1, 1.25), cex=axcex)#
+points((regMat_nr[Inter,"inferred_mu_mid"] - regMat_nr[Inter,"true_mu"])^2, (regMat_rec[Inter,"inferred_mu_mid"] - regMat_rec[Inter,"true_mu"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=2, line=2)#
+abline(0,1)#
+mtext("d)", side=2, at=1.25, line=2, las=1)#
+#points((regMat_nr[Inter[Roots],"inferred_mu_mid"] - regMat_nr[Inter[Roots],"true_mu"])^2, (regMat_rec[Inter[Roots],"inferred_mu_mid"] - regMat_rec[Inter[Roots],"true_mu"])^2, pch=21, bg='red')#
+#
+dev.off()
+axcex <- 0.75#
+pdf(paste(Path_base, "figures/no_recompute/comparison_rootflag.pdf", sep=""), height=6.5, width=6.5)#
+BG <- 'gray80'#
+par(mfrow=c(2,2), mgp=c(0,0.25,0), tck=-0.01, las=0, mar=c(4,5,0.5,0.5))#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2), ylim=c(0, 2), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+points(regMat_nr[Inter,"inferred_lambda_mid"], regMat_rec[Inter,"inferred_lambda_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", lambda, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", lambda, sep="")), side=2, line=2)#
+mtext("a)", side=2, at=2, line=2, las=1)#
+abline(0,1)#
+points(regMat_nr[Inter[Roots],"inferred_lambda_mid"], regMat_rec[Inter[Roots],"inferred_lambda_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 1.5), ylim=c(0, 1.5), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5), cex=axcex)#
+points(regMat_nr[Inter,"inferred_mu_mid"], regMat_rec[Inter,"inferred_mu_mid"], pch=21, bg=BG)#
+mtext(expression(paste("if different ", mu, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", mu, sep="")), side=2, line=2)#
+mtext("b)", side=2, at=1.5, line=2, las=1)#
+abline(0, 1)#
+points(regMat_nr[Inter[Roots],"inferred_mu_mid"], regMat_rec[Inter[Roots],"inferred_mu_mid"], pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 2), ylim=c(0, 2), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+axis(2, at=c(-10, 0, 0.5, 1, 1.5, 2), cex=axcex)#
+points((regMat_nr[Inter,"inferred_lambda_mid"] - regMat_nr[Inter,"true_lambda"])^2, (regMat_rec[Inter,"inferred_lambda_mid"] - regMat_rec[Inter,"true_lambda"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", lambda["inf"] - lambda["true"], ")"^2, sep="")), side=2, line=2)#
+mtext("c)", side=2, at=2, line=2, las=1)#
+abline(0,1)#
+points((regMat_nr[Inter[Roots],"inferred_lambda_mid"] - regMat_nr[Inter[Roots],"true_lambda"])^2, (regMat_rec[Inter[Roots],"inferred_lambda_mid"] - regMat_rec[Inter[Roots],"true_lambda"])^2, pch=21, bg='red')#
+#
+plot(1, 1, type="n", xlab="", ylab="", xlim=c(0, 1.25), ylim=c(0, 1.25), axes=F, bty="n")#
+axis(1, at=c(-10, 0, 0.25, 0.5, 0.75, 1, 1.25), cex=axcex)#
+axis(2, at=c(-10, 0, 0.25, 0.5, 0.75, 1, 1.25), cex=axcex)#
+points((regMat_nr[Inter,"inferred_mu_mid"] - regMat_nr[Inter,"true_mu"])^2, (regMat_rec[Inter,"inferred_mu_mid"] - regMat_rec[Inter,"true_mu"])^2, pch=21, bg=BG)#
+mtext(expression(paste("if different ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=1, line=2)#
+mtext(expression(paste("recompute ", "(", mu["inf"] - mu["true"], ")"^2, sep="")), side=2, line=2)#
+abline(0,1)#
+mtext("d)", side=2, at=1.25, line=2, las=1)#
+points((regMat_nr[Inter[Roots],"inferred_mu_mid"] - regMat_nr[Inter[Roots],"true_mu"])^2, (regMat_rec[Inter[Roots],"inferred_mu_mid"] - regMat_rec[Inter[Roots],"true_mu"])^2, pch=21, bg='red')#
+#
+dev.off()
+setwd("~/Documents/BAMM_fossilBAMM_description/results/no_recompute")#
+totalMat <- read.csv("regimesSummary.csv", stringsAsFactors=FALSE)#
+#
+treeMat <- read.csv("treesSummary.csv", stringsAsFactors=FALSE)#
+Conv <- treeMat[,"eN_N_shifts"]#
+names(Conv) <- treeMat[,"tree"]#
+regConv <- Conv[as.character(totalMat[,"tree"])]#
+#
+Include <- intersect(which(totalMat[,"N_taxa"]>=1), which(regConv >= 0))#
+#
+regMat <- totalMat[Include,]#
+#
+totalExtinct <- apply(regMat, 1, function(x) ifelse(x["N_taxa"]==x["N_fossils"],2,1))#
+Extinct <- apply(regMat, 1, function(x) ifelse(x["N_fossils"]>0,2,1))#
+psiZero <- which(regMat[,"psi_class"]==0)#
+psiLo <- which(regMat[,"psi_class"]==1)#
+psiMid <- which(regMat[,"psi_class"]==2)#
+psiHi <- which(regMat[,"psi_class"]==3)#
+psiStg <- which(regMat[,"psi_class"]==-1)#
+#
+setwd("~/Documents/BAMM_fossilBAMM_description/figures/no_recompute")#
+pdf("rateCors_nolog_three_all.pdf", height=7.8, width=6)#
+#pdf("rateCors_nolog_three_n>20.pdf", height=7.8, width=6)#
+#
+par(mfrow=c(4,3), las=1, mgp=c(2, 0.5, 0), mar=c(4,4,0.1,0.25), oma=c(0,2,0,0), bty="n", tck=-0.01, cex.axis=0.75, pty="s")#
+#
+SPAX <- c(0.0005, 0.005, 0.05, 0.5, 5)#
+SPAX2 <- c(0.00004, 0.0004, 0.004, 0.04, 0.4, 4)#
+SPLIM <- c(0.01, 5)#
+SPLIM2 <- c(0.0001, 4)#
+#
+LOG <- "xy"#
+#
+EXAXx <-  c(-1, 0, 0.5, 1, 1.5, 2, 2.5, 3)#
+EXAXy <- c(-1, 0, 0.5, 1, 1.5, 2, 2.5, 3)#
+EXLIMx <- c(0, 3)#
+EXLIMy <- c(0, 3)#
+COLORS <- c(rgb(0,0,0,0.1), rgb(0,0,0,0.1))#
+#
+#EXAXx <- c(-5, 0, 2, 4, 6, 8)#
+#EXAXy <- c(-5, 0, 2, 4, 6, 8)#
+#EXLIMx <- c(0, 8)#
+#EXLIMy <- c(0, 8)#
+#
+Slopes <- c()#
+Errors <- c()#
+#
+eSlopes <- c()#
+eErrors <- c()#
+#
+METH <- "spearman"#
+#
+### Extant-only#
+Chosen <- psiZero#
+plot(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM, ylim=SPLIM, xaxt="n", yaxt="n", xlab=expression(paste("true ", lambda)), ylab=expression(paste("inferred ", lambda)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX, labels=as.character(SPAX))#
+axis(2, at=SPAX, labels=as.character(SPAX))#
+Cor <- round(cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+mtext(bquote(psi == 0), side=2, line=4, xpd=NA, las=0)#
+Model <- summary(lm(regMat[Chosen,"inferred_lambda_mid"]~regMat[Chosen,"true_lambda"]+0))#
+Slopes[1] <- Model$coefficients[1]#
+Errors[1] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM2, ylim=SPLIM2, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu)), ylab=expression(paste("inferred ", mu)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX2, labels=as.character(SPAX2))#
+axis(2, at=SPAX2, labels=as.character(SPAX2))#
+Cor <- round(cor(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+Model <- summary(lm(regMat[Chosen,"inferred_mu_mid"]~regMat[Chosen,"true_mu"]+0))#
+eSlopes[1] <- Model$coefficients[1]#
+eErrors[1] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=EXLIMx, ylim=EXLIMy, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu, " / ", lambda)), ylab=expression(paste("inferred ", mu, " / ", lambda)))#
+abline(0,1,lty=2)#
+axis(1, at=EXAXx, labels=as.character(EXAXx))#
+axis(2, at=EXAXy, labels=as.character(EXAXy))#
+Cor <- round(cor(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+if (Cor == 0)	{#
+	legend("topleft", legend="r < 0.01", bty="n")#
+}#
+if (Cor > 0)	{	#
+	legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+}#
+#
+### Low#
+Chosen <- psiLo#
+plot(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM, ylim=SPLIM, xaxt="n", yaxt="n", xlab=expression(paste("true ", lambda)), ylab=expression(paste("inferred ", lambda)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX, labels=as.character(SPAX))#
+axis(2, at=SPAX, labels=as.character(SPAX))#
+Cor <- round(cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+mtext(bquote(psi == 0.01), side=2, line=4, xpd=NA, las=0)#
+Model <- summary(lm(regMat[Chosen,"inferred_lambda_mid"]~regMat[Chosen,"true_lambda"]+0))#
+Slopes[2] <- Model$coefficients[1]#
+Errors[2] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM2, ylim=SPLIM2, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu)), ylab=expression(paste("inferred ", mu)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX2, labels=as.character(SPAX2))#
+axis(2, at=SPAX2, labels=as.character(SPAX2))#
+Cor <- round(cor(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+Model <- summary(lm(regMat[Chosen,"inferred_mu_mid"]~regMat[Chosen,"true_mu"]+0))#
+eSlopes[2] <- Model$coefficients[1]#
+eErrors[2] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=EXLIMx, ylim=EXLIMy, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu, " / ", lambda)), ylab=expression(paste("inferred ", mu, " / ", lambda)))#
+abline(0,1,lty=2)#
+axis(1, at=EXAXx, labels=as.character(EXAXx))#
+axis(2, at=EXAXy, labels=as.character(EXAXy))#
+Cor <- round(cor(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+#
+### Mid#
+Chosen <- psiMid#
+plot(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM, ylim=SPLIM, xaxt="n", yaxt="n", xlab=expression(paste("true ", lambda)), ylab=expression(paste("inferred ", lambda)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX, labels=as.character(SPAX))#
+axis(2, at=SPAX, labels=as.character(SPAX))#
+Cor <- round(cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+mtext(bquote(psi == 0.1), side=2, line=4, xpd=NA, las=0)#
+Model <- summary(lm(regMat[Chosen,"inferred_lambda_mid"]~regMat[Chosen,"true_lambda"]+0))#
+Slopes[3] <- Model$coefficients[1]#
+Errors[3] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM2, ylim=SPLIM2, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu)), ylab=expression(paste("inferred ", mu)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX2, labels=as.character(SPAX2))#
+axis(2, at=SPAX2, labels=as.character(SPAX2))#
+Cor <- round(cor(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+Model <- summary(lm(regMat[Chosen,"inferred_mu_mid"]~regMat[Chosen,"true_mu"]+0))#
+eSlopes[3] <- Model$coefficients[1]#
+eErrors[3] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=EXLIMx, ylim=EXLIMy, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu, " / ", lambda)), ylab=expression(paste("inferred ", mu, " / ", lambda)))#
+abline(0,1,lty=2)#
+axis(1, at=EXAXx, labels=as.character(EXAXx))#
+axis(2, at=EXAXy, labels=as.character(EXAXy))#
+Cor <- round(cor(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+#
+### High#
+Chosen <- psiHi#
+plot(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM, ylim=SPLIM, xaxt="n", yaxt="n", xlab=expression(paste("true ", lambda)), ylab=expression(paste("inferred ", lambda)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX, labels=as.character(SPAX))#
+axis(2, at=SPAX, labels=as.character(SPAX))#
+Cor <- round(cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+mtext(bquote(psi == 1), side=2, line=4, xpd=NA, las=0)#
+Model <- summary(lm(regMat[Chosen,"inferred_lambda_mid"]~regMat[Chosen,"true_lambda"]+0))#
+Slopes[4] <- Model$coefficients[1]#
+Errors[4] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM2, ylim=SPLIM2, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu)), ylab=expression(paste("inferred ", mu)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX2, labels=as.character(SPAX2))#
+axis(2, at=SPAX2, labels=as.character(SPAX2))#
+Cor <- round(cor(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+Model <- summary(lm(regMat[Chosen,"inferred_mu_mid"]~regMat[Chosen,"true_mu"]+0))#
+eSlopes[4] <- Model$coefficients[1]#
+eErrors[4] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=EXLIMx, ylim=EXLIMy, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu, " / ", lambda)), ylab=expression(paste("inferred ", mu, " / ", lambda)))#
+abline(0,1,lty=2)#
+axis(1, at=EXAXx, labels=as.character(EXAXx))#
+axis(2, at=EXAXy, labels=as.character(EXAXy))#
+Cor <- round(cor(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+dev.off()
+Include <- intersect(which(totalMat[,"N_taxa"]>=20), which(regConv >= 0))#
+#
+regMat <- totalMat[Include,]#
+#
+totalExtinct <- apply(regMat, 1, function(x) ifelse(x["N_taxa"]==x["N_fossils"],2,1))#
+Extinct <- apply(regMat, 1, function(x) ifelse(x["N_fossils"]>0,2,1))#
+psiZero <- which(regMat[,"psi_class"]==0)#
+psiLo <- which(regMat[,"psi_class"]==1)#
+psiMid <- which(regMat[,"psi_class"]==2)#
+psiHi <- which(regMat[,"psi_class"]==3)#
+psiStg <- which(regMat[,"psi_class"]==-1)#
+#
+setwd("~/Documents/BAMM_fossilBAMM_description/figures/no_recompute")#
+pdf("rateCors_nolog_three_all.pdf", height=7.8, width=6)#
+#pdf("rateCors_nolog_three_n>20.pdf", height=7.8, width=6)#
+#
+par(mfrow=c(4,3), las=1, mgp=c(2, 0.5, 0), mar=c(4,4,0.1,0.25), oma=c(0,2,0,0), bty="n", tck=-0.01, cex.axis=0.75, pty="s")#
+#
+SPAX <- c(0.0005, 0.005, 0.05, 0.5, 5)#
+SPAX2 <- c(0.00004, 0.0004, 0.004, 0.04, 0.4, 4)#
+SPLIM <- c(0.01, 5)#
+SPLIM2 <- c(0.0001, 4)#
+#
+LOG <- "xy"#
+#
+EXAXx <-  c(-1, 0, 0.5, 1, 1.5, 2, 2.5, 3)#
+EXAXy <- c(-1, 0, 0.5, 1, 1.5, 2, 2.5, 3)#
+EXLIMx <- c(0, 3)#
+EXLIMy <- c(0, 3)#
+COLORS <- c(rgb(0,0,0,0.1), rgb(0,0,0,0.1))#
+#
+#EXAXx <- c(-5, 0, 2, 4, 6, 8)#
+#EXAXy <- c(-5, 0, 2, 4, 6, 8)#
+#EXLIMx <- c(0, 8)#
+#EXLIMy <- c(0, 8)#
+#
+Slopes <- c()#
+Errors <- c()#
+#
+eSlopes <- c()#
+eErrors <- c()#
+#
+METH <- "spearman"#
+#
+### Extant-only#
+Chosen <- psiZero#
+plot(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM, ylim=SPLIM, xaxt="n", yaxt="n", xlab=expression(paste("true ", lambda)), ylab=expression(paste("inferred ", lambda)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX, labels=as.character(SPAX))#
+axis(2, at=SPAX, labels=as.character(SPAX))#
+Cor <- round(cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+mtext(bquote(psi == 0), side=2, line=4, xpd=NA, las=0)#
+Model <- summary(lm(regMat[Chosen,"inferred_lambda_mid"]~regMat[Chosen,"true_lambda"]+0))#
+Slopes[1] <- Model$coefficients[1]#
+Errors[1] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM2, ylim=SPLIM2, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu)), ylab=expression(paste("inferred ", mu)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX2, labels=as.character(SPAX2))#
+axis(2, at=SPAX2, labels=as.character(SPAX2))#
+Cor <- round(cor(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+Model <- summary(lm(regMat[Chosen,"inferred_mu_mid"]~regMat[Chosen,"true_mu"]+0))#
+eSlopes[1] <- Model$coefficients[1]#
+eErrors[1] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=EXLIMx, ylim=EXLIMy, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu, " / ", lambda)), ylab=expression(paste("inferred ", mu, " / ", lambda)))#
+abline(0,1,lty=2)#
+axis(1, at=EXAXx, labels=as.character(EXAXx))#
+axis(2, at=EXAXy, labels=as.character(EXAXy))#
+Cor <- round(cor(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+if (Cor == 0)	{#
+	legend("topleft", legend="r < 0.01", bty="n")#
+}#
+if (Cor > 0)	{	#
+	legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+}#
+#
+### Low#
+Chosen <- psiLo#
+plot(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM, ylim=SPLIM, xaxt="n", yaxt="n", xlab=expression(paste("true ", lambda)), ylab=expression(paste("inferred ", lambda)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX, labels=as.character(SPAX))#
+axis(2, at=SPAX, labels=as.character(SPAX))#
+Cor <- round(cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+mtext(bquote(psi == 0.01), side=2, line=4, xpd=NA, las=0)#
+Model <- summary(lm(regMat[Chosen,"inferred_lambda_mid"]~regMat[Chosen,"true_lambda"]+0))#
+Slopes[2] <- Model$coefficients[1]#
+Errors[2] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM2, ylim=SPLIM2, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu)), ylab=expression(paste("inferred ", mu)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX2, labels=as.character(SPAX2))#
+axis(2, at=SPAX2, labels=as.character(SPAX2))#
+Cor <- round(cor(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+Model <- summary(lm(regMat[Chosen,"inferred_mu_mid"]~regMat[Chosen,"true_mu"]+0))#
+eSlopes[2] <- Model$coefficients[1]#
+eErrors[2] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=EXLIMx, ylim=EXLIMy, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu, " / ", lambda)), ylab=expression(paste("inferred ", mu, " / ", lambda)))#
+abline(0,1,lty=2)#
+axis(1, at=EXAXx, labels=as.character(EXAXx))#
+axis(2, at=EXAXy, labels=as.character(EXAXy))#
+Cor <- round(cor(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+#
+### Mid#
+Chosen <- psiMid#
+plot(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM, ylim=SPLIM, xaxt="n", yaxt="n", xlab=expression(paste("true ", lambda)), ylab=expression(paste("inferred ", lambda)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX, labels=as.character(SPAX))#
+axis(2, at=SPAX, labels=as.character(SPAX))#
+Cor <- round(cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+mtext(bquote(psi == 0.1), side=2, line=4, xpd=NA, las=0)#
+Model <- summary(lm(regMat[Chosen,"inferred_lambda_mid"]~regMat[Chosen,"true_lambda"]+0))#
+Slopes[3] <- Model$coefficients[1]#
+Errors[3] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM2, ylim=SPLIM2, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu)), ylab=expression(paste("inferred ", mu)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX2, labels=as.character(SPAX2))#
+axis(2, at=SPAX2, labels=as.character(SPAX2))#
+Cor <- round(cor(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+Model <- summary(lm(regMat[Chosen,"inferred_mu_mid"]~regMat[Chosen,"true_mu"]+0))#
+eSlopes[3] <- Model$coefficients[1]#
+eErrors[3] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=EXLIMx, ylim=EXLIMy, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu, " / ", lambda)), ylab=expression(paste("inferred ", mu, " / ", lambda)))#
+abline(0,1,lty=2)#
+axis(1, at=EXAXx, labels=as.character(EXAXx))#
+axis(2, at=EXAXy, labels=as.character(EXAXy))#
+Cor <- round(cor(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+#
+### High#
+Chosen <- psiHi#
+plot(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM, ylim=SPLIM, xaxt="n", yaxt="n", xlab=expression(paste("true ", lambda)), ylab=expression(paste("inferred ", lambda)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX, labels=as.character(SPAX))#
+axis(2, at=SPAX, labels=as.character(SPAX))#
+Cor <- round(cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+mtext(bquote(psi == 1), side=2, line=4, xpd=NA, las=0)#
+Model <- summary(lm(regMat[Chosen,"inferred_lambda_mid"]~regMat[Chosen,"true_lambda"]+0))#
+Slopes[4] <- Model$coefficients[1]#
+Errors[4] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM2, ylim=SPLIM2, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu)), ylab=expression(paste("inferred ", mu)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX2, labels=as.character(SPAX2))#
+axis(2, at=SPAX2, labels=as.character(SPAX2))#
+Cor <- round(cor(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+Model <- summary(lm(regMat[Chosen,"inferred_mu_mid"]~regMat[Chosen,"true_mu"]+0))#
+eSlopes[4] <- Model$coefficients[1]#
+eErrors[4] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=EXLIMx, ylim=EXLIMy, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu, " / ", lambda)), ylab=expression(paste("inferred ", mu, " / ", lambda)))#
+abline(0,1,lty=2)#
+axis(1, at=EXAXx, labels=as.character(EXAXx))#
+axis(2, at=EXAXy, labels=as.character(EXAXy))#
+Cor <- round(cor(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+dev.off()
+Include <- intersect(which(totalMat[,"N_taxa"]>=1), which(regConv >= 0))#
+#
+regMat <- totalMat[Include,]#
+#
+totalExtinct <- apply(regMat, 1, function(x) ifelse(x["N_taxa"]==x["N_fossils"],2,1))#
+Extinct <- apply(regMat, 1, function(x) ifelse(x["N_fossils"]>0,2,1))#
+psiZero <- which(regMat[,"psi_class"]==0)#
+psiLo <- which(regMat[,"psi_class"]==1)#
+psiMid <- which(regMat[,"psi_class"]==2)#
+psiHi <- which(regMat[,"psi_class"]==3)#
+psiStg <- which(regMat[,"psi_class"]==-1)#
+#
+setwd("~/Documents/BAMM_fossilBAMM_description/figures/no_recompute")#
+pdf("rateCors_nolog_three_all.pdf", height=7.8, width=6)#
+#pdf("rateCors_nolog_three_n>20.pdf", height=7.8, width=6)#
+#
+par(mfrow=c(4,3), las=1, mgp=c(2, 0.5, 0), mar=c(4,4,0.1,0.25), oma=c(0,2,0,0), bty="n", tck=-0.01, cex.axis=0.75, pty="s")#
+#
+SPAX <- c(0.0005, 0.005, 0.05, 0.5, 5)#
+SPAX2 <- c(0.00004, 0.0004, 0.004, 0.04, 0.4, 4)#
+SPLIM <- c(0.01, 5)#
+SPLIM2 <- c(0.0001, 4)#
+#
+LOG <- "xy"#
+#
+EXAXx <-  c(-1, 0, 0.5, 1, 1.5, 2, 2.5, 3)#
+EXAXy <- c(-1, 0, 0.5, 1, 1.5, 2, 2.5, 3)#
+EXLIMx <- c(0, 3)#
+EXLIMy <- c(0, 3)#
+COLORS <- c(rgb(0,0,0,0.1), rgb(0,0,0,0.1))#
+#
+#EXAXx <- c(-5, 0, 2, 4, 6, 8)#
+#EXAXy <- c(-5, 0, 2, 4, 6, 8)#
+#EXLIMx <- c(0, 8)#
+#EXLIMy <- c(0, 8)#
+#
+Slopes <- c()#
+Errors <- c()#
+#
+eSlopes <- c()#
+eErrors <- c()#
+#
+METH <- "spearman"#
+#
+### Extant-only#
+Chosen <- psiZero#
+plot(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM, ylim=SPLIM, xaxt="n", yaxt="n", xlab=expression(paste("true ", lambda)), ylab=expression(paste("inferred ", lambda)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX, labels=as.character(SPAX))#
+axis(2, at=SPAX, labels=as.character(SPAX))#
+Cor <- round(cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+mtext(bquote(psi == 0), side=2, line=4, xpd=NA, las=0)#
+Model <- summary(lm(regMat[Chosen,"inferred_lambda_mid"]~regMat[Chosen,"true_lambda"]+0))#
+Slopes[1] <- Model$coefficients[1]#
+Errors[1] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM2, ylim=SPLIM2, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu)), ylab=expression(paste("inferred ", mu)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX2, labels=as.character(SPAX2))#
+axis(2, at=SPAX2, labels=as.character(SPAX2))#
+Cor <- round(cor(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+Model <- summary(lm(regMat[Chosen,"inferred_mu_mid"]~regMat[Chosen,"true_mu"]+0))#
+eSlopes[1] <- Model$coefficients[1]#
+eErrors[1] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=EXLIMx, ylim=EXLIMy, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu, " / ", lambda)), ylab=expression(paste("inferred ", mu, " / ", lambda)))#
+abline(0,1,lty=2)#
+axis(1, at=EXAXx, labels=as.character(EXAXx))#
+axis(2, at=EXAXy, labels=as.character(EXAXy))#
+Cor <- round(cor(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+if (Cor == 0)	{#
+	legend("topleft", legend="r < 0.01", bty="n")#
+}#
+if (Cor > 0)	{	#
+	legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+}#
+#
+### Low#
+Chosen <- psiLo#
+plot(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM, ylim=SPLIM, xaxt="n", yaxt="n", xlab=expression(paste("true ", lambda)), ylab=expression(paste("inferred ", lambda)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX, labels=as.character(SPAX))#
+axis(2, at=SPAX, labels=as.character(SPAX))#
+Cor <- round(cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+mtext(bquote(psi == 0.01), side=2, line=4, xpd=NA, las=0)#
+Model <- summary(lm(regMat[Chosen,"inferred_lambda_mid"]~regMat[Chosen,"true_lambda"]+0))#
+Slopes[2] <- Model$coefficients[1]#
+Errors[2] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM2, ylim=SPLIM2, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu)), ylab=expression(paste("inferred ", mu)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX2, labels=as.character(SPAX2))#
+axis(2, at=SPAX2, labels=as.character(SPAX2))#
+Cor <- round(cor(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+Model <- summary(lm(regMat[Chosen,"inferred_mu_mid"]~regMat[Chosen,"true_mu"]+0))#
+eSlopes[2] <- Model$coefficients[1]#
+eErrors[2] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=EXLIMx, ylim=EXLIMy, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu, " / ", lambda)), ylab=expression(paste("inferred ", mu, " / ", lambda)))#
+abline(0,1,lty=2)#
+axis(1, at=EXAXx, labels=as.character(EXAXx))#
+axis(2, at=EXAXy, labels=as.character(EXAXy))#
+Cor <- round(cor(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+#
+### Mid#
+Chosen <- psiMid#
+plot(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM, ylim=SPLIM, xaxt="n", yaxt="n", xlab=expression(paste("true ", lambda)), ylab=expression(paste("inferred ", lambda)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX, labels=as.character(SPAX))#
+axis(2, at=SPAX, labels=as.character(SPAX))#
+Cor <- round(cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+mtext(bquote(psi == 0.1), side=2, line=4, xpd=NA, las=0)#
+Model <- summary(lm(regMat[Chosen,"inferred_lambda_mid"]~regMat[Chosen,"true_lambda"]+0))#
+Slopes[3] <- Model$coefficients[1]#
+Errors[3] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM2, ylim=SPLIM2, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu)), ylab=expression(paste("inferred ", mu)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX2, labels=as.character(SPAX2))#
+axis(2, at=SPAX2, labels=as.character(SPAX2))#
+Cor <- round(cor(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+Model <- summary(lm(regMat[Chosen,"inferred_mu_mid"]~regMat[Chosen,"true_mu"]+0))#
+eSlopes[3] <- Model$coefficients[1]#
+eErrors[3] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=EXLIMx, ylim=EXLIMy, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu, " / ", lambda)), ylab=expression(paste("inferred ", mu, " / ", lambda)))#
+abline(0,1,lty=2)#
+axis(1, at=EXAXx, labels=as.character(EXAXx))#
+axis(2, at=EXAXy, labels=as.character(EXAXy))#
+Cor <- round(cor(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+#
+### High#
+Chosen <- psiHi#
+plot(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM, ylim=SPLIM, xaxt="n", yaxt="n", xlab=expression(paste("true ", lambda)), ylab=expression(paste("inferred ", lambda)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX, labels=as.character(SPAX))#
+axis(2, at=SPAX, labels=as.character(SPAX))#
+Cor <- round(cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+mtext(bquote(psi == 1), side=2, line=4, xpd=NA, las=0)#
+Model <- summary(lm(regMat[Chosen,"inferred_lambda_mid"]~regMat[Chosen,"true_lambda"]+0))#
+Slopes[4] <- Model$coefficients[1]#
+Errors[4] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM2, ylim=SPLIM2, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu)), ylab=expression(paste("inferred ", mu)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX2, labels=as.character(SPAX2))#
+axis(2, at=SPAX2, labels=as.character(SPAX2))#
+Cor <- round(cor(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+Model <- summary(lm(regMat[Chosen,"inferred_mu_mid"]~regMat[Chosen,"true_mu"]+0))#
+eSlopes[4] <- Model$coefficients[1]#
+eErrors[4] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=EXLIMx, ylim=EXLIMy, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu, " / ", lambda)), ylab=expression(paste("inferred ", mu, " / ", lambda)))#
+abline(0,1,lty=2)#
+axis(1, at=EXAXx, labels=as.character(EXAXx))#
+axis(2, at=EXAXy, labels=as.character(EXAXy))#
+Cor <- round(cor(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+dev.off()
+Include <- intersect(which(totalMat[,"N_taxa"]>=20), which(regConv >= 0))#
+#
+regMat <- totalMat[Include,]#
+#
+totalExtinct <- apply(regMat, 1, function(x) ifelse(x["N_taxa"]==x["N_fossils"],2,1))#
+Extinct <- apply(regMat, 1, function(x) ifelse(x["N_fossils"]>0,2,1))#
+psiZero <- which(regMat[,"psi_class"]==0)#
+psiLo <- which(regMat[,"psi_class"]==1)#
+psiMid <- which(regMat[,"psi_class"]==2)#
+psiHi <- which(regMat[,"psi_class"]==3)#
+psiStg <- which(regMat[,"psi_class"]==-1)#
+#
+setwd("~/Documents/BAMM_fossilBAMM_description/figures/no_recompute")#
+#pdf("rateCors_nolog_three_all.pdf", height=7.8, width=6)#
+pdf("rateCors_nolog_three_n>20.pdf", height=7.8, width=6)#
+#
+par(mfrow=c(4,3), las=1, mgp=c(2, 0.5, 0), mar=c(4,4,0.1,0.25), oma=c(0,2,0,0), bty="n", tck=-0.01, cex.axis=0.75, pty="s")#
+#
+SPAX <- c(0.0005, 0.005, 0.05, 0.5, 5)#
+SPAX2 <- c(0.00004, 0.0004, 0.004, 0.04, 0.4, 4)#
+SPLIM <- c(0.01, 5)#
+SPLIM2 <- c(0.0001, 4)#
+#
+LOG <- "xy"#
+#
+EXAXx <-  c(-1, 0, 0.5, 1, 1.5, 2, 2.5, 3)#
+EXAXy <- c(-1, 0, 0.5, 1, 1.5, 2, 2.5, 3)#
+EXLIMx <- c(0, 3)#
+EXLIMy <- c(0, 3)#
+COLORS <- c(rgb(0,0,0,0.1), rgb(0,0,0,0.1))#
+#
+#EXAXx <- c(-5, 0, 2, 4, 6, 8)#
+#EXAXy <- c(-5, 0, 2, 4, 6, 8)#
+#EXLIMx <- c(0, 8)#
+#EXLIMy <- c(0, 8)#
+#
+Slopes <- c()#
+Errors <- c()#
+#
+eSlopes <- c()#
+eErrors <- c()#
+#
+METH <- "spearman"#
+#
+### Extant-only#
+Chosen <- psiZero#
+plot(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM, ylim=SPLIM, xaxt="n", yaxt="n", xlab=expression(paste("true ", lambda)), ylab=expression(paste("inferred ", lambda)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX, labels=as.character(SPAX))#
+axis(2, at=SPAX, labels=as.character(SPAX))#
+Cor <- round(cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+mtext(bquote(psi == 0), side=2, line=4, xpd=NA, las=0)#
+Model <- summary(lm(regMat[Chosen,"inferred_lambda_mid"]~regMat[Chosen,"true_lambda"]+0))#
+Slopes[1] <- Model$coefficients[1]#
+Errors[1] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM2, ylim=SPLIM2, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu)), ylab=expression(paste("inferred ", mu)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX2, labels=as.character(SPAX2))#
+axis(2, at=SPAX2, labels=as.character(SPAX2))#
+Cor <- round(cor(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+Model <- summary(lm(regMat[Chosen,"inferred_mu_mid"]~regMat[Chosen,"true_mu"]+0))#
+eSlopes[1] <- Model$coefficients[1]#
+eErrors[1] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=EXLIMx, ylim=EXLIMy, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu, " / ", lambda)), ylab=expression(paste("inferred ", mu, " / ", lambda)))#
+abline(0,1,lty=2)#
+axis(1, at=EXAXx, labels=as.character(EXAXx))#
+axis(2, at=EXAXy, labels=as.character(EXAXy))#
+Cor <- round(cor(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+if (Cor == 0)	{#
+	legend("topleft", legend="r < 0.01", bty="n")#
+}#
+if (Cor > 0)	{	#
+	legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+}#
+#
+### Low#
+Chosen <- psiLo#
+plot(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM, ylim=SPLIM, xaxt="n", yaxt="n", xlab=expression(paste("true ", lambda)), ylab=expression(paste("inferred ", lambda)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX, labels=as.character(SPAX))#
+axis(2, at=SPAX, labels=as.character(SPAX))#
+Cor <- round(cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+mtext(bquote(psi == 0.01), side=2, line=4, xpd=NA, las=0)#
+Model <- summary(lm(regMat[Chosen,"inferred_lambda_mid"]~regMat[Chosen,"true_lambda"]+0))#
+Slopes[2] <- Model$coefficients[1]#
+Errors[2] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM2, ylim=SPLIM2, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu)), ylab=expression(paste("inferred ", mu)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX2, labels=as.character(SPAX2))#
+axis(2, at=SPAX2, labels=as.character(SPAX2))#
+Cor <- round(cor(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+Model <- summary(lm(regMat[Chosen,"inferred_mu_mid"]~regMat[Chosen,"true_mu"]+0))#
+eSlopes[2] <- Model$coefficients[1]#
+eErrors[2] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=EXLIMx, ylim=EXLIMy, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu, " / ", lambda)), ylab=expression(paste("inferred ", mu, " / ", lambda)))#
+abline(0,1,lty=2)#
+axis(1, at=EXAXx, labels=as.character(EXAXx))#
+axis(2, at=EXAXy, labels=as.character(EXAXy))#
+Cor <- round(cor(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+#
+### Mid#
+Chosen <- psiMid#
+plot(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM, ylim=SPLIM, xaxt="n", yaxt="n", xlab=expression(paste("true ", lambda)), ylab=expression(paste("inferred ", lambda)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX, labels=as.character(SPAX))#
+axis(2, at=SPAX, labels=as.character(SPAX))#
+Cor <- round(cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+mtext(bquote(psi == 0.1), side=2, line=4, xpd=NA, las=0)#
+Model <- summary(lm(regMat[Chosen,"inferred_lambda_mid"]~regMat[Chosen,"true_lambda"]+0))#
+Slopes[3] <- Model$coefficients[1]#
+Errors[3] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM2, ylim=SPLIM2, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu)), ylab=expression(paste("inferred ", mu)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX2, labels=as.character(SPAX2))#
+axis(2, at=SPAX2, labels=as.character(SPAX2))#
+Cor <- round(cor(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+Model <- summary(lm(regMat[Chosen,"inferred_mu_mid"]~regMat[Chosen,"true_mu"]+0))#
+eSlopes[3] <- Model$coefficients[1]#
+eErrors[3] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=EXLIMx, ylim=EXLIMy, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu, " / ", lambda)), ylab=expression(paste("inferred ", mu, " / ", lambda)))#
+abline(0,1,lty=2)#
+axis(1, at=EXAXx, labels=as.character(EXAXx))#
+axis(2, at=EXAXy, labels=as.character(EXAXy))#
+Cor <- round(cor(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+#
+### High#
+Chosen <- psiHi#
+plot(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM, ylim=SPLIM, xaxt="n", yaxt="n", xlab=expression(paste("true ", lambda)), ylab=expression(paste("inferred ", lambda)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX, labels=as.character(SPAX))#
+axis(2, at=SPAX, labels=as.character(SPAX))#
+Cor <- round(cor(regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+mtext(bquote(psi == 1), side=2, line=4, xpd=NA, las=0)#
+Model <- summary(lm(regMat[Chosen,"inferred_lambda_mid"]~regMat[Chosen,"true_lambda"]+0))#
+Slopes[4] <- Model$coefficients[1]#
+Errors[4] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=SPLIM2, ylim=SPLIM2, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu)), ylab=expression(paste("inferred ", mu)), log=LOG)#
+abline(0,1,lty=2)#
+axis(1, at=SPAX2, labels=as.character(SPAX2))#
+axis(2, at=SPAX2, labels=as.character(SPAX2))#
+Cor <- round(cor(regMat[Chosen,"true_mu"], regMat[Chosen,"inferred_mu_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+Model <- summary(lm(regMat[Chosen,"inferred_mu_mid"]~regMat[Chosen,"true_mu"]+0))#
+eSlopes[4] <- Model$coefficients[1]#
+eErrors[4] <- Model$coefficients[2]#
+#
+plot(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], pch=16, col=COLORS[Extinct[Chosen]], xlim=EXLIMx, ylim=EXLIMy, xaxt="n", yaxt="n", xlab=expression(paste("true ", mu, " / ", lambda)), ylab=expression(paste("inferred ", mu, " / ", lambda)))#
+abline(0,1,lty=2)#
+axis(1, at=EXAXx, labels=as.character(EXAXx))#
+axis(2, at=EXAXy, labels=as.character(EXAXy))#
+Cor <- round(cor(regMat[Chosen,"true_mu"]/regMat[Chosen,"true_lambda"], regMat[Chosen,"inferred_mu_mid"]/regMat[Chosen,"inferred_lambda_mid"], method=METH, use="complete"), digits=2)#
+legend("topleft", legend=bquote(r == .(Cor)), bty="n")#
+dev.off()
+ancThresh
+library(phytools)
+ancThresh
+rm(list=ls())
+Path_base <- "~/Documents/Salamanders/"#
+addFamily <- function(Taxa, Family, Cex=2, centering=T, Top=T)	{#
+	Names <- unique(c(tree$tip.label[grep(Taxa[1], tree$tip.label)], tree$tip.label[grep(Taxa[2], tree$tip.label)], tree$tip.label[grep(Taxa[3], tree$tip.label)]))#
+	allNames <- na.omit(tree$tip.label[getDescendants(tree, findMRCA(tree, tips=Names))])#
+	if (centering == T)		{#
+		Center <- allNames[round(mean(1:length(allNames)))]#
+		tiplabels(Family, tip=which(tree$tip.label == Center), bg='white', frame='none', xpd=NA, adj=-0.05, cex=Cex)#
+	}#
+	else	 if (centering == F){#
+		if (Top == T)	{#
+			Center <- rev(allNames)[1]#
+		}#
+		else	{#
+			Center <- allNames[1]#
+		}#
+		tiplabels(Family, tip=which(tree$tip.label == Center), bg='white', frame='none', xpd=NA, adj=-0.05, cex=Cex)#
+	}#
+}#
+library(phytools)#
+library(BAMMtools)#
+#
+# Read in neoteny scores#
+setwd(paste(Path_base, "neoteny", sep=""))#
+neoteny <- read.csv("neoteny.csv", stringsAsFactors=F)#
+spNames <- apply(neoteny, 1, function(x) paste(x[1], x[2], sep="_", collapse=""))#
+neoteny <- neoteny[,3]#
+names(neoteny) <- spNames#
+#
+Alpha <- 1#
+#Cols <- c(rgb(254/255, 232/255, 200/255, Alpha), rgb(253/255, 187/255, 132/255, Alpha), rgb(227/255, 74/255, 51/255, Alpha))#
+#names(Cols) <- c("0", "1", "2")#
+Cols <- c(rgb(254/255, 237/255, 222/255, Alpha), rgb(253/255, 190/255, 133/255, Alpha), rgb(253/255, 141/255, 60/255, Alpha), rgb(217/255, 71/255, 1/255, Alpha))#
+names(Cols) <- c("-1", "0", "1", "2")#
+PrA <- matrix(rep(0.01666667, length(Cols)), nrow=1)#
+colnames(PrA) <- names(Cols)#
+rownames(PrA) <- Ntip(tree) + 1#
+PrA[1,"0"] <- 1 - (3 * PrA[1,"1"])#
+#
+# extant tree#
+#tree <- read.tree(paste(Path_base, "bamm/extant_only/no_pleth.tre", sep=""))#
+tree <- read.tree(paste(Path_base, "bamm/extant_only/modernSal.tre", sep=""))#
+#
+Ngen <- 5e6
+ACE <- ancThresh(tree, neoteny[tree$tip.label], ngen=Ngen, sequence=colnames(PrA), control=list(sample=Ngen/1e3, propthresh=0.15*max(nodeHeights(tree)), propliab=0.75*max(nodeHeights(tree)), burnin=Ngen*0.1, piecol=Cols, tipcol="input", pr.anc=PrA))#
+save(ACE, file=paste(Path_base, "output/neotAnc/neotAnc_extant.RData", sep=""))#
+#
+# Load trees

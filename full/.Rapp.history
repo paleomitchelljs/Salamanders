@@ -1,0 +1,2479 @@
+e2 <- events#
+e2$abstime <- e2$abstime - deltaT
+deltaT
+e2$abstime
+fulltree <- trueTrees[[1]]#
+fullEvents <- trueEvents[which(trueEvents[,1]==1),]#
+#
+extantTree <- read.tree("phy.tre")#
+#
+paleophy <- extantTree#
+truephy <- fulltree#
+events <- fullEvents#
+#
+v <- NU.branching.times(paleophy, return.type = 'begin.end')#
+truephy <- NU.branching.times(truephy, return.type = 'begin.end')#
+root <- length(v$tip.label) + 1#
+#
+begin_times_fossil <- c(0, v$begin)#
+names(begin_times_fossil) <- c(root, v$edge[,2])#
+end_times_fossil <- c(0, v$end)#
+names(end_times_fossil) <- c(root, v$edge[,2])#
+#
+end_times_full <- c(0, truephy$end)#
+names(end_times_full) <- c((length(truephy$tip.label)+1), truephy$edge[,2])#
+#
+# spanning tips for fossil tree#
+tset <- intersect(v$tip.label, truephy$tip.label)[1:2]#
+#
+# root of fossil tree's location in full tree#
+tnode <- getMRCA(truephy, tip = tset)#
+fnode <- getMRCA(v, tip = tset)#
+#
+deltaT <- end_times_full[as.character(tnode)] - end_times_fossil[as.character(fnode)]				#
+e2 <- events#
+e2$abstime <- e2$abstime - deltaT
+deltaT
+e2$abstime
+e2
+for (i in 1:nrow(events)){#
+		nodex <- which(truephy$tip.label == e2$leftchild[i])#
+		if (!is.na(events$rightchild[i]) & events$rightchild[i] != events$leftchild[i]){#
+			nodex <- getMRCA(truephy, tip = c(e2$rightchild[i], e2$leftchild[i]))			#
+		}#
+		if (nodex > length(truephy$tip.label)){#
+			tipset <- extract.clade(truephy, nodex)$tip.label#
+		}else{#
+			tipset <- truephy$tip.label[nodex]#
+		}#
+		iset <- intersect(tipset, v$tip.label)#
+		atime <- e2$abstime[i]#
+		if (length(iset) > 0){#
+			rtip <- iset[1]#
+			node <- which(v$tip.label == rtip)#
+			if (atime < end_times_fossil[as.character(node)]){#
+				#only go here if event occurs before tip time in fossil tree  #
+ 				while (node != root){#
+ 					# step back down tree until find correct branch for event.#
+ 					st <- begin_times_fossil[as.character(node)]#
+ 					if (atime > st){#
+ 						# event must have occurred on this branch.#
+ 						break;#
+ 					}else{#
+ 						# event occurs before the focal branch.#
+ 						node <- v$edge[,1][v$edge[,2] == node]#
+ 					}#
+ 				}#
+ 				dtips <- getSpanningTips(v, node=node)#
+ 				# add event here.#
+ 				tmp <- makeRowDF(1, dtips[1], dtips[2], e2$abstime[i], e2$lambdainit[i], e2$lambdashift[i], e2$muinit[i], 0.0);	#
+ 				if (node == root){#
+ 					tmp$abstime = 0;#
+ 				}#
+ 				if (is.null(res)){#
+ 					res <- tmp#
+ 				}else{#
+ 					res <- rbind(res, tmp)#
+ 				}#
+ 			}#
+		}
+}
+res <- NULL
+for (i in 1:nrow(events)){#
+		nodex <- which(truephy$tip.label == e2$leftchild[i])#
+		if (!is.na(events$rightchild[i]) & events$rightchild[i] != events$leftchild[i]){#
+			nodex <- getMRCA(truephy, tip = c(e2$rightchild[i], e2$leftchild[i]))			#
+		}#
+		if (nodex > length(truephy$tip.label)){#
+			tipset <- extract.clade(truephy, nodex)$tip.label#
+		}else{#
+			tipset <- truephy$tip.label[nodex]#
+		}#
+		iset <- intersect(tipset, v$tip.label)#
+		atime <- e2$abstime[i]#
+		if (length(iset) > 0){#
+			rtip <- iset[1]#
+			node <- which(v$tip.label == rtip)#
+			if (atime < end_times_fossil[as.character(node)]){#
+				#only go here if event occurs before tip time in fossil tree  #
+ 				while (node != root){#
+ 					# step back down tree until find correct branch for event.#
+ 					st <- begin_times_fossil[as.character(node)]#
+ 					if (atime > st){#
+ 						# event must have occurred on this branch.#
+ 						break;#
+ 					}else{#
+ 						# event occurs before the focal branch.#
+ 						node <- v$edge[,1][v$edge[,2] == node]#
+ 					}#
+ 				}#
+ 				dtips <- getSpanningTips(v, node=node)#
+ 				# add event here.#
+ 				tmp <- makeRowDF(1, dtips[1], dtips[2], e2$abstime[i], e2$lambdainit[i], e2$lambdashift[i], e2$muinit[i], 0.0);	#
+ 				if (node == root){#
+ 					tmp$abstime = 0;#
+ 				}#
+ 				if (is.null(res)){#
+ 					res <- tmp#
+ 				}else{#
+ 					res <- rbind(res, tmp)#
+ 				}#
+ 			}#
+		}
+}
+res
+plot(getEventData(paleophy, res))
+events
+x <- getEventData(paleophy, res)
+y <- x$meanTipLambda
+names(y) <- x$tip.label
+y["A501"]
+res
+par(mfrow=c(1,4), mar=c(0,1,0,1))#
+plot(trueTrees[[1]], cex=0.5)#
+x <- plot(edatT, breaks="quantile")#
+plot(edatE, colorbreaks=x$colorbreaks)#
+plot(edatI, colorbreaks=x$colorbreaks)
+tLam <- edatT$meanTipLambda
+names(tLam) <- edatT$tip.label
+eLam <- edatE$meanTipLambda
+names(eLam) <- edatE$tip.label
+plot(tLam[intersect(names(eLam), names(tLam))], eLam[intersect(names(eLam), names(tLam))])
+plot(tLam[intersect(names(eLam), names(tLam))], eLam[intersect(names(eLam), names(tLam))])
+## take a full tree, a pruned tree and an event data matrix consistent with the FULL tree and create an event data matrix consistent with the PRUNED tree#
+degradeEventMat <- function(fullTree, prunedTree, eventMatrix)	{#
+	Data <- eventMatrix#
+	ftree <- fullTree#
+	fossilRoot <- max(nodeHeights(prunedTree))#
+	fullRoot <- max(nodeHeights(ftree))#
+	deltaTime <- fossilRoot - fullRoot#
+	newData <- Data#
+	Nshifts <- nrow(Data)#
+	DropRow <- NA#
+#
+	# There need to be at least 20 sampled tips for this to work#
+	Ntotal <- Ntip(prunedTree)#
+	Shift <- 1					#
+	# Go through each shift#
+	for (Shift in 1:Nshifts)		{#
+		# first, does the shift already have two extant spanning members?#
+		#if the shift does not occur on a tip...#
+		if (!is.na(newData[Shift,3]) && newData[Shift,3] != newData[Shift,2])	{#
+			# If both left and right child are present in the pruned tree, do nothing#
+			if (newData[Shift,2] %in% prunedTree$tip.label && newData[Shift,3] %in% prunedTree$tip.label)	{#
+					newData[Shift,] <- newData[Shift,]#
+			}#
+			# If one of the spanning taxa is unsampled, find a sampled replacement#
+			else	{#
+				Tips <- na.omit(ftree$tip.label[getDescendants(ftree, findMRCA(ftree, newData[Shift, c(2,3)]))])#
+				Vals <- Tips[which(Tips %in% prunedTree$tip.label)]#
+				Test <- Vals[c(1,length(Vals))]#
+				# If the two spanning taxa are not the same, accept the change#
+				if (sum(duplicated(Test)) == 0)	{#
+					newData[Shift,c(2,3)] <- Vals[c(1,length(Vals))]#
+				}#
+				# If the two spanning taxa ARE the same, it's a tip shift#
+				if (sum(duplicated(Test)) >= 1)	{#
+					newData[Shift,c(2,3)] <- c(Vals, NA)#
+				}				#
+			}#
+		}#
+		# if the shift occurs on a tip...#
+		else		{#
+			# ...and that tip is sampled, leave it alone...#
+			if (newData[Shift,2] %in% prunedTree$tip.label)	{#
+				newData[Shift,] <- newData[Shift,]#
+			}#
+			# ...but if that tip is extinct, then the shift regime is unobserved#
+			else	{#
+				newData[Shift,c(2:3)] <- c(NA, NA)#
+			}#
+		}#
+	}#
+	newData <- newData[!is.na(newData[,2]),]#
+	if (colnames(newData)[ncol(newData)] != "mushift")	{#
+		newData <- cbind(newData, rep(0, nrow(newData)))#
+	}#
+	colnames(newData) <- c("generation", "leftchild", "rightchild", "abstime", "lambdainit", "lambdashift", "muinit", "mushift")#
+	return(newData)#
+}
+## take a full tree, a pruned tree and an event data matrix consistent with the FULL tree and create an event data matrix consistent with the PRUNED tree#
+degradeEventMat <- function(fullTree, prunedTree, eventMatrix)	{#
+	Data <- eventMatrix#
+	ftree <- fullTree#
+	fossilRoot <- max(nodeHeights(prunedTree))#
+	fullRoot <- max(nodeHeights(ftree))#
+	deltaTime <- fossilRoot - fullRoot#
+	newData <- Data#
+	Nshifts <- nrow(Data)#
+	DropRow <- NA#
+#
+	# There need to be at least 20 sampled tips for this to work#
+	Ntotal <- Ntip(prunedTree)#
+	Shift <- 1					#
+	# Go through each shift#
+	for (Shift in 1:Nshifts)		{#
+		# first, does the shift already have two extant spanning members?#
+		#if the shift does not occur on a tip...#
+		if (!is.na(newData[Shift,3]) && newData[Shift,3] != newData[Shift,2])	{#
+			# If both left and right child are present in the pruned tree, do nothing#
+			if (newData[Shift,2] %in% prunedTree$tip.label && newData[Shift,3] %in% prunedTree$tip.label)	{#
+					newData[Shift,] <- newData[Shift,]#
+			}#
+			# If one of the spanning taxa is unsampled, find a sampled replacement#
+			else	{#
+				Tips <- na.omit(ftree$tip.label[getDescendants(ftree, findMRCA(ftree, newData[Shift, c(2,3)]))])#
+				Vals <- Tips[which(Tips %in% prunedTree$tip.label)]#
+				Test <- Vals[c(1,length(Vals))]#
+				# If the two spanning taxa are not the same, accept the change#
+				if (sum(duplicated(Test)) == 0)	{#
+					newData[Shift,c(2,3)] <- Vals[c(1,length(Vals))]#
+				}#
+				# If the two spanning taxa ARE the same, it's a tip shift#
+				if (sum(duplicated(Test)) >= 1)	{#
+					newData[Shift,c(2,3)] <- c(Vals, NA)#
+				}				#
+			}#
+		}#
+		# if the shift occurs on a tip...#
+		else		{#
+			# ...and that tip is sampled, leave it alone...#
+			if (newData[Shift,2] %in% prunedTree$tip.label)	{#
+				newData[Shift,] <- newData[Shift,]#
+			}#
+			# ...but if that tip is extinct, then the shift regime is unobserved#
+			else	{#
+				newData[Shift,c(2:3)] <- c(NA, NA)#
+			}#
+		}#
+	}#
+	newData <- newData[!is.na(newData[,2]),]#
+	if (colnames(newData)[ncol(newData)] != "mushift")	{#
+		newData <- cbind(newData, rep(0, nrow(newData)))#
+	}#
+	colnames(newData) <- c("generation", "leftchild", "rightchild", "abstime", "lambdainit", "lambdashift", "muinit", "mushift")#
+	return(newData)#
+}
+z <- degradeEventMat(truephy, paleophy, events)
+z
+plot(getEventData(paleophy, z))
+edatE <- getEventData(paleophy, z)#
+#
+tLam <- edatT$meanTipLambda#
+names(tLam) <- edatT$tip.label#
+eLam <- edatE$meanTipLambda#
+names(eLam) <- edatE$tip.label#
+plot(tLam[intersect(names(eLam), names(tLam))], eLam[intersect(names(eLam), names(tLam))])
+135 - 50
+edatE <- getEventData(paleophy, z)#
+#
+tLam <- edatT$meanTipLambda#
+names(tLam) <- edatT$tip.label#
+eLam <- edatE$meanTipLambda#
+names(eLam) <- edatE$tip.label#
+plot(tLam[intersect(names(eLam), names(tLam))], eLam[intersect(names(eLam), names(tLam))])
+text(tLam[intersect(names(eLam), names(tLam))], eLam[intersect(names(eLam), names(tLam))], intersect(names(eLam), names(tLam)), cex=0.25)
+text(tLam[intersect(names(eLam), names(tLam))], eLam[intersect(names(eLam), names(tLam))], intersect(names(eLam), names(tLam)), cex=0.25, pos=3)
+text(tLam[intersect(names(eLam), names(tLam))], eLam[intersect(names(eLam), names(tLam))], intersect(names(eLam), names(tLam)), cex=0.75, pos=3)
+e2
+e2[order(e2$abstime),]
+e2 <- e2[order(e2$abstime),]
+for (i in 1:nrow(events)){#
+		nodex <- which(truephy$tip.label == e2$leftchild[i])#
+		if (!is.na(events$rightchild[i]) & events$rightchild[i] != events$leftchild[i]){#
+			nodex <- getMRCA(truephy, tip = c(e2$rightchild[i], e2$leftchild[i]))			#
+		}#
+		if (nodex > length(truephy$tip.label)){#
+			tipset <- extract.clade(truephy, nodex)$tip.label#
+		}else{#
+			tipset <- truephy$tip.label[nodex]#
+		}#
+		iset <- intersect(tipset, v$tip.label)#
+		atime <- e2$abstime[i]#
+		if (length(iset) > 0){#
+			rtip <- iset[1]#
+			node <- which(v$tip.label == rtip)#
+			if (atime < end_times_fossil[as.character(node)]){#
+				#only go here if event occurs before tip time in fossil tree  #
+ 				while (node != root){#
+ 					# step back down tree until find correct branch for event.#
+ 					st <- begin_times_fossil[as.character(node)]#
+ 					if (atime > st){#
+ 						# event must have occurred on this branch.#
+ 						break;#
+ 					}else{#
+ 						# event occurs before the focal branch.#
+ 						node <- v$edge[,1][v$edge[,2] == node]#
+ 					}#
+ 				}#
+ 				dtips <- getSpanningTips(v, node=node)#
+ 				# add event here.#
+ 				tmp <- makeRowDF(1, dtips[1], dtips[2], e2$abstime[i], e2$lambdainit[i], e2$lambdashift[i], e2$muinit[i], 0.0);	#
+ 				if (node == root){#
+ 					tmp$abstime = 0;#
+ 				}#
+ 				if (is.null(res)){#
+ 					res <- tmp#
+ 				}else{#
+ 					res <- rbind(res, tmp)#
+ 				}#
+ 			}#
+		}
+}
+## take a full tree, a pruned tree and an event data matrix consistent with the FULL tree and create an event data matrix consistent with the PRUNED tree#
+degradeEventMat <- function(fullTree, prunedTree, eventMatrix)	{#
+	Data <- eventMatrix#
+	ftree <- fullTree#
+	fossilRoot <- max(nodeHeights(prunedTree))#
+	fullRoot <- max(nodeHeights(ftree))#
+	deltaTime <- fossilRoot - fullRoot#
+	newData <- Data#
+	Nshifts <- nrow(Data)#
+	DropRow <- NA#
+#
+	# There need to be at least 20 sampled tips for this to work#
+	Ntotal <- Ntip(prunedTree)#
+	Shift <- 1					#
+	# Go through each shift#
+	for (Shift in 1:Nshifts)		{#
+		# first, does the shift already have two extant spanning members?#
+		#if the shift does not occur on a tip...#
+		if (!is.na(newData[Shift,3]) && newData[Shift,3] != newData[Shift,2])	{#
+			# If both left and right child are present in the pruned tree, do nothing#
+			if (newData[Shift,2] %in% prunedTree$tip.label && newData[Shift,3] %in% prunedTree$tip.label)	{#
+					newData[Shift,] <- newData[Shift,]#
+			}#
+			# If one of the spanning taxa is unsampled, find a sampled replacement#
+			else	{#
+				Tips <- na.omit(ftree$tip.label[getDescendants(ftree, findMRCA(ftree, newData[Shift, c(2,3)]))])#
+				Vals <- Tips[which(Tips %in% prunedTree$tip.label)]#
+				Test <- Vals[c(1,length(Vals))]#
+				# If the two spanning taxa are not the same, accept the change#
+				if (sum(duplicated(Test)) == 0)	{#
+					newData[Shift,c(2,3)] <- Vals[c(1,length(Vals))]#
+				}#
+				# If the two spanning taxa ARE the same, it's a tip shift#
+				if (sum(duplicated(Test)) >= 1)	{#
+					newData[Shift,c(2,3)] <- c(Vals, NA)#
+				}				#
+			}#
+		}#
+		# if the shift occurs on a tip...#
+		else		{#
+			# ...and that tip is sampled, leave it alone...#
+			if (newData[Shift,2] %in% prunedTree$tip.label)	{#
+				newData[Shift,] <- newData[Shift,]#
+			}#
+			# ...but if that tip is extinct, then the shift regime is unobserved#
+			else	{#
+				newData[Shift,c(2:3)] <- c(NA, NA)#
+			}#
+		}#
+	}#
+	newData <- newData[!is.na(newData[,2]),]#
+	if (colnames(newData)[ncol(newData)] != "mushift")	{#
+		newData <- cbind(newData, rep(0, nrow(newData)))#
+	}#
+	colnames(newData) <- c("generation", "leftchild", "rightchild", "abstime", "lambdainit", "lambdashift", "muinit", "mushift")#
+	return(newData)#
+}#
+fulltree <- trueTrees[[1]]#
+fullEvents <- trueEvents[which(trueEvents[,1]==1),]#
+#
+extantTree <- read.tree("phy.tre")#
+#
+paleophy <- extantTree#
+truephy <- fulltree#
+events <- fullEvents#
+#
+v <- NU.branching.times(paleophy, return.type = 'begin.end')#
+truephy <- NU.branching.times(truephy, return.type = 'begin.end')#
+root <- length(v$tip.label) + 1#
+#
+begin_times_fossil <- c(0, v$begin)#
+names(begin_times_fossil) <- c(root, v$edge[,2])#
+end_times_fossil <- c(0, v$end)#
+names(end_times_fossil) <- c(root, v$edge[,2])#
+#
+end_times_full <- c(0, truephy$end)#
+names(end_times_full) <- c((length(truephy$tip.label)+1), truephy$edge[,2])#
+#
+# spanning tips for fossil tree#
+tset <- intersect(v$tip.label, truephy$tip.label)[1:2]#
+#
+# root of fossil tree's location in full tree#
+tnode <- getMRCA(truephy, tip = tset)#
+fnode <- getMRCA(v, tip = tset)#
+#
+deltaT <- end_times_full[as.character(tnode)] - end_times_fossil[as.character(fnode)]				#
+e2 <- events#
+e2$abstime <- e2$abstime - deltaT#
+e2 <- e2[order(e2$abstime),]#
+#
+res <- NULL
+head(fullEvents)
+Mins <- tapply(fullEvents$lambdainit, fullEvents$generation, min)
+Maxs <- tapply(fullEvents$lambdainit, fullEvents$generation, max)
+hist(Mins/Maxs)
+boxplot(Mins, Maxs)
+fullEvents
+Maxs <- tapply(trueEvents$lambdainit, trueEvents$generation, max)
+Mins <- tapply(trueEvents$lambdainit, trueEvents$generation, min)
+hist(Mins/Maxs)
+hist(Maxs/Mins)
+max(Maxs)
+max(Mins)
+min(Mins)
+hist(log10(Maxs/Mins))
+median(log10(Maxs/Mins))
+median(Maxs/Mins)
+4.64 / 0.01
+convertEventData <- function(paleophy, truephy, events, tol = 1e-5){#
+	v <- NU.branching.times(paleophy, return.type = 'begin.end')#
+	truephy <- NU.branching.times(truephy, return.type = 'begin.end')#
+	root <- length(v$tip.label) + 1#
+	begin_times_fossil <- c(0, v$begin)#
+	names(begin_times_fossil) <- c(root, v$edge[,2])#
+	end_times_fossil <- c(0, v$end)#
+	names(end_times_fossil) <- c(root, v$edge[,2])#
+	end_times_full <- c(0, truephy$end)#
+	names(end_times_full) <- c((length(truephy$tip.label)+1), truephy$edge[,2])#
+	if (length(intersect(v$tip.label, truephy$tip.label)) <= 1){#
+		return(0)#
+	}#
+	tset <- intersect(v$tip.label, truephy$tip.label)[1:2]#
+	tnode <- getMRCA(truephy, tip = tset)#
+	fnode <- getMRCA(v, tip = tset)#
+	deltaT <- end_times_full[as.character(tnode)] - end_times_fossil[as.character(fnode)]		#
+	e2 <- events#
+	e2$abstime <- e2$abstime - deltaT#
+	res <- NULL#
+ 	e2$abstime[e2$abstime < tol] <- 0#
+ 	e2 <- e2[order(e2$abstime),]#
+	for (i in 1:nrow(events)){#
+		nodex <- which(truephy$tip.label == e2$leftchild[i])#
+		if (!is.na(events$rightchild[i]) & events$rightchild[i] != events$leftchild[i]){#
+			nodex <- getMRCA(truephy, tip = c(e2$rightchild[i], e2$leftchild[i]))			#
+		}#
+		if (nodex > length(truephy$tip.label)){#
+			tipset <- extract.clade(truephy, nodex)$tip.label#
+		}else{#
+			tipset <- truephy$tip.label[nodex]#
+		}#
+		iset <- intersect(tipset, v$tip.label)#
+		atime <- e2$abstime[i]#
+		if (length(iset) > 0){#
+			rtip <- iset[1]#
+			node <- which(v$tip.label == rtip)#
+			if (atime < end_times_fossil[as.character(node)]){#
+				#only go here if event occurs before tip time in fossil tree  #
+ 				while (node != root){#
+ 					# step back down tree until find correct branch for event.#
+ 					st <- begin_times_fossil[as.character(node)]#
+ 					if (atime > st){#
+ 						# event must have occurred on this branch.#
+ 						break;#
+ 					}else{#
+ 						# event occurs before the focal branch.#
+ 						node <- v$edge[,1][v$edge[,2] == node]#
+ 					}#
+ 				}#
+ 				dtips <- getSpanningTips(v, node=node)#
+ 				# add event here.#
+ 				tmp <- makeRowDF(1, dtips[1], dtips[2], e2$abstime[i], e2$lambdainit[i], e2$lambdashift[i], e2$muinit[i], 0.0);	#
+ 				if (node == root){#
+ 					tmp$abstime = 0;#
+ 				}#
+ 				if (is.null(res)){#
+ 					res <- tmp#
+ 				}else{#
+ 					res <- rbind(res, tmp)#
+ 				}#
+ 			}#
+		}#
+	}#
+	if (sum(res$abstime < 0) > 0){#
+		stop('Failure in convertEventData / negative time\n')#
+	}#
+	return(res)#
+}
+edatE <- getEventData(paleophy, z)#
+#
+tLam <- edatT$meanTipLambda#
+names(tLam) <- edatT$tip.label#
+eLam <- edatE$meanTipLambda#
+names(eLam) <- edatE$tip.label#
+plot(tLam[intersect(names(eLam), names(tLam))], eLam[intersect(names(eLam), names(tLam))])
+text(tLam[intersect(names(eLam), names(tLam))], eLam[intersect(names(eLam), names(tLam))], intersect(names(eLam), names(tLam)), cex=0.75, pos=3)
+fulltree <- trueTrees[[1]]#
+fullEvents <- trueEvents[which(trueEvents[,1]==1),]#
+#
+extantTree <- read.tree("phy.tre")#
+#
+paleophy <- extantTree#
+truephy <- fulltree#
+events <- fullEvents#
+#
+v <- NU.branching.times(paleophy, return.type = 'begin.end')#
+truephy <- NU.branching.times(truephy, return.type = 'begin.end')#
+root <- length(v$tip.label) + 1#
+#
+begin_times_fossil <- c(0, v$begin)#
+names(begin_times_fossil) <- c(root, v$edge[,2])#
+end_times_fossil <- c(0, v$end)#
+names(end_times_fossil) <- c(root, v$edge[,2])#
+#
+end_times_full <- c(0, truephy$end)#
+names(end_times_full) <- c((length(truephy$tip.label)+1), truephy$edge[,2])#
+#
+# spanning tips for fossil tree#
+tset <- intersect(v$tip.label, truephy$tip.label)[1:2]#
+#
+# root of fossil tree's location in full tree#
+tnode <- getMRCA(truephy, tip = tset)#
+fnode <- getMRCA(v, tip = tset)#
+#
+deltaT <- end_times_full[as.character(tnode)] - end_times_fossil[as.character(fnode)]				#
+e2 <- events#
+e2$abstime <- e2$abstime - deltaT#
+e2 <- e2[order(e2$abstime),]#
+#
+res <- NULL#
+#
+for (i in 1:nrow(events)){	#
+	nodex <- which(truephy$tip.label == e2$leftchild[i])#
+	if (!is.na(events$rightchild[i]) & events$rightchild[i] != events$leftchild[i]){#
+		nodex <- getMRCA(truephy, tip = c(e2$rightchild[i], e2$leftchild[i]))			#
+	}#
+	if (nodex > length(truephy$tip.label)){#
+		tipset <- extract.clade(truephy, nodex)$tip.label#
+	}else{#
+		tipset <- truephy$tip.label[nodex]#
+	}#
+	iset <- intersect(tipset, v$tip.label)#
+	atime <- e2$abstime[i]#
+	if (length(iset) > 0){#
+		rtip <- iset[1]#
+		node <- which(v$tip.label == rtip)#
+		if (atime < end_times_fossil[as.character(node)]){#
+			#only go here if event occurs before tip time in fossil tree  #
+			while (node != root){#
+				# step back down tree until find correct branch for event.#
+				st <- begin_times_fossil[as.character(node)]#
+				if (atime > st){#
+					# event must have occurred on this branch.#
+					break;#
+				}else{#
+ 					# event occurs before the focal branch.#
+ 					node <- v$edge[,1][v$edge[,2] == node]#
+ 				}#
+ 			}#
+ 			dtips <- getSpanningTips(v, node=node)#
+ 			# add event here.#
+ 			tmp <- makeRowDF(1, dtips[1], dtips[2], e2$abstime[i], e2$lambdainit[i], e2$lambdashift[i], e2$muinit[i], 0.0);	#
+ 			if (node == root){#
+ 				tmp$abstime = 0;#
+ 			}#
+ 			if (is.null(res)){#
+ 				res <- tmp#
+ 			}else{#
+ 				res <- rbind(res, tmp)#
+ 			}#
+ 		} 			#
+	}#
+}
+i
+nodex
+e2$leftchild[i]
+which(truephy$tip.label == "D3")
+rm(list=ls())
+Path_default <- "~/Documents/BAMM_fossilBAMM_description/"#
+trueTrees <- read.tree(paste(Path_default, "simulations/true/simtrees.txt", sep=""))#
+trueEvents <- read.csv(paste(Path_default, "simulations/true/events.txt", sep=""), stringsAsFactors=FALSE)#
+trueEvents <- cbind(trueEvents, rep(0, nrow(trueEvents)))#
+colnames(trueEvents) <- c("generation", "leftchild", "rightchild", "abstime", "lambdainit", "lambdashift", "muinit", "mushift")#
+#
+fulltree <- trueTrees[[1]]#
+fullEvents <- trueEvents[which(trueEvents[,1]==1),]#
+#
+setwd("~/Documents/BAMM_fossilBAMM_description/simulations/extant/sim-1")#
+#
+extantTree <- read.tree("phy.tre")#
+#
+paleophy <- extantTree#
+truephy <- fulltree#
+events <- fullEvents#
+#
+v <- NU.branching.times(paleophy, return.type = 'begin.end')#
+truephy <- NU.branching.times(truephy, return.type = 'begin.end')#
+root <- length(v$tip.label) + 1#
+#
+begin_times_fossil <- c(0, v$begin)#
+names(begin_times_fossil) <- c(root, v$edge[,2])#
+end_times_fossil <- c(0, v$end)#
+names(end_times_fossil) <- c(root, v$edge[,2])#
+#
+end_times_full <- c(0, truephy$end)#
+names(end_times_full) <- c((length(truephy$tip.label)+1), truephy$edge[,2])#
+#
+# spanning tips for fossil tree#
+tset <- intersect(v$tip.label, truephy$tip.label)[1:2]#
+#
+# root of fossil tree's location in full tree#
+tnode <- getMRCA(truephy, tip = tset)#
+fnode <- getMRCA(v, tip = tset)#
+#
+deltaT <- end_times_full[as.character(tnode)] - end_times_fossil[as.character(fnode)]				#
+e2 <- events#
+e2$abstime <- e2$abstime - deltaT#
+e2 <- e2[order(e2$abstime),]#
+#
+res <- NULL
+library(BAMMtools)
+NU.branching.times <- BAMMtools:::NU.branching.times
+v <- NU.branching.times(paleophy, return.type = 'begin.end')#
+truephy <- NU.branching.times(truephy, return.type = 'begin.end')#
+root <- length(v$tip.label) + 1#
+#
+begin_times_fossil <- c(0, v$begin)#
+names(begin_times_fossil) <- c(root, v$edge[,2])#
+end_times_fossil <- c(0, v$end)#
+names(end_times_fossil) <- c(root, v$edge[,2])#
+#
+end_times_full <- c(0, truephy$end)#
+names(end_times_full) <- c((length(truephy$tip.label)+1), truephy$edge[,2])#
+#
+# spanning tips for fossil tree#
+tset <- intersect(v$tip.label, truephy$tip.label)[1:2]#
+#
+# root of fossil tree's location in full tree#
+tnode <- getMRCA(truephy, tip = tset)#
+fnode <- getMRCA(v, tip = tset)#
+#
+deltaT <- end_times_full[as.character(tnode)] - end_times_fossil[as.character(fnode)]				#
+e2 <- events#
+e2$abstime <- e2$abstime - deltaT#
+e2 <- e2[order(e2$abstime),]#
+#
+res <- NULL
+i <- 1#
+for (i in 1:nrow(events)){	#
+	nodex <- which(truephy$tip.label == e2$leftchild[i])#
+	if (!is.na(events$rightchild[i]) & events$rightchild[i] != events$leftchild[i]){#
+		nodex <- getMRCA(truephy, tip = c(e2$rightchild[i], e2$leftchild[i]))			#
+	}#
+	if (nodex > length(truephy$tip.label)){#
+		tipset <- extract.clade(truephy, nodex)$tip.label#
+	}else{#
+		tipset <- truephy$tip.label[nodex]#
+	}#
+	iset <- intersect(tipset, v$tip.label)#
+	atime <- e2$abstime[i]#
+	if (length(iset) > 0){#
+		rtip <- iset[1]#
+		node <- which(v$tip.label == rtip)#
+		if (atime < end_times_fossil[as.character(node)]){#
+			#only go here if event occurs before tip time in fossil tree  #
+			while (node != root){#
+				# step back down tree until find correct branch for event.#
+				st <- begin_times_fossil[as.character(node)]#
+				if (atime > st){#
+					# event must have occurred on this branch.#
+					break;#
+				}else{#
+ 					# event occurs before the focal branch.#
+ 					node <- v$edge[,1][v$edge[,2] == node]#
+ 				}#
+ 			}#
+ 			dtips <- getSpanningTips(v, node=node)#
+ 			# add event here.#
+ 			tmp <- makeRowDF(1, dtips[1], dtips[2], e2$abstime[i], e2$lambdainit[i], e2$lambdashift[i], e2$muinit[i], 0.0);	#
+ 			if (node == root){#
+ 				tmp$abstime = 0;#
+ 			}#
+ 			if (is.null(res)){#
+ 				res <- tmp#
+ 			}else{#
+ 				res <- rbind(res, tmp)#
+ 			}#
+ 		} 			#
+	}#
+}
+makeRowDF <- function(g, lc, rc, at, li, ls, mi, ms){#
+	dff <- data.frame(generation=g, leftchild=lc, #
+			rightchild=rc, abstime=at, lambdainit=li, lambdashift=ls, muinit=mi, mushift=ms , stringsAsFactors=F);#
+	return(dff);#
+}#
+# getSpanningTips#
+#	returns a pair of tips that span a given node. #
+#	if the node is terminal, includes "NA"#
+getSpanningTips <- function(phy, node){#
+	if (node <= length(phy$tip.label)){#
+		return(c(phy$tip.label[node], 'NA'));#
+	}else{#
+		dnodes <- phy$edge[,2][phy$edge[,1] == node];#
+		while (dnodes[1] > length(phy$tip.label)){#
+			dnodes[1] <- phy$edge[,2][phy$edge[,1] == dnodes[1]][1];#
+		}#
+		while (dnodes[2] > length(phy$tip.label)){#
+			dnodes[2] <- phy$edge[,2][phy$edge[,1] == dnodes[2]][1];#
+		}		#
+		dset <- phy$tip.label[dnodes];#
+		return(dset);#
+	}#
+}
+i <- 1#
+for (i in 1:nrow(events)){	#
+	nodex <- which(truephy$tip.label == e2$leftchild[i])#
+	if (!is.na(events$rightchild[i]) & events$rightchild[i] != events$leftchild[i]){#
+		nodex <- getMRCA(truephy, tip = c(e2$rightchild[i], e2$leftchild[i]))			#
+	}#
+	if (nodex > length(truephy$tip.label)){#
+		tipset <- extract.clade(truephy, nodex)$tip.label#
+	}else{#
+		tipset <- truephy$tip.label[nodex]#
+	}#
+	iset <- intersect(tipset, v$tip.label)#
+	atime <- e2$abstime[i]#
+	if (length(iset) > 0){#
+		rtip <- iset[1]#
+		node <- which(v$tip.label == rtip)#
+		if (atime < end_times_fossil[as.character(node)]){#
+			#only go here if event occurs before tip time in fossil tree  #
+			while (node != root){#
+				# step back down tree until find correct branch for event.#
+				st <- begin_times_fossil[as.character(node)]#
+				if (atime > st){#
+					# event must have occurred on this branch.#
+					break;#
+				}else{#
+ 					# event occurs before the focal branch.#
+ 					node <- v$edge[,1][v$edge[,2] == node]#
+ 				}#
+ 			}#
+ 			dtips <- getSpanningTips(v, node=node)#
+ 			# add event here.#
+ 			tmp <- makeRowDF(1, dtips[1], dtips[2], e2$abstime[i], e2$lambdainit[i], e2$lambdashift[i], e2$muinit[i], 0.0);	#
+ 			if (node == root){#
+ 				tmp$abstime = 0;#
+ 			}#
+ 			if (is.null(res)){#
+ 				res <- tmp#
+ 			}else{#
+ 				res <- rbind(res, tmp)#
+ 			}#
+ 		} 			#
+	}#
+}
+i
+nodex
+nodex <- which(truephy$tip.label == e2$leftchild[i])
+nodex
+i
+e2
+nrow(e2)
+nrow(events)
+i <- 1#
+for (i in 1:nrow(events)){	#
+	nodex <- which(truephy$tip.label == e2$leftchild[i])#
+	if (!is.na(e2$rightchild[i]) & e2$rightchild[i] != e2$leftchild[i]){#
+		nodex <- getMRCA(truephy, tip = c(e2$rightchild[i], e2$leftchild[i]))			#
+	}#
+	if (nodex > length(truephy$tip.label)){#
+		tipset <- extract.clade(truephy, nodex)$tip.label#
+	}else{#
+		tipset <- truephy$tip.label[nodex]#
+	}#
+	iset <- intersect(tipset, v$tip.label)#
+	atime <- e2$abstime[i]#
+	if (length(iset) > 0){#
+		rtip <- iset[1]#
+		node <- which(v$tip.label == rtip)#
+		if (atime < end_times_fossil[as.character(node)]){#
+			#only go here if event occurs before tip time in fossil tree  #
+			while (node != root){#
+				# step back down tree until find correct branch for event.#
+				st <- begin_times_fossil[as.character(node)]#
+				if (atime > st){#
+					# event must have occurred on this branch.#
+					break;#
+				}else{#
+ 					# event occurs before the focal branch.#
+ 					node <- v$edge[,1][v$edge[,2] == node]#
+ 				}#
+ 			}#
+ 			dtips <- getSpanningTips(v, node=node)#
+ 			# add event here.#
+ 			tmp <- makeRowDF(1, dtips[1], dtips[2], e2$abstime[i], e2$lambdainit[i], e2$lambdashift[i], e2$muinit[i], 0.0);	#
+ 			if (node == root){#
+ 				tmp$abstime = 0;#
+ 			}#
+ 			if (is.null(res)){#
+ 				res <- tmp#
+ 			}else{#
+ 				res <- rbind(res, tmp)#
+ 			}#
+ 		} 			#
+	}#
+}
+res
+plot(getEventData(paleophy, res))
+nodelabels(node=findMRCA(paleophy, c("A882", "A484")), pch=16, col='red')
+Old <- getEventData(truephy, events)
+New <- getEventData(paleophy, res)#
+Old <- getEventData(truephy, events)#
+#
+tLam <- Old$meanTipLambda#
+names(tLam) <- Old$tip.label#
+eLam <- New$meanTipLambda#
+names(eLam) <- New$tip.label#
+Over <- intersect(names(eLam), names(tLam))#
+#
+plot(tLam[Over], eLam[Over])
+text(tLam[Over], eLam[Over], Over, pos=3)
+events
+res
+# Allows mapping of event data from simulation on full tree#
+#	to match that generated by simulateFossilSampling#
+#	Object "events" must be the relevant event data as #
+#	written by the BAMMtree simulation code#
+convertEventData <- function(paleophy, truephy, events, tol = 1e-5){#
+	v <- NU.branching.times(paleophy, return.type = 'begin.end')#
+	truephy <- NU.branching.times(truephy, return.type = 'begin.end')#
+	root <- length(v$tip.label) + 1#
+	begin_times_fossil <- c(0, v$begin)#
+	names(begin_times_fossil) <- c(root, v$edge[,2])#
+	end_times_fossil <- c(0, v$end)#
+	names(end_times_fossil) <- c(root, v$edge[,2])#
+	end_times_full <- c(0, truephy$end)#
+	names(end_times_full) <- c((length(truephy$tip.label)+1), truephy$edge[,2])#
+	if (length(intersect(v$tip.label, truephy$tip.label)) <= 1){#
+		return(0)#
+	}#
+	tset <- intersect(v$tip.label, truephy$tip.label)[1:2]#
+	tnode <- getMRCA(truephy, tip = tset)#
+	fnode <- getMRCA(v, tip = tset)#
+	deltaT <- end_times_full[as.character(tnode)] - end_times_fossil[as.character(fnode)]		#
+	e2 <- events#
+	e2$abstime <- e2$abstime - deltaT#
+	res <- NULL#
+ 	e2$abstime[e2$abstime < tol] <- 0#
+ 	e2 <- e2[order(e2$abstime),]#
+	for (i in 1:nrow(events)){#
+		nodex <- which(truephy$tip.label == e2$leftchild[i])		#
+		if (!is.na(e2$rightchild[i]) & e2$rightchild[i] != e2$leftchild[i]){#
+			nodex <- getMRCA(truephy, tip = c(e2$rightchild[i], e2$leftchild[i]))			#
+		}#
+		if (nodex > length(truephy$tip.label)){#
+			tipset <- extract.clade(truephy, nodex)$tip.label#
+		}#
+		if (nodex <= length(truephy$tip.label)){#
+			tipset <- truephy$tip.label[nodex]#
+		}#
+		iset <- intersect(tipset, v$tip.label)#
+		atime <- e2$abstime[i]#
+		if (length(iset) > 0){#
+			rtip <- iset[1]#
+			node <- which(v$tip.label == rtip)#
+			if (atime < end_times_fossil[as.character(node)]){#
+				#only go here if event occurs before tip time in fossil tree  #
+ 				while (node != root){#
+ 					# step back down tree until find correct branch for event.#
+ 					st <- begin_times_fossil[as.character(node)]#
+ 					if (atime > st){#
+ 						# event must have occurred on this branch.#
+ 						break;#
+ 					}else{#
+ 						# event occurs before the focal branch.#
+ 						node <- v$edge[,1][v$edge[,2] == node]#
+ 					}#
+ 				}#
+ 				Desc <- getDescendants(v, node=node)#
+ 				DescTips <- na.omit(v$tip.label[Desc])#
+ 				dtips <- DescTips[c(1,length(DescTips))]#
+ 				# add event here.#
+ 				tmp <- makeRowDF(1, dtips[1], dtips[2], e2$abstime[i], e2$lambdainit[i], e2$lambdashift[i], e2$muinit[i], 0.0);	#
+ 				if (node == root){#
+ 					tmp$abstime = 0;#
+ 				}#
+ 				if (is.null(res)){#
+ 					res <- tmp#
+ 				}else{#
+ 					res <- rbind(res, tmp)#
+ 				}#
+ 			}#
+		}#
+	}#
+	if (sum(res$abstime < 0) > 0){#
+		stop('Failure in convertEventData / negative time\n')#
+	}#
+	return(res)#
+}
+Path_default <- "~/Documents/BAMM_fossilBAMM_description/"#
+trueTrees <- read.tree(paste(Path_default, "simulations/true/simtrees.txt", sep=""))#
+trueEvents <- read.csv(paste(Path_default, "simulations/true/events.txt", sep=""), stringsAsFactors=FALSE)#
+trueEvents <- cbind(trueEvents, rep(0, nrow(trueEvents)))#
+colnames(trueEvents) <- c("generation", "leftchild", "rightchild", "abstime", "lambdainit", "lambdashift", "muinit", "mushift")#
+#
+fulltree <- trueTrees[[1]]#
+fullEvents <- trueEvents[which(trueEvents[,1]==1),]#
+#
+setwd("~/Documents/BAMM_fossilBAMM_description/simulations/extant/sim-1")#
+#
+extantTree <- read.tree("phy.tre")#
+#
+paleophy <- extantTree#
+truephy <- fulltree#
+events <- fullEvents#
+#
+v <- NU.branching.times(paleophy, return.type = 'begin.end')#
+truephy <- NU.branching.times(truephy, return.type = 'begin.end')#
+root <- length(v$tip.label) + 1#
+#
+begin_times_fossil <- c(0, v$begin)#
+names(begin_times_fossil) <- c(root, v$edge[,2])#
+end_times_fossil <- c(0, v$end)#
+names(end_times_fossil) <- c(root, v$edge[,2])#
+#
+end_times_full <- c(0, truephy$end)#
+names(end_times_full) <- c((length(truephy$tip.label)+1), truephy$edge[,2])#
+#
+# spanning tips for fossil tree#
+tset <- intersect(v$tip.label, truephy$tip.label)[1:2]#
+#
+# root of fossil tree's location in full tree#
+tnode <- getMRCA(truephy, tip = tset)#
+fnode <- getMRCA(v, tip = tset)#
+#
+deltaT <- end_times_full[as.character(tnode)] - end_times_fossil[as.character(fnode)]				#
+e2 <- events#
+e2$abstime <- e2$abstime - deltaT#
+e2 <- e2[order(e2$abstime),]#
+#
+res <- NULL#
+#
+i <- 1#
+for (i in 1:nrow(events)){	#
+	nodex <- which(truephy$tip.label == e2$leftchild[i])#
+	if (!is.na(e2$rightchild[i]) & e2$rightchild[i] != e2$leftchild[i]){#
+		nodex <- getMRCA(truephy, tip = c(e2$rightchild[i], e2$leftchild[i]))			#
+	}#
+	if (nodex > length(truephy$tip.label)){#
+		tipset <- extract.clade(truephy, nodex)$tip.label#
+	}else{#
+		tipset <- truephy$tip.label[nodex]#
+	}#
+	iset <- intersect(tipset, v$tip.label)#
+	atime <- e2$abstime[i]#
+	if (length(iset) > 0){#
+		rtip <- iset[1]#
+		node <- which(v$tip.label == rtip)#
+		if (atime < end_times_fossil[as.character(node)]){#
+			#only go here if event occurs before tip time in fossil tree  #
+			while (node != root){#
+				# step back down tree until find correct branch for event.#
+				st <- begin_times_fossil[as.character(node)]#
+				if (atime > st){#
+					# event must have occurred on this branch.#
+					break;#
+				}else{#
+ 					# event occurs before the focal branch.#
+ 					node <- v$edge[,1][v$edge[,2] == node]#
+ 				}#
+ 			}#
+			Desc <- getDescendants(v, node=node)#
+ 			DescTips <- na.omit(v$tip.label[Desc])#
+ 			dtips <- DescTips[c(1,length(DescTips))]#
+ 			# add event here.#
+ 			tmp <- makeRowDF(1, dtips[1], dtips[2], e2$abstime[i], e2$lambdainit[i], e2$lambdashift[i], e2$muinit[i], 0.0);	#
+ 			if (node == root){#
+ 				tmp$abstime = 0;#
+ 			}#
+ 			if (is.null(res)){#
+ 				res <- tmp#
+ 			}else{#
+ 				res <- rbind(res, tmp)#
+ 			}#
+ 		} 			#
+	}#
+}#
+New <- getEventData(paleophy, res)#
+Old <- getEventData(truephy, events)#
+#
+tLam <- Old$meanTipLambda#
+names(tLam) <- Old$tip.label#
+eLam <- New$meanTipLambda#
+names(eLam) <- New$tip.label#
+Over <- intersect(names(eLam), names(tLam))#
+#
+plot(tLam[Over], eLam[Over])#
+text(tLam[Over], eLam[Over], Over, pos=3)
+res
+setwd("~/Documents/BAMM_fossilBAMM_description/simulations/extant/sim-1")#
+#
+extantTree <- read.tree("phy.tre")#
+#
+paleophy <- extantTree#
+truephy <- fulltree#
+events <- fullEvents#
+#
+v <- NU.branching.times(paleophy, return.type = 'begin.end')#
+truephy <- NU.branching.times(truephy, return.type = 'begin.end')#
+root <- length(v$tip.label) + 1#
+#
+begin_times_fossil <- c(0, v$begin)#
+names(begin_times_fossil) <- c(root, v$edge[,2])#
+end_times_fossil <- c(0, v$end)#
+names(end_times_fossil) <- c(root, v$edge[,2])#
+#
+end_times_full <- c(0, truephy$end)#
+names(end_times_full) <- c((length(truephy$tip.label)+1), truephy$edge[,2])#
+#
+# spanning tips for fossil tree#
+tset <- intersect(v$tip.label, truephy$tip.label)[1:2]#
+#
+# root of fossil tree's location in full tree#
+tnode <- getMRCA(truephy, tip = tset)#
+fnode <- getMRCA(v, tip = tset)#
+#
+deltaT <- end_times_full[as.character(tnode)] - end_times_fossil[as.character(fnode)]				#
+e2 <- events#
+e2$abstime <- e2$abstime - deltaT#
+#e2 <- e2[order(e2$abstime),]#
+#
+res <- NULL#
+#
+i <- 1#
+for (i in 1:nrow(events)){	#
+	nodex <- which(truephy$tip.label == e2$leftchild[i])#
+	if (!is.na(e2$rightchild[i]) & e2$rightchild[i] != e2$leftchild[i]){#
+		nodex <- getMRCA(truephy, tip = c(e2$rightchild[i], e2$leftchild[i]))			#
+	}#
+	if (nodex > length(truephy$tip.label)){#
+		tipset <- extract.clade(truephy, nodex)$tip.label#
+	}else{#
+		tipset <- truephy$tip.label[nodex]#
+	}#
+	iset <- intersect(tipset, v$tip.label)#
+	atime <- e2$abstime[i]#
+	if (length(iset) > 0){#
+		rtip <- iset[1]#
+		node <- which(v$tip.label == rtip)#
+		if (atime < end_times_fossil[as.character(node)]){#
+			#only go here if event occurs before tip time in fossil tree  #
+			while (node != root){#
+				# step back down tree until find correct branch for event.#
+				st <- begin_times_fossil[as.character(node)]#
+				if (atime > st){#
+					# event must have occurred on this branch.#
+					break;#
+				}else{#
+ 					# event occurs before the focal branch.#
+ 					node <- v$edge[,1][v$edge[,2] == node]#
+ 				}#
+ 			}#
+			Desc <- getDescendants(v, node=node)#
+ 			DescTips <- na.omit(v$tip.label[Desc])#
+ 			dtips <- DescTips[c(1,length(DescTips))]#
+ 			# add event here.#
+ 			tmp <- makeRowDF(1, dtips[1], dtips[2], e2$abstime[i], e2$lambdainit[i], e2$lambdashift[i], e2$muinit[i], 0.0);	#
+ 			if (node == root){#
+ 				tmp$abstime = 0;#
+ 			}#
+ 			if (is.null(res)){#
+ 				res <- tmp#
+ 			}else{#
+ 				res <- rbind(res, tmp)#
+ 			}#
+ 		} 			#
+	}#
+}#
+New <- getEventData(paleophy, res)#
+Old <- getEventData(truephy, events)#
+#
+tLam <- Old$meanTipLambda#
+names(tLam) <- Old$tip.label#
+eLam <- New$meanTipLambda#
+names(eLam) <- New$tip.label#
+Over <- intersect(names(eLam), names(tLam))#
+#
+plot(tLam[Over], eLam[Over])#
+text(tLam[Over], eLam[Over], Over, pos=3)
+setwd("~/Documents/BAMM_fossilBAMM_description/simulations/extant/sim-1")#
+#
+extantTree <- read.tree("phy.tre")#
+#
+paleophy <- extantTree#
+truephy <- fulltree#
+events <- fullEvents#
+#
+v <- NU.branching.times(paleophy, return.type = 'begin.end')#
+truephy <- NU.branching.times(truephy, return.type = 'begin.end')#
+root <- length(v$tip.label) + 1#
+#
+begin_times_fossil <- c(0, v$begin)#
+names(begin_times_fossil) <- c(root, v$edge[,2])#
+end_times_fossil <- c(0, v$end)#
+names(end_times_fossil) <- c(root, v$edge[,2])#
+#
+end_times_full <- c(0, truephy$end)#
+names(end_times_full) <- c((length(truephy$tip.label)+1), truephy$edge[,2])#
+#
+# spanning tips for fossil tree#
+tset <- intersect(v$tip.label, truephy$tip.label)[1:2]#
+#
+# root of fossil tree's location in full tree#
+tnode <- getMRCA(truephy, tip = tset)#
+fnode <- getMRCA(v, tip = tset)#
+#
+deltaT <- end_times_full[as.character(tnode)] - end_times_fossil[as.character(fnode)]				#
+e2 <- events#
+e2$abstime <- e2$abstime - deltaT#
+#e2 <- e2[order(e2$abstime),]#
+#
+res <- NULL#
+#
+i <- 1#
+for (i in 1:nrow(events)){	#
+	nodex <- which(truephy$tip.label == e2$leftchild[i])#
+	if (!is.na(e2$rightchild[i]) & e2$rightchild[i] != e2$leftchild[i]){#
+		nodex <- getMRCA(truephy, tip = c(e2$rightchild[i], e2$leftchild[i]))			#
+	}#
+	if (nodex > length(truephy$tip.label)){#
+		tipset <- extract.clade(truephy, nodex)$tip.label#
+	}else{#
+		tipset <- truephy$tip.label[nodex]#
+	}#
+	iset <- intersect(tipset, v$tip.label)#
+	atime <- e2$abstime[i]#
+	if (length(iset) > 0){#
+		rtip <- iset[1]#
+		node <- which(v$tip.label == rtip)#
+		if (atime < end_times_fossil[as.character(node)]){#
+			#only go here if event occurs before tip time in fossil tree  #
+			while (node != root){#
+				# step back down tree until find correct branch for event.#
+				st <- begin_times_fossil[as.character(node)]#
+				if (atime > st){#
+					# event must have occurred on this branch.#
+					break;#
+				}else{#
+ 					# event occurs before the focal branch.#
+ 					node <- v$edge[,1][v$edge[,2] == node]#
+ 				}#
+ 			}#
+			Desc <- getDescendants(v, node=node)#
+ 			DescTips <- na.omit(v$tip.label[Desc])#
+ 			dtips <- DescTips[c(1,length(DescTips))]#
+ 			# add event here.#
+ 			tmp <- makeRowDF(1, dtips[1], dtips[2], e2$abstime[i], e2$lambdainit[i], e2$lambdashift[i], e2$muinit[i], 0.0);	#
+ 			if (node == root){#
+ 				tmp$abstime = 0;#
+ 			}#
+ 			if (is.null(res)){#
+ 				res <- tmp#
+ 			}else{#
+ 				res <- rbind(res, tmp)#
+ 			}#
+ 		} 			#
+	}#
+}#
+New <- getEventData(paleophy, res)#
+Old <- getEventData(truephy, events)#
+#
+tLam <- Old$meanTipLambda#
+names(tLam) <- Old$tip.label#
+eLam <- New$meanTipLambda#
+names(eLam) <- New$tip.label#
+Over <- intersect(names(eLam), names(tLam))
+plot(tLam[Over], eLam[Over])#
+text(tLam[Over], eLam[Over], Over, pos=3)
+plot(paleophy)
+plot(ladderize(paleophy))
+setwd("~/Documents/BAMM_fossilBAMM_description/simulations/extant/sim-1")#
+#
+extantTree <- read.tree("phy.tre")#
+#
+paleophy <- ladderize(extantTree)#
+truephy <- ladderize(fulltree)#
+events <- fullEvents#
+#
+v <- NU.branching.times(paleophy, return.type = 'begin.end')#
+truephy <- NU.branching.times(truephy, return.type = 'begin.end')#
+root <- length(v$tip.label) + 1#
+#
+begin_times_fossil <- c(0, v$begin)#
+names(begin_times_fossil) <- c(root, v$edge[,2])#
+end_times_fossil <- c(0, v$end)#
+names(end_times_fossil) <- c(root, v$edge[,2])#
+#
+end_times_full <- c(0, truephy$end)#
+names(end_times_full) <- c((length(truephy$tip.label)+1), truephy$edge[,2])#
+#
+# spanning tips for fossil tree#
+tset <- intersect(v$tip.label, truephy$tip.label)[1:2]#
+#
+# root of fossil tree's location in full tree#
+tnode <- getMRCA(truephy, tip = tset)#
+fnode <- getMRCA(v, tip = tset)#
+#
+deltaT <- end_times_full[as.character(tnode)] - end_times_fossil[as.character(fnode)]				#
+e2 <- events#
+e2$abstime <- e2$abstime - deltaT#
+#e2 <- e2[order(e2$abstime),]#
+#
+res <- NULL#
+#
+i <- 1#
+for (i in 1:nrow(events)){	#
+	nodex <- which(truephy$tip.label == e2$leftchild[i])#
+	if (!is.na(e2$rightchild[i]) & e2$rightchild[i] != e2$leftchild[i]){#
+		nodex <- getMRCA(truephy, tip = c(e2$rightchild[i], e2$leftchild[i]))			#
+	}#
+	if (nodex > length(truephy$tip.label)){#
+		tipset <- extract.clade(truephy, nodex)$tip.label#
+	}else{#
+		tipset <- truephy$tip.label[nodex]#
+	}#
+	iset <- intersect(tipset, v$tip.label)#
+	atime <- e2$abstime[i]#
+	if (length(iset) > 0){#
+		rtip <- iset[1]#
+		node <- which(v$tip.label == rtip)#
+		if (atime < end_times_fossil[as.character(node)]){#
+			#only go here if event occurs before tip time in fossil tree  #
+			while (node != root){#
+				# step back down tree until find correct branch for event.#
+				st <- begin_times_fossil[as.character(node)]#
+				if (atime > st){#
+					# event must have occurred on this branch.#
+					break;#
+				}else{#
+ 					# event occurs before the focal branch.#
+ 					node <- v$edge[,1][v$edge[,2] == node]#
+ 				}#
+ 			}#
+			Desc <- getDescendants(v, node=node)#
+ 			DescTips <- na.omit(v$tip.label[Desc])#
+ 			dtips <- DescTips[c(1,length(DescTips))]#
+ 			# add event here.#
+ 			tmp <- makeRowDF(1, dtips[1], dtips[2], e2$abstime[i], e2$lambdainit[i], e2$lambdashift[i], e2$muinit[i], 0.0);	#
+ 			if (node == root){#
+ 				tmp$abstime = 0;#
+ 			}#
+ 			if (is.null(res)){#
+ 				res <- tmp#
+ 			}else{#
+ 				res <- rbind(res, tmp)#
+ 			}#
+ 		} 			#
+	}#
+}#
+New <- getEventData(paleophy, res)#
+Old <- getEventData(truephy, events)#
+#
+tLam <- Old$meanTipLambda#
+names(tLam) <- Old$tip.label#
+eLam <- New$meanTipLambda#
+names(eLam) <- New$tip.label#
+Over <- intersect(names(eLam), names(tLam))#
+#
+plot(tLam[Over], eLam[Over])#
+text(tLam[Over], eLam[Over], Over, pos=3)
+plot(New)
+tiplabels("here", tip=which(New$tip.label=="A613"))
+par(mfrow=c(1,2))
+plot(New)
+tiplabels(tip=which(New$tip.label=="A613"), pch=16, col='black')
+plot(Old)
+tiplabels(tip=which(Old$tip.label=="A613"), pch=16, col='black')
+res
+events
+z <- events
+apply(z[,c("leftchild", "rightchild")], 1, duplicated)
+apply(z[,c("leftchild", "rightchild")], 1, duplicated)[2,]
+z[apply(z[,c("leftchild", "rightchild")], 1, duplicated)[2,],"rightchild"] <- NA
+z
+events
+z <- events
+z[apply(z[,c("leftchild", "rightchild")], 1, duplicated)[2,],"rightchild"] <- "NA"
+z
+Old <- getEventData(truephy, z)
+plot(Old)
+library(BAMMtools)#
+Path_default <- "~/Documents/BAMM_fossilBAMM_description/"#
+#
+setwd(paste(Path_default, "scripts/support", sep=""))#
+source('effectiveN.R', chdir = TRUE)#
+source('drop.tipID.R', chdir = TRUE)#
+source('bammFit.R', chdir = TRUE)#
+source('thinEdata.R', chdir = TRUE)#
+source('Dan_degrade_tree.R', chdir = TRUE)#
+#
+setwd(paste(Path_default, "simulations", sep=""))#
+#
+analyze <- function(count, Path_base=paste(Path_default, "simulations/trueStagesTrees/sim-", sep=""), nameBase="stages", BURN=0.1, THIN=2, tbegin=NULL, tend=NULL)	{#
+	setwd(paste(Path_base, count, sep=""))#
+	if (file.exists(paste(nameBase, "_mcmc_out.txt", sep="")))	{#
+		ftree <- read.tree("phy.tre")#
+		trueMat <- read.csv("trueEvents.txt", stringsAsFactors=FALSE)#
+		if (nameBase == "extant")	{#
+			trueMat <- NA#
+		}#
+		else	{#
+			trueRates <- read.table("stageRate.txt", sep="\t")#
+		}#
+		if (ncol(trueMat) < 8)	{#
+			Names <- colnames(trueMat)#
+			# dummy column for mushift#
+			trueMat <- cbind(trueMat, rep(0, nrow(trueMat)))#
+			colnames(trueMat) <- c(Names, "mushift")#
+		}#
+		MCMC <- read.csv(paste(nameBase, "_mcmc_out.txt", sep=""), stringsAsFactors=FALSE)#
+		postburn <- thinEdata(MCMC, burnin=0.1, thinning=THIN, BEGIN=tbegin, END=tend)#
+		trueK <- nrow(trueMat) - 1#
+		postProb <- length(which(postburn[,"N_shifts"] == trueK)) / nrow(postburn)#
+		overProb <- length(which(postburn[,"N_shifts"] > trueK)) / nrow(postburn)#
+		eData <- read.csv(paste(nameBase, "_event_data.txt", sep=""), stringsAsFactors=FALSE)#
+		#eData <- thinEdata(eData, burnin=0, thinning=THIN, BEGIN=tbegin, END=tend)#
+		edata <- getEventData(ftree, eData, burnin=0.1, nsamples=200)#
+		BFMat <- computeBayesFactors(MCMC, 200, burnin=0.1)#
+		Fits <- bammFit(edata, postburn, trueMat)#
+		Fits$trueMat <- trueMat#
+		Fits$trueRates <- trueRates#
+		Fits$postProb <- postProb#
+		Fits$overProb <- overProb#
+		Fits$BFMat <- BFMat#
+		Fits$edata <- edata#
+		Fits$presRateInf <- quantile(postburn[,"preservationRate"], probs=c(0.10, 0.50, 0.90))#
+		return(Fits)#
+	}#
+}#
+#
+trueTrees <- read.tree(paste(Path_default, "simulations/true/simtrees.txt", sep=""))#
+trueEvents <- read.csv(paste(Path_default, "simulations/true/events.txt", sep=""), stringsAsFactors=FALSE)#
+trueEvents <- cbind(trueEvents, rep(0, nrow(trueEvents)))#
+colnames(trueEvents) <- c("generation", "leftchild", "rightchild", "abstime", "lambdainit", "lambdashift", "muinit", "mushift")
+Max <- 200#
+count <- 1#
+counter <- 1#
+NoExtant <- c()#
+for (count in 1:Max)	{#
+	fullTree <- trueTrees[[count]]#
+	fullMat <- trueEvents[which(trueEvents[,1]==count),]#
+#
+	if (	file.exists(paste(Path_default, "simulations/extant/sim-", count, "/phy.tre", sep="")))	{#
+		setwd(paste(Path_default, "simulations/extant/sim-", count, sep=""))#
+		cTree <- read.tree("phy.tre")#
+		outEvents <- convertEventData(cTree, fullTree, fullMat)#
+		write.csv(outEvents, "trueEvents.txt", row.names=FALSE, quote=FALSE)#
+	}#
+	else	{#
+		NoExtant[counter] <- count#
+		counter <- counter + 1#
+	}#
+#	setwd(paste(Path_default, "simulations/trueOneRateTrees-Lo/sim-", count, sep=""))#
+#	cTree <- read.tree("phy.tre")#
+#	outEvents <- convertEventData(cTree, fullTree, fullMat)#
+#	write.csv(outEvents, "trueEvents.txt", row.names=FALSE, quote=FALSE)#
+#	setwd(paste(Path_default, "simulations/trueOneRateTrees-10/sim-", count, sep=""))#
+#	cTree <- read.tree("phy.tre")#
+#	outEvents <- convertEventData(cTree, fullTree, fullMat)#
+#	write.csv(outEvents, "trueEvents.txt", row.names=FALSE, quote=FALSE)#
+#
+#	setwd(paste(Path_default, "simulations/trueOneRateTrees-Hi/sim-", count, sep=""))#
+#	cTree <- read.tree("phy.tre")#
+#	outEvents <- convertEventData(cTree, fullTree, fullMat)#
+#	write.csv(outEvents, "trueEvents.txt", row.names=FALSE, quote=FALSE)#
+#
+#	setwd(paste(Path_default, "simulations/trueStagesTrees/sim-", count, sep=""))#
+#	cTree <- read.tree("phy.tre")#
+#	outEvents <- convertEventData(cTree, fullTree, fullMat)#
+#	write.csv(outEvents, "trueEvents.txt", row.names=FALSE, quote=FALSE)#
+}#
+#
+getDesc <- BAMMtools:::getDesc#
+Vec <- 1:Max#
+Vec <- Vec[-NoExtant]#
+extant <- sapply(Vec, analyze, Path_base=paste(Path_default, "simulations/extant/sim-", sep=""), nameBase="extant", simplify=FALSE, THIN=1, tbegin=3500, tend=35e6)#
+#save(extant, file=paste(Path_default, "results/extant.RData", sep=""))
+analyze <- function(count, Path_base=paste(Path_default, "simulations/trueStagesTrees/sim-", sep=""), nameBase="stages", BURN=0.1, THIN=2, tbegin=NULL, tend=NULL)	{#
+	setwd(paste(Path_base, count, sep=""))#
+	if (file.exists(paste(nameBase, "_mcmc_out.txt", sep="")))	{#
+		ftree <- read.tree("phy.tre")#
+		trueMat <- read.csv("trueEvents.txt", stringsAsFactors=FALSE)#
+		if (nameBase == "extant")	{#
+			trueRates <- NA#
+		}#
+		else	{#
+			trueRates <- read.table("stageRate.txt", sep="\t")#
+		}#
+		if (ncol(trueMat) < 8)	{#
+			Names <- colnames(trueMat)#
+			# dummy column for mushift#
+			trueMat <- cbind(trueMat, rep(0, nrow(trueMat)))#
+			colnames(trueMat) <- c(Names, "mushift")#
+		}#
+		MCMC <- read.csv(paste(nameBase, "_mcmc_out.txt", sep=""), stringsAsFactors=FALSE)#
+		postburn <- thinEdata(MCMC, burnin=0.1, thinning=THIN, BEGIN=tbegin, END=tend)#
+		trueK <- nrow(trueMat) - 1#
+		postProb <- length(which(postburn[,"N_shifts"] == trueK)) / nrow(postburn)#
+		overProb <- length(which(postburn[,"N_shifts"] > trueK)) / nrow(postburn)#
+		eData <- read.csv(paste(nameBase, "_event_data.txt", sep=""), stringsAsFactors=FALSE)#
+		#eData <- thinEdata(eData, burnin=0, thinning=THIN, BEGIN=tbegin, END=tend)#
+		edata <- getEventData(ftree, eData, burnin=0.1, nsamples=200)#
+		BFMat <- computeBayesFactors(MCMC, 200, burnin=0.1)#
+		Fits <- bammFit(edata, postburn, trueMat)#
+		Fits$trueMat <- trueMat#
+		Fits$trueRates <- trueRates#
+		Fits$postProb <- postProb#
+		Fits$overProb <- overProb#
+		Fits$BFMat <- BFMat#
+		Fits$edata <- edata#
+		Fits$presRateInf <- quantile(postburn[,"preservationRate"], probs=c(0.10, 0.50, 0.90))#
+		return(Fits)#
+	}#
+}
+Max <- 200#
+count <- 1#
+counter <- 1#
+NoExtant <- c()#
+for (count in 1:Max)	{#
+	fullTree <- trueTrees[[count]]#
+	fullMat <- trueEvents[which(trueEvents[,1]==count),]#
+#
+	if (	file.exists(paste(Path_default, "simulations/extant/sim-", count, "/phy.tre", sep="")))	{#
+		setwd(paste(Path_default, "simulations/extant/sim-", count, sep=""))#
+		cTree <- read.tree("phy.tre")#
+		outEvents <- convertEventData(cTree, fullTree, fullMat)#
+		write.csv(outEvents, "trueEvents.txt", row.names=FALSE, quote=FALSE)#
+	}#
+	else	{#
+		NoExtant[counter] <- count#
+		counter <- counter + 1#
+	}#
+#	setwd(paste(Path_default, "simulations/trueOneRateTrees-Lo/sim-", count, sep=""))#
+#	cTree <- read.tree("phy.tre")#
+#	outEvents <- convertEventData(cTree, fullTree, fullMat)#
+#	write.csv(outEvents, "trueEvents.txt", row.names=FALSE, quote=FALSE)#
+#	setwd(paste(Path_default, "simulations/trueOneRateTrees-10/sim-", count, sep=""))#
+#	cTree <- read.tree("phy.tre")#
+#	outEvents <- convertEventData(cTree, fullTree, fullMat)#
+#	write.csv(outEvents, "trueEvents.txt", row.names=FALSE, quote=FALSE)#
+#
+#	setwd(paste(Path_default, "simulations/trueOneRateTrees-Hi/sim-", count, sep=""))#
+#	cTree <- read.tree("phy.tre")#
+#	outEvents <- convertEventData(cTree, fullTree, fullMat)#
+#	write.csv(outEvents, "trueEvents.txt", row.names=FALSE, quote=FALSE)#
+#
+#	setwd(paste(Path_default, "simulations/trueStagesTrees/sim-", count, sep=""))#
+#	cTree <- read.tree("phy.tre")#
+#	outEvents <- convertEventData(cTree, fullTree, fullMat)#
+#	write.csv(outEvents, "trueEvents.txt", row.names=FALSE, quote=FALSE)#
+}#
+#
+getDesc <- BAMMtools:::getDesc#
+Vec <- 1:Max#
+Vec <- Vec[-NoExtant]#
+extant <- sapply(Vec, analyze, Path_base=paste(Path_default, "simulations/extant/sim-", sep=""), nameBase="extant", simplify=FALSE, THIN=1, tbegin=3500, tend=35e6)#
+#save(extant, file=paste(Path_default, "results/extant.RData", sep=""))
+analyze <- function(count, Path_base=paste(Path_default, "simulations/trueStagesTrees/sim-", sep=""), nameBase="stages", BURN=0.1, THIN=2, tbegin=NULL, tend=NULL)	{#
+	setwd(paste(Path_base, count, sep=""))#
+	if (file.exists(paste(nameBase, "_mcmc_out.txt", sep="")))	{#
+		ftree <- read.tree("phy.tre")#
+		trueMat <- read.csv("trueEvents.txt", stringsAsFactors=FALSE)#
+		if (nameBase == "extant")	{#
+			trueRates <- NA#
+		}#
+		else	{#
+			trueRates <- read.table("stageRate.txt", sep="\t")#
+		}#
+		if (ncol(trueMat) < 8)	{#
+			Names <- colnames(trueMat)#
+			# dummy column for mushift#
+			trueMat <- cbind(trueMat, rep(0, nrow(trueMat)))#
+			colnames(trueMat) <- c(Names, "mushift")#
+		}#
+		MCMC <- read.csv(paste(nameBase, "_mcmc_out.txt", sep=""), stringsAsFactors=FALSE)#
+		postburn <- thinEdata(MCMC, burnin=0.1, thinning=THIN, BEGIN=tbegin, END=tend)#
+		trueK <- nrow(trueMat) - 1#
+		postProb <- length(which(postburn[,"N_shifts"] == trueK)) / nrow(postburn)#
+		overProb <- length(which(postburn[,"N_shifts"] > trueK)) / nrow(postburn)#
+		eData <- read.csv(paste(nameBase, "_event_data.txt", sep=""), stringsAsFactors=FALSE)#
+		#eData <- thinEdata(eData, burnin=0, thinning=THIN, BEGIN=tbegin, END=tend)#
+		edata <- getEventData(ftree, eData, burnin=0.1, nsamples=200)#
+		BFMat <- computeBayesFactors(MCMC, 200, burnin=0.1)#
+		Fits <- bammFit(edata, postburn, trueMat)#
+		Fits$trueMat <- trueMat#
+		Fits$trueRates <- trueRates#
+		Fits$postProb <- postProb#
+		Fits$overProb <- overProb#
+		Fits$BFMat <- BFMat#
+		Fits$edata <- edata#
+		if (nameBase == "extant")	{#
+			Fits$presRateInf <- NA#
+		}#
+		else	{#
+			Fits$presRateInf <- quantile(postburn[,"preservationRate"], probs=c(0.10, 0.50, 0.90))#
+		}#
+		return(Fits)#
+	}#
+}
+extant <- sapply(Vec, analyze, Path_base=paste(Path_default, "simulations/extant/sim-", sep=""), nameBase="extant", simplify=FALSE, THIN=1, tbegin=3500, tend=35e6)
+extant <- list()#
+counter <- 1#
+for (count in Vec)	{#
+	X <- try(analyze(count, Path_base=paste(Path_default, "simulations/extant/sim-", sep=""), nameBase="extant", simplify=FALSE, THIN=1, tbegin=3500, tend=35e6))#
+	if (class(X) == "list")	{#
+		extant[[counter]] <- X#
+		counter <- counter + 1#
+	}#
+}
+extant <- list()#
+counter <- 1#
+for (count in Vec)	{#
+	X <- try(analyze(count, Path_base=paste(Path_default, "simulations/extant/sim-", sep=""), nameBase="extant", THIN=1, tbegin=3500, tend=35e6))#
+	if (class(X) == "list")	{#
+		extant[[counter]] <- X#
+		counter <- counter + 1#
+	}#
+}
+pullRegDat <- function(tree, List, psi_class=-1)	{#
+	Params <- List[[tree]]$regimeOverview#
+	Params <- cbind(rep(tree, nrow(Params)), Params, rep(mean(List[[tree]]$trueRates[,4]), nrow(Params)), rep(List[[tree]]$presRateInf[2], nrow(Params)), rep(psi_class, nrow(Params)))#
+	colnames(Params) <- c("tree", colnames(List[[tree]]$regimeOverview), "psi", "inferred_psi", "psi_class")#
+	return(Params)#
+}#
+pullTreeDat <- function(tree, List, psi_class=-1)	{#
+	Params <- List[[tree]]$treeStats#
+	Pnames <- names(Params)#
+	Params <- c(tree, Params, mean(List[[tree]]$trueRates[,4]), List[[tree]]$presRateInf[2], psi_class)#
+	names(Params) <- c("tree", Pnames, "psi", "inferred_psi", "psi_class")#
+	return(Params)#
+}#
+pullRatesDat <- function(tree, List, psi_class=-1)	{#
+	Params <- List[[tree]]$rates#
+	Pnames <- colnames(Params)#
+	Params <- cbind(rep(tree, nrow(Params)), Params, rep(psi_class, nrow(Params)))#
+	colnames(Params) <- c("tree", Pnames, "psi_class")#
+	return(Params)#
+}
+Vec <- 1:Max#
+Vec <- Vec[-NoExtant]#
+regDat <- sapply(Vec, pullRegDat, List=extant, psi_class=0)#
+regDat <- do.call(rbind, regDat)
+#### Write tree and regime summary files#
+pullRegDat <- function(tree, List, psi_class=-1)	{#
+	Params <- List[[tree]]$regimeOverview#
+	if (psi_class == 0)	{#
+		Params <- cbind(rep(tree, nrow(Params)), Params, rep(NA, nrow(Params)), rep(NA, nrow(Params)), rep(psi_class, nrow(Params)))#
+	}#
+	else		{#
+		Params <- cbind(rep(tree, nrow(Params)), Params, rep(mean(List[[tree]]$trueRates[,4]), nrow(Params)), rep(List[[tree]]$presRateInf[2], nrow(Params)), rep(psi_class, nrow(Params)))#
+	}#
+	colnames(Params) <- c("tree", colnames(List[[tree]]$regimeOverview), "psi", "inferred_psi", "psi_class")#
+	return(Params)#
+}
+Vec <- 1:Max#
+Vec <- Vec[-NoExtant]#
+regDat <- sapply(Vec, pullRegDat, List=extant, psi_class=0)#
+regDat <- do.call(rbind, regDat)
+regDat <- sapply(1:length(extant), pullRegDat, List=extant, psi_class=0)#
+regDat <- do.call(rbind, regDat)
+head(regDat)
+plot(regDat$true_lambda, regDat$inferred_lambda_mid)
+plot(regDat[,"true_lambda"], regDat[,"inferred_lambda_mid"])
+plot(regDat[,"true_lambda"], regDat[,"inferred_lambda_mid"], cex=regDat[,"N_taxa"]/10, pch=16, col=rgb(0,0,0,0.5))
+plot(regDat[,"true_lambda"], regDat[,"inferred_lambda_mid"], cex=regDat[,"N_taxa"]/10, pch=16, col=rgb(0,0,0,0.1))
+plot(regDat[,"true_lambda"], regDat[,"inferred_lambda_mid"], cex=log10(regDat[,"N_taxa"]), pch=16, col=rgb(0,0,0,0.1))
+plot(regDat[,"true_lambda"], regDat[,"inferred_lambda_mid"], cex=log10(regDat[,"N_taxa"]), pch=16, col=rgb(0,0,0,0.1), log="xy")
+extant[[1]]
+extant[[1]]$conv
+extant[[1]]$$treeStats[,"eN_logLik"]
+extant[[1]]$treeStats[,"eN_logLik"]
+extant[[1]]$treeStats["eN_logLik"]
+Conv <- sapply(extant, function(x) x$treeStats["eN_logLik"])
+hist(Conv)
+which(Conv < 200)
+length(which(Conv < 200))
+extant[[1]]$treeStats
+plot(regDat[,"true_lambda"], regDat[,"inferred_lambda_mid"], cex=log10(regDat[,"N_taxa"]), pch=16, col=rgb(0,0,0,0.1), log="xy")
+plot(regDat[,"true_lambda"], regDat[,"inferred_lambda_mid"], cex=log10(regDat[,"N_taxa"]), pch=16, col=rgb(0,0,0,0.1))
+cor(regDat[,"true_lambda"], regDat[,"inferred_lambda_mid"])
+cor(regDat[,"true_lambda"], regDat[,"inferred_lambda_mid"], use="complete")
+cor(regDat[,"true_lambda"], regDat[,"inferred_lambda_mid"], use="complete", method="spear")
+cor(regDat[which(regDat[,"N_taxa"]>25),"true_lambda"], regDat[which(regDat[,"N_taxa"]>25),"inferred_lambda_mid"], use="complete", method="spear")
+cor(regDat[which(regDat[,"N_taxa"]>25),"true_lambda"], regDat[which(regDat[,"N_taxa"]>25),"inferred_lambda_mid"], use="complete")
+plot(regDat[,"true_lambda"], regDat[,"inferred_lambda_mid"], cex=log10(regDat[,"N_taxa"]), pch=16, col=rgb(0,0,0,0.1), log="xy")
+setwd("~/Downloads/checkTanagers")#
+#
+tree <- read.tree("BAMMinput_Tanagertree.tre")#
+edata <- getEventData(tree, "event_data.txt", burnin=0.1, nsamples=200)#
+mcmc <- read.csv("mcmc_out.txt", stringsAsFactors=F)
+tree <- read.tree("BAMMinput_Tanagertree.tre")#
+edata <- getEventData(tree, "event_data.txt", burnin=0.1, nsamples=200, type="trait")#
+mcmc <- read.csv("mcmc_out.txt", stringsAsFactors=F)
+plot(edata)
+credibleShiftSet(edata, 1)
+plot(credibleShiftSet(edata, 1))
+0.045 + 0.015 + 0.01 + 0.005 + 0.005 + 0.005 + 0.005
+head(mcmc)
+plot(mcmc$generation, mcmc$logLik, type='l')
+edata <- getEventData(tree, "event_data.txt", burnin=0.1, nsamples=900, type="trait")
+plot(edata)
+credibleShiftSet(edata, 1)
+edata <- getEventData(tree, "event_data.txt", burnin=0.5, nsamples=1000, type="trait")
+credibleShiftSet(edata, 1)
+z <- credibleShiftSet(edata, 1)
+str(z)
+Nodes <- sapply(z$eventData, function(x) x$node)
+str(Nodes)
+Shifts <- unlist(Nodes)
+nodeProb <- tapply(Shifts, Shifts, length)
+nodeProb
+nodeProb/length(Shifts)
+nodeProb <- tapply(Shifts, Shifts, length) / length(Shifts)
+sort(nodeProb)
+head(sort(nodeProb))
+head(sort(nodeProb, decreasing=T))
+z <- credibleShiftSet(edata, 1, threshold=10)#
+Nodes <- sapply(z$eventData, function(x) x$node)#
+Shifts <- unlist(Nodes)#
+nodeProb <- tapply(Shifts, Shifts, length) / length(Shifts)
+head(sort(nodeProb, decreasing=T))
+plot(tree, cex=0.1)#
+nodelabels(node=as.numeric(names(nodeProb))[which(nodeProb > 0.05)], pch=16, col='red')
+plot(tree, cex=0.1)#
+nodelabels(node=as.numeric(names(nodeProb))[which(nodeProb > 0.01)], pch=16, col='red')
+Ntip(tree)
+.pdf", height=10, width=10)#
+par(mar=c(0,0,0,0))#
+plot(tree, cex=0.1)#
+nodelabels(node=as.numeric(names(nodeProb))[which(nodeProb > 0.01)], pch=16, col='red')#
+dev.off()
+)
+""
+pdf("tree.pdf", height=10, width=10)#
+par(mar=c(0,0,0,0))#
+plot(tree, cex=0.1)#
+nodelabels(node=as.numeric(names(nodeProb))[which(nodeProb > 0.01)], pch=16, col='red')#
+dev.off()
+pdf("tree.pdf", height=10, width=10)#
+par(mar=c(0,0,0,0))#
+plot(tree, cex=0.5)#
+nodelabels(node=as.numeric(names(nodeProb))[which(nodeProb > 0.01)], pch=16, col='red')#
+dev.off()
+pdf("tree.pdf", height=10, width=10)#
+par(mar=c(0,0,0,0))#
+plot(tree, cex=0.25)#
+nodelabels(node=as.numeric(names(nodeProb))[which(nodeProb > 0.01)], pch=16, col='red')#
+dev.off()
+hist(mcmc$N_shifts)
+setwd("~/Downloads/checkTanagers")#
+#
+tree <- read.tree("BAMMinput_Tanagertree.tre")#
+edata <- getEventData(tree, "jsm_event_data.txt", burnin=0.5, nsamples=1000, type="trait")#
+mcmc <- read.csv("jsm_mcmc_out.txt", stringsAsFactors=F)#
+z <- credibleShiftSet(edata, 1, threshold=10)#
+Nodes <- sapply(z$eventData, function(x) x$node)#
+Shifts <- unlist(Nodes)#
+nodeProb <- tapply(Shifts, Shifts, length) / length(Shifts)#
+head(sort(nodeProb, decreasing=T))
+par(mar=c(0,0,0,0))#
+plot(tree, cex=0.25)#
+nodelabels(node=as.numeric(names(nodeProb))[which(nodeProb > 0.01)], pch=16, col='red')
+plot(edata)
+69950000 / 1e6
+100000000 / 1e6
+tree <- read.tree("BAMMinput_Tanagertree.tre")#
+edata <- getEventData(tree, "jsm_event_data.txt", burnin=0.5, nsamples=1000, type="trait")#
+mcmc <- read.csv("jsm_mcmc_out.txt", stringsAsFactors=F)#
+#
+z <- credibleShiftSet(edata, 1, threshold=10)#
+#
+plot(z)
+setwd("~/Downloads/checkTanagers")#
+#
+tree <- read.tree("BAMMinput_Tanagertree.tre")#
+edata <- getEventData(tree, "jsm_event_data.txt", burnin=0.9, type="trait")#
+mcmc <- read.csv("jsm_mcmc_out.txt", stringsAsFactors=F)#
+#
+z <- credibleShiftSet(edata, 1, threshold=10)#
+#
+plot(z)#
+#
+Nodes <- sapply(z$eventData, function(x) x$node)#
+Shifts <- unlist(Nodes)#
+nodeProb <- tapply(Shifts, Shifts, length) / length(Shifts)#
+head(sort(nodeProb, decreasing=T))
+hist(mcmc$N_shifts)
+rexp(10, 15.54)
+mean(rexp(10, 15.54))
+1 / (1 + 0.05 * (2-1))
+1 / (1 + 0.1 * (2-1))
+setwd("~/Downloads/checkTanagers")#
+#
+tree <- read.tree("BAMMinput_Tanagertree.tre")#
+edata <- getEventData(tree, "jsm_event_data.txt", burnin=0.5, type="trait")#
+mcmc <- read.csv("jsm_mcmc_out.txt", stringsAsFactors=F)#
+#
+z <- credibleShiftSet(edata, 1, threshold=10)#
+#
+plot(z)#
+#
+Nodes <- sapply(z$eventData, function(x) x$node)#
+Shifts <- unlist(Nodes)#
+nodeProb <- tapply(Shifts, Shifts, length) / length(Shifts)#
+head(sort(nodeProb, decreasing=T))
+z <- credibleShiftSet(edata, 200, threshold=20)#
+#
+plot(z)
+z <- credibleShiftSet(edata, 200, threshold=10)#
+plot(z)
+setwd("~/Downloads/checkTanagers")#
+#
+tree <- read.tree("BAMMinput_Tanagertree.tre")#
+edata <- getEventData(tree, "jsm_event_data.txt", burnin=0.5, type="trait", nsamples=1000)#
+mcmc <- read.csv("jsm_mcmc_out.txt", stringsAsFactors=F)#
+#
+z <- credibleShiftSet(edata, 200, threshold=10)#
+plot(z)
+tail(mcmc)
+250000000 / 1e6
+100000 / 1e6
+z
+trees <- read.tree("~/Documents/BAMM_fossilBAMM_description/simulations/true/simtrees.txt")
+N <- sapply(trees, Ntip)
+which(N > 500)
+which(N > 1000)
+plotRateThroughTimeMatrix()
+?plotRateThroughTime
+Path_base <- "~/Documents/Salamanders/"#
+setwd(paste(Path_base, "Rscripts", sep=""))#
+source('placeFossil.R', chdir = TRUE)#
+library(phytools)#
+library(TreePar)#
+#
+# Read in the data#
+setwd(paste(Path_base, "datafiles", sep=""))#
+extant <- read.csv("salamanders.csv", stringsAsFactors=FALSE)#
+extant <- rbind(extant, c("Karsenia_koreana", "NA", 41.8, 0.15*41.8))	# From description in Nature, 2005 Min et al.#
+tree <- read.tree("amphibians3309.tre")#
+#
+# Drop tips with no data#
+SalNode <- findMRCA(tree, tips=c("Plethodon_cinereus", "Cryptobranchus_alleganiensis", "Andrias_japonicus"))#
+GetSals <- na.omit(tree$tip.label[getDescendants(tree, SalNode)])#
+#
+Drops <- setdiff(tree$tip.label, GetSals)#
+onlySal <- drop.tip(tree, Drops)#
+totalSal <- 701#
+write.tree(onlySal, "modernSal.tre")#
+#
+salTimes <- getx(onlySal)#
+Frac <- Ntip(onlySal) / totalSal#
+tree_rates <- function(par)	{#
+	Pars <- exp(par)#
+	x <- LikConstant(Pars[1], Pars[2], Frac, salTimes)#
+	return(x)#
+}#
+#
+# Need speciation, extinction and preservation rates to determine branch lengths for fossil tips#
+rates <- optim(c(0.01, 0.005), tree_rates)#
+psi_rate <- sum(fossil$numOcc) / sum(onlySal$edge.length)#
+Save <- c("Plethodon_cinereus", "Ambystoma_tigrinum", "Amphiuma_means", "Andrias_japonicus", "Rhyacotriton_cascadae", "Necturus_maculosus", "Bolitoglossa_stuarti", "Dicamptodon_copei", "Siren_lacertina", "Hynobius_katoi", "Neurergus_kaiseri")#
+newtree <- drop.tip(onlySal, setdiff(onlySal$tip.label, Save))#
+newtree$tip.label <- c("Cryptobranchidae", "Hynobiidae", "Sirenidae", "Dicamptodontidae", "Ambystomatidae", "Salamandridae", "Proteidae", "Rhyacotritonidae", "Amphiumidae", "Plethodontinae", "Bolitoglossinae")#
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("skeletontree.pdf", height=10, width=10)#
+par(mar=c(0,0,0,0), oma=c(0,0,0,5))#
+plot(newtree, cex=2, font=1)#
+dev.off()#
+plethGens <- c("Plethodon", "Bolito", "Eurycea", "Aneides", "Pseudotriton", "Thorius", "Batrachoseps")#
+plethTips <- unlist(sapply(plethGens, function(x) onlySal$tip.label[grep(x, onlySal$tip.label)]))#
+#plethNode <- findMRCA(onlySal, plethTips)	#633#
+plethTipN <- na.omit(onlySal$tip.label[getDescendants(onlySal, node=633)])#
+plethTipN <- setdiff(plethTipN, "Gyrinophilus_porphyriticus")#
+#
+hynGens <- c("Hynobius_kimurae", "Salamandrella_keyserlingii", "Onychodactylus_japonicus")#
+hynNode <- findMRCA(onlySal, hynGens)	# 171#
+hynTipN <- na.omit(onlySal$tip.label[getDescendants(onlySal, hynNode)])#
+hynTipN <- setdiff(hynTipN, "Salamandrella_keyserlingii")#
+#
+### Plot showing probability of different fossil branch lengths#
+ds <- seq(from=0,to=100,by=0.1)#
+brlen_prob <- sapply(ds, function(x) probDel(x, lam=rates$par[1], mu=rates$par[2], psi=psi_rate))#
+brlen_prob_nopres <- sapply(ds, function(x) probDel(x, lam=rates$par[1], mu=rates$par[2], psi=0))#
+brlen_prob_tenpres <- sapply(ds, function(x) probDel(x, lam=rates$par[1], mu=rates$par[2], psi=psi_rate*10))#
+#
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("brProb.pdf", height=5, width=5)#
+par(mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, bty="n", las=1, cex.lab=1.5)#
+Alpha <- 1#
+exCol <- rgb(217/255, 95/255, 2/255, Alpha)#
+hiCol <- rgb(27/255, 158/255, 119/255, Alpha)#
+loCol <- rgb(117/255, 112/255, 179/255, Alpha)#
+plot(ds, brlen_prob, type='l', ylim=c(0,0.08), xlim=c(0,100), axes=F, xlab=expression(paste("missing time (" %~~% "fossil branch length)", sep="")), ylab="probability", col=loCol, lwd=3)#
+lines(ds, brlen_prob_nopres, col=exCol, lty=3, lwd=3)#
+lines(ds, brlen_prob_tenpres, col=hiCol, lty=2, lwd=3)#
+axis(1, at=c(-10, 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100))#
+axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08))#
+legend("right", legend=c(expression(paste(psi, " = 0")), expression(paste(psi, " = est.")), expression(paste(psi, " = 10X est."))), col=c(exCol, loCol, hiCol), lty=c(3,1,2), bty='n', lwd=3, cex=2)#
+dev.off()#
+#
+# Keep one frog and caecillian b/c some fossil salamanders are stem to sal clade#
+Keeper <- c(grep("Rana", Drops)[1], grep("Ichthyophis", Drops)[1])#
+Frog <- Drops[Keeper]#
+Drops <- Drops[-Keeper]#
+#
+# Make a tree that is salamanders + one frog#
+salTree <- drop.tip(tree, Drops)#
+salTree_uni <- salTree#
+saveTree <- salTree
+ugh <- read.csv("~/Documents/Salamanders/datafiles/fossilSalamanders.csv", stringsAsFactors=F)
+sum(ugh$numOcc)
+Path_base <- "~/Documents/Salamanders/"#
+setwd(paste(Path_base, "Rscripts", sep=""))#
+source('placeFossil.R', chdir = TRUE)#
+library(phytools)#
+library(TreePar)#
+#
+# Read in the data#
+setwd(paste(Path_base, "datafiles", sep=""))#
+extant <- read.csv("salamanders.csv", stringsAsFactors=FALSE)#
+extant <- rbind(extant, c("Karsenia_koreana", "NA", 41.8, 0.15*41.8))	# From description in Nature, 2005 Min et al.#
+tree <- read.tree("amphibians3309.tre")#
+#
+# Drop tips with no data#
+SalNode <- findMRCA(tree, tips=c("Plethodon_cinereus", "Cryptobranchus_alleganiensis", "Andrias_japonicus"))#
+GetSals <- na.omit(tree$tip.label[getDescendants(tree, SalNode)])#
+#
+Drops <- setdiff(tree$tip.label, GetSals)#
+onlySal <- drop.tip(tree, Drops)#
+totalSal <- 701#
+write.tree(onlySal, "modernSal.tre")#
+#
+salTimes <- getx(onlySal)#
+Frac <- Ntip(onlySal) / totalSal#
+tree_rates <- function(par)	{#
+	Pars <- exp(par)#
+	x <- LikConstant(Pars[1], Pars[2], Frac, salTimes)#
+	return(x)#
+}#
+#
+# Need speciation, extinction and preservation rates to determine branch lengths for fossil tips#
+rates <- optim(c(0.01, 0.005), tree_rates)#
+psi_rate <- 129 / sum(onlySal$edge.length) #sum(fossil$numOcc)#
+Save <- c("Plethodon_cinereus", "Ambystoma_tigrinum", "Amphiuma_means", "Andrias_japonicus", "Rhyacotriton_cascadae", "Necturus_maculosus", "Bolitoglossa_stuarti", "Dicamptodon_copei", "Siren_lacertina", "Hynobius_katoi", "Neurergus_kaiseri")#
+newtree <- drop.tip(onlySal, setdiff(onlySal$tip.label, Save))#
+newtree$tip.label <- c("Cryptobranchidae", "Hynobiidae", "Sirenidae", "Dicamptodontidae", "Ambystomatidae", "Salamandridae", "Proteidae", "Rhyacotritonidae", "Amphiumidae", "Plethodontinae", "Bolitoglossinae")#
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("skeletontree.pdf", height=10, width=10)#
+par(mar=c(0,0,0,0), oma=c(0,0,0,5))#
+plot(newtree, cex=2, font=1)#
+dev.off()#
+plethGens <- c("Plethodon", "Bolito", "Eurycea", "Aneides", "Pseudotriton", "Thorius", "Batrachoseps")#
+plethTips <- unlist(sapply(plethGens, function(x) onlySal$tip.label[grep(x, onlySal$tip.label)]))#
+#plethNode <- findMRCA(onlySal, plethTips)	#633#
+plethTipN <- na.omit(onlySal$tip.label[getDescendants(onlySal, node=633)])#
+plethTipN <- setdiff(plethTipN, "Gyrinophilus_porphyriticus")#
+#
+hynGens <- c("Hynobius_kimurae", "Salamandrella_keyserlingii", "Onychodactylus_japonicus")#
+hynNode <- findMRCA(onlySal, hynGens)	# 171#
+hynTipN <- na.omit(onlySal$tip.label[getDescendants(onlySal, hynNode)])#
+hynTipN <- setdiff(hynTipN, "Salamandrella_keyserlingii")#
+#
+### Plot showing probability of different fossil branch lengths#
+ds <- seq(from=0,to=100,by=0.1)#
+brlen_prob <- sapply(ds, function(x) probDel(x, lam=rates$par[1], mu=rates$par[2], psi=psi_rate))#
+brlen_prob_nopres <- sapply(ds, function(x) probDel(x, lam=rates$par[1], mu=rates$par[2], psi=0))#
+brlen_prob_tenpres <- sapply(ds, function(x) probDel(x, lam=rates$par[1], mu=rates$par[2], psi=psi_rate*10))#
+#
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("brProb.pdf", height=5, width=5)#
+par(mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, bty="n", las=1, cex.lab=1.5)#
+Alpha <- 1#
+exCol <- rgb(217/255, 95/255, 2/255, Alpha)#
+hiCol <- rgb(27/255, 158/255, 119/255, Alpha)#
+loCol <- rgb(117/255, 112/255, 179/255, Alpha)#
+plot(ds, brlen_prob, type='l', ylim=c(0,0.08), xlim=c(0,100), axes=F, xlab=expression(paste("missing time (" %~~% "fossil branch length)", sep="")), ylab="probability", col=loCol, lwd=3)#
+lines(ds, brlen_prob_nopres, col=exCol, lty=3, lwd=3)#
+lines(ds, brlen_prob_tenpres, col=hiCol, lty=2, lwd=3)#
+axis(1, at=c(-10, 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100))#
+axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08))#
+legend("right", legend=c(expression(paste(psi, " = 0")), expression(paste(psi, " = est.")), expression(paste(psi, " = 10X est."))), col=c(exCol, loCol, hiCol), lty=c(3,1,2), bty='n', lwd=3, cex=2)#
+dev.off()#
+#
+# Keep one frog and caecillian b/c some fossil salamanders are stem to sal clade#
+Keeper <- c(grep("Rana", Drops)[1], grep("Ichthyophis", Drops)[1])#
+Frog <- Drops[Keeper]#
+Drops <- Drops[-Keeper]#
+#
+# Make a tree that is salamanders + one frog#
+salTree <- drop.tip(tree, Drops)#
+salTree_uni <- salTree#
+saveTree <- salTree
+Topologies <- c("fossilSalamanders.csv", "fossilSalamanders_BS+E.csv", "fossilSalamanders_BSE.csv", "fossilSalamanders_S+BE.csv", "fossilSalamanders_SBE.csv", "fossilSalamanders_SD+BHC.csv", "fossilSalamanders_SHC+BD.csv")#
+for (tcount in 1:length(Topologies))	{#
+fossil <- read.csv(Topologies[tcount], stringsAsFactors=FALSE)#
+fossilSp <- apply(fossil,1,function(x) paste(x[1], x[2], sep="_", collapse=""))#
+fossil2 <- cbind(fossil$svl, fossil$head_width, fossil$age_min, fossil$age_max)#
+rownames(fossil2) <- fossilSp#
+#
+# Generate trees#
+Stop <- FALSE#
+sim <- 1#
+simN <- (tcount - 1) * 10#
+while (Stop == FALSE)	{#
+	setwd(paste(Path_base, "/bamm/", sep=""))#
+	salTree <- saveTree#
+	salTree_uni <- saveTree#
+# Add each fossil iteratively, as some are sister to other fossils#
+for (count in 1:length(unique(fossilSp)))	{#
+	Row <- which(fossilSp == unique(fossilSp)[count])[1]#
+	Children <- fossil[Row,c("lchild", "rchild")]#
+	Fossil <- unique(fossilSp)[count]#
+#
+	# Draw age from bounds#
+	#Age <- runif(1, min=fossil[Row, "age_min"], max=fossil[Row, "age_max"])#
+	# Set age to min age#
+	Age <- fossil[Row, "age_min"]#
+	if (Children$rchild == "")	{#
+		Children <- Children$lchild#
+		lTips <- salTree$tip.label[grep(Children[1], salTree$tip.label)]#
+		Tips <- lTips#
+	}#
+	else	{#
+		lTips <- salTree$tip.label[grep(Children[1], salTree$tip.label)]#
+		rTips <- salTree$tip.label[grep(Children[2], salTree$tip.label)]#
+		Tips <- unique(c(lTips, rTips))#
+	}#
+	newTree <- try(placeFossil(salTree, Age, Name=Fossil, taxa=Tips, grain=0.01, rates=c(rates$par, psi_rate), maxAge=310))#
+	newTree_uni <- try(placeFossil(salTree_uni, Age, Name=Fossil, taxa=Tips, grain=0.01, rates=NULL, maxAge=310))#
+#
+	if (class(newTree) == "try-error")	{#
+		print(Fossil)#
+	}#
+	if (class(newTree) == "phylo")	{#
+		salTree <- newTree#
+		cat(Fossil, ":", count, ": Tips =", Ntip(salTree), ": Nodes =", Nnode(salTree), "\n")#
+	}#
+	if (class(newTree_uni) == "try-error")	{#
+		cat(Fossil, " Uniform error\n")#
+	}#
+	if (class(newTree_uni) == "phylo")	{#
+		salTree_uni <- newTree_uni#
+	}#
+}#
+#
+	# Remove the cursed frog!#
+	salTree <- drop.tip(salTree, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", hynTipN, plethTipN, "Ichthyophis_bombayensis", "Rana_alticola"))#
+	salTree_uni <- drop.tip(salTree_uni, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", hynTipN, plethTipN, "Ichthyophis_bombayensis", "Rana_alticola"))#
+	if (Ntip(salTree) >= 170)	{#
+		dir.create(paste("output-", simN, sep=""))#
+		setwd(paste("output-", simN, sep=""))#
+		write.tree(salTree, "fossilTree.tre")#
+		write.tree(salTree_uni, "fossilTree_uni.tre")	#
+		setwd(paste(Path_base, "bamm/control_file/", sep=""))#
+		z <- read.table("control.txt", stringsAsFactors=F, row.names=1)#
+		setwd(paste(Path_base, "bamm/output-", simN, sep=""))#
+		phy <- salTree#
+		priors <- setBAMMpriors(phy, outfile=NULL)#
+		z[names(priors)[2:4],2] <- priors[2:4]#
+		totalTime <- max(nodeHeights(phy))#
+		z["observationTime",2] <- totalTime#
+		z["numberOccurrences",2] <- sum(fossil$numOcc) + 26	# current count of unique pleth fossils#
+		write.table(z, file="control.txt", quote=FALSE, row.names=T, col.names=F, sep=" ")#
+		z["numberOccurrences",2] <- sum(fossil$numOcc)*10#
+		write.table(z, file="control_hi.txt", quote=FALSE, row.names=T, col.names=F, sep=" ")#
+		samp <- read.table(paste(Path_base, "bamm/control_file/sampling_nopleth.txt", sep=""), sep="\t", row.names=1)#
+		samp_uni <- samp#
+		Droptips <- setdiff(phy$tip.label, rownames(samp))#
+		if (length(Droptips) >= 1)	{#
+			cat("Dropping from tree: ", Droptips, "\n")#
+			phy <- drop.tip(phy, Droptips)#
+			write.tree(phy, "fossilTree.tre")#
+		}#
+		samp <- samp[phy$tip.label,]#
+		samp <- cbind(rownames(samp), samp)#
+		colnames(samp) <- c("0.1697575","","")#
+		write.table(samp, "sampling.txt", row.names=F, col.names=T, quote=FALSE)		#
+		Droptips <- setdiff(salTree_uni$tip.label, rownames(samp_uni))#
+		if (length(Droptips) >= 1)	{#
+			cat("Dropping from tree: ", Droptips, "\n")#
+			salTree_uni <- drop.tip(salTree_uni, Droptips)#
+			write.tree(salTree_uni, "fossilTree_uni.tre")#
+		}#
+		samp <- samp_uni[salTree_uni$tip.label,]#
+		samp <- cbind(rownames(samp), samp)#
+		colnames(samp) <- c("0.1697575","","")#
+		write.table(samp, "sampling_uni.txt", row.names=F, col.names=T, quote=FALSE)				#
+		sim <- sim + 1#
+	}#
+	if (sim >= 11)	{#
+		Stop <- TRUE#
+		break;#
+	}#
+}
+}
+Path_base
+Topologies <- c("fossilSalamanders.csv", "fossilSalamanders_BS+E.csv", "fossilSalamanders_BSE.csv", "fossilSalamanders_S+BE.csv", "fossilSalamanders_SBE.csv", "fossilSalamanders_SD+BHC.csv", "fossilSalamanders_SHC+BD.csv")#
+for (tcount in 1:length(Topologies))	{#
+setwd(paste(Path_base, "datafiles/", sep=""))#
+fossil <- read.csv(Topologies[tcount], stringsAsFactors=FALSE)#
+fossilSp <- apply(fossil,1,function(x) paste(x[1], x[2], sep="_", collapse=""))#
+fossil2 <- cbind(fossil$svl, fossil$head_width, fossil$age_min, fossil$age_max)#
+rownames(fossil2) <- fossilSp#
+#
+# Generate trees#
+Stop <- FALSE#
+sim <- 1#
+simN <- (tcount - 1) * 10#
+while (Stop == FALSE)	{#
+	setwd(paste(Path_base, "bamm/", sep=""))#
+	salTree <- saveTree#
+	salTree_uni <- saveTree#
+# Add each fossil iteratively, as some are sister to other fossils#
+for (count in 1:length(unique(fossilSp)))	{#
+	Row <- which(fossilSp == unique(fossilSp)[count])[1]#
+	Children <- fossil[Row,c("lchild", "rchild")]#
+	Fossil <- unique(fossilSp)[count]#
+#
+	# Draw age from bounds#
+	#Age <- runif(1, min=fossil[Row, "age_min"], max=fossil[Row, "age_max"])#
+	# Set age to min age#
+	Age <- fossil[Row, "age_min"]#
+	if (Children$rchild == "")	{#
+		Children <- Children$lchild#
+		lTips <- salTree$tip.label[grep(Children[1], salTree$tip.label)]#
+		Tips <- lTips#
+	}#
+	else	{#
+		lTips <- salTree$tip.label[grep(Children[1], salTree$tip.label)]#
+		rTips <- salTree$tip.label[grep(Children[2], salTree$tip.label)]#
+		Tips <- unique(c(lTips, rTips))#
+	}#
+	newTree <- try(placeFossil(salTree, Age, Name=Fossil, taxa=Tips, grain=0.01, rates=c(rates$par, psi_rate), maxAge=310))#
+	newTree_uni <- try(placeFossil(salTree_uni, Age, Name=Fossil, taxa=Tips, grain=0.01, rates=NULL, maxAge=310))#
+#
+	if (class(newTree) == "try-error")	{#
+		print(Fossil)#
+	}#
+	if (class(newTree) == "phylo")	{#
+		salTree <- newTree#
+		cat(Fossil, ":", count, ": Tips =", Ntip(salTree), ": Nodes =", Nnode(salTree), "\n")#
+	}#
+	if (class(newTree_uni) == "try-error")	{#
+		cat(Fossil, " Uniform error\n")#
+	}#
+	if (class(newTree_uni) == "phylo")	{#
+		salTree_uni <- newTree_uni#
+	}#
+}#
+#
+	# Remove the cursed frog!#
+	salTree <- drop.tip(salTree, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", hynTipN, plethTipN, "Ichthyophis_bombayensis", "Rana_alticola"))#
+	salTree_uni <- drop.tip(salTree_uni, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", hynTipN, plethTipN, "Ichthyophis_bombayensis", "Rana_alticola"))#
+	if (Ntip(salTree) >= 170)	{#
+		dir.create(paste("output-", simN, sep=""))#
+		setwd(paste("output-", simN, sep=""))#
+		write.tree(salTree, "fossilTree.tre")#
+		write.tree(salTree_uni, "fossilTree_uni.tre")	#
+		setwd(paste(Path_base, "bamm/control_file/", sep=""))#
+		z <- read.table("control.txt", stringsAsFactors=F, row.names=1)#
+		setwd(paste(Path_base, "bamm/output-", simN, sep=""))#
+		phy <- salTree#
+		priors <- setBAMMpriors(phy, outfile=NULL)#
+		z[names(priors)[2:4],2] <- priors[2:4]#
+		totalTime <- max(nodeHeights(phy))#
+		z["observationTime",2] <- totalTime#
+		z["numberOccurrences",2] <- sum(fossil$numOcc) + 26	# current count of unique pleth fossils#
+		write.table(z, file="control.txt", quote=FALSE, row.names=T, col.names=F, sep=" ")#
+		z["numberOccurrences",2] <- sum(fossil$numOcc)*10#
+		write.table(z, file="control_hi.txt", quote=FALSE, row.names=T, col.names=F, sep=" ")#
+		samp <- read.table(paste(Path_base, "bamm/control_file/sampling_nopleth.txt", sep=""), sep="\t", row.names=1)#
+		samp_uni <- samp#
+		Droptips <- setdiff(phy$tip.label, rownames(samp))#
+		if (length(Droptips) >= 1)	{#
+			cat("Dropping from tree: ", Droptips, "\n")#
+			phy <- drop.tip(phy, Droptips)#
+			write.tree(phy, "fossilTree.tre")#
+		}#
+		samp <- samp[phy$tip.label,]#
+		samp <- cbind(rownames(samp), samp)#
+		colnames(samp) <- c("0.1697575","","")#
+		write.table(samp, "sampling.txt", row.names=F, col.names=T, quote=FALSE)		#
+		Droptips <- setdiff(salTree_uni$tip.label, rownames(samp_uni))#
+		if (length(Droptips) >= 1)	{#
+			cat("Dropping from tree: ", Droptips, "\n")#
+			salTree_uni <- drop.tip(salTree_uni, Droptips)#
+			write.tree(salTree_uni, "fossilTree_uni.tre")#
+		}#
+		samp <- samp_uni[salTree_uni$tip.label,]#
+		samp <- cbind(rownames(samp), samp)#
+		colnames(samp) <- c("0.1697575","","")#
+		write.table(samp, "sampling_uni.txt", row.names=F, col.names=T, quote=FALSE)				#
+		sim <- sim + 1#
+	}#
+	if (sim >= 11)	{#
+		Stop <- TRUE#
+		break;#
+	}#
+}#
+}
+salTree <- saveTree
+Topologies <- c("fossilSalamanders.csv", "fossilSalamanders_BS+E.csv", "fossilSalamanders_BSE.csv", "fossilSalamanders_S+BE.csv", "fossilSalamanders_SBE.csv", "fossilSalamanders_SD+BHC.csv", "fossilSalamanders_SHC+BD.csv")#
+for (tcount in 1:length(Topologies))	{#
+setwd(paste(Path_base, "datafiles/", sep=""))#
+fossil <- read.csv(Topologies[tcount], stringsAsFactors=FALSE)#
+fossilSp <- apply(fossil,1,function(x) paste(x[1], x[2], sep="_", collapse=""))#
+fossil2 <- cbind(fossil$svl, fossil$head_width, fossil$age_min, fossil$age_max)#
+rownames(fossil2) <- fossilSp#
+#
+# Generate trees#
+Stop <- FALSE#
+sim <- 1#
+simN <- sim + ( (tcount - 1) * 10 )#
+while (Stop == FALSE)	{#
+	setwd(paste(Path_base, "bamm/", sep=""))#
+	salTree <- saveTree#
+	salTree_uni <- saveTree#
+# Add each fossil iteratively, as some are sister to other fossils#
+for (count in 1:length(unique(fossilSp)))	{#
+	Row <- which(fossilSp == unique(fossilSp)[count])[1]#
+	Children <- fossil[Row,c("lchild", "rchild")]#
+	Fossil <- unique(fossilSp)[count]#
+#
+	# Draw age from bounds#
+	#Age <- runif(1, min=fossil[Row, "age_min"], max=fossil[Row, "age_max"])#
+	# Set age to min age#
+	Age <- fossil[Row, "age_min"]#
+	if (Children$rchild == "")	{#
+		Children <- Children$lchild#
+		lTips <- salTree$tip.label[grep(Children[1], salTree$tip.label)]#
+		Tips <- lTips#
+	}#
+	else	{#
+		lTips <- salTree$tip.label[grep(Children[1], salTree$tip.label)]#
+		rTips <- salTree$tip.label[grep(Children[2], salTree$tip.label)]#
+		Tips <- unique(c(lTips, rTips))#
+	}#
+	newTree <- try(placeFossil(salTree, Age, Name=Fossil, taxa=Tips, grain=0.01, rates=c(rates$par, psi_rate), maxAge=310))#
+	newTree_uni <- try(placeFossil(salTree_uni, Age, Name=Fossil, taxa=Tips, grain=0.01, rates=NULL, maxAge=310))#
+#
+	if (class(newTree) == "try-error")	{#
+		print(Fossil)#
+	}#
+	if (class(newTree) == "phylo")	{#
+		salTree <- newTree#
+		cat(Fossil, ":", count, ": Tips =", Ntip(salTree), ": Nodes =", Nnode(salTree), "\n")#
+	}#
+	if (class(newTree_uni) == "try-error")	{#
+		cat(Fossil, " Uniform error\n")#
+	}#
+	if (class(newTree_uni) == "phylo")	{#
+		salTree_uni <- newTree_uni#
+	}#
+}#
+#
+	# Remove the cursed frog!#
+	salTree <- drop.tip(salTree, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", hynTipN, plethTipN, "Ichthyophis_bombayensis", "Rana_alticola"))#
+	salTree_uni <- drop.tip(salTree_uni, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", hynTipN, plethTipN, "Ichthyophis_bombayensis", "Rana_alticola"))#
+	if (Ntip(salTree) >= 170)	{#
+		dir.create(paste("output-", simN, sep=""))#
+		setwd(paste("output-", simN, sep=""))#
+		write.tree(salTree, "fossilTree.tre")#
+		write.tree(salTree_uni, "fossilTree_uni.tre")	#
+		setwd(paste(Path_base, "bamm/control_file/", sep=""))#
+		z <- read.table("control.txt", stringsAsFactors=F, row.names=1)#
+		setwd(paste(Path_base, "bamm/output-", simN, sep=""))#
+		phy <- salTree#
+		priors <- setBAMMpriors(phy, outfile=NULL)#
+		z[names(priors)[2:4],2] <- priors[2:4]#
+		totalTime <- max(nodeHeights(phy))#
+		z["observationTime",2] <- totalTime#
+		z["numberOccurrences",2] <- sum(fossil$numOcc) + 26	# current count of unique pleth fossils#
+		write.table(z, file="control.txt", quote=FALSE, row.names=T, col.names=F, sep=" ")#
+		z["numberOccurrences",2] <- sum(fossil$numOcc)*10#
+		write.table(z, file="control_hi.txt", quote=FALSE, row.names=T, col.names=F, sep=" ")#
+		samp <- read.table(paste(Path_base, "bamm/control_file/sampling_nopleth.txt", sep=""), sep="\t", row.names=1)#
+		samp_uni <- samp#
+		Droptips <- setdiff(phy$tip.label, rownames(samp))#
+		if (length(Droptips) >= 1)	{#
+			cat("Dropping from tree: ", Droptips, "\n")#
+			phy <- drop.tip(phy, Droptips)#
+			write.tree(phy, "fossilTree.tre")#
+		}#
+		samp <- samp[phy$tip.label,]#
+		samp <- cbind(rownames(samp), samp)#
+		colnames(samp) <- c("0.1697575","","")#
+		write.table(samp, "sampling.txt", row.names=F, col.names=T, quote=FALSE)		#
+		Droptips <- setdiff(salTree_uni$tip.label, rownames(samp_uni))#
+		if (length(Droptips) >= 1)	{#
+			cat("Dropping from tree: ", Droptips, "\n")#
+			salTree_uni <- drop.tip(salTree_uni, Droptips)#
+			write.tree(salTree_uni, "fossilTree_uni.tre")#
+		}#
+		samp <- samp_uni[salTree_uni$tip.label,]#
+		samp <- cbind(rownames(samp), samp)#
+		colnames(samp) <- c("0.1697575","","")#
+		write.table(samp, "sampling_uni.txt", row.names=F, col.names=T, quote=FALSE)				#
+		sim <- sim + 1#
+	}#
+	if (sim >= 11)	{#
+		Stop <- TRUE#
+		break;#
+	}#
+}#
+}
+salTree <- saveTree
+Topologies <- c("fossilSalamanders.csv", "fossilSalamanders_BS+E.csv", "fossilSalamanders_BSE.csv", "fossilSalamanders_S+BE.csv", "fossilSalamanders_SBE.csv", "fossilSalamanders_SD+BHC.csv", "fossilSalamanders_SHC+BD.csv")#
+for (tcount in 1:length(Topologies))	{#
+setwd(paste(Path_base, "datafiles/", sep=""))#
+fossil <- read.csv(Topologies[tcount], stringsAsFactors=FALSE)#
+fossilSp <- apply(fossil,1,function(x) paste(x[1], x[2], sep="_", collapse=""))#
+fossil2 <- cbind(fossil$svl, fossil$head_width, fossil$age_min, fossil$age_max)#
+rownames(fossil2) <- fossilSp#
+#
+# Generate trees#
+Stop <- FALSE#
+sim <- 1#
+while (Stop == FALSE)	{#
+	simN <- sim + ( (tcount - 1) * 10 )#
+	setwd(paste(Path_base, "bamm/", sep=""))#
+	salTree <- saveTree#
+	salTree_uni <- saveTree#
+# Add each fossil iteratively, as some are sister to other fossils#
+for (count in 1:length(unique(fossilSp)))	{#
+	Row <- which(fossilSp == unique(fossilSp)[count])[1]#
+	Children <- fossil[Row,c("lchild", "rchild")]#
+	Fossil <- unique(fossilSp)[count]#
+#
+	# Draw age from bounds#
+	#Age <- runif(1, min=fossil[Row, "age_min"], max=fossil[Row, "age_max"])#
+	# Set age to min age#
+	Age <- fossil[Row, "age_min"]#
+	if (Children$rchild == "")	{#
+		Children <- Children$lchild#
+		lTips <- salTree$tip.label[grep(Children[1], salTree$tip.label)]#
+		Tips <- lTips#
+	}#
+	else	{#
+		lTips <- salTree$tip.label[grep(Children[1], salTree$tip.label)]#
+		rTips <- salTree$tip.label[grep(Children[2], salTree$tip.label)]#
+		Tips <- unique(c(lTips, rTips))#
+	}#
+	newTree <- try(placeFossil(salTree, Age, Name=Fossil, taxa=Tips, grain=0.01, rates=c(rates$par, psi_rate), maxAge=310))#
+	newTree_uni <- try(placeFossil(salTree_uni, Age, Name=Fossil, taxa=Tips, grain=0.01, rates=NULL, maxAge=310))#
+#
+	if (class(newTree) == "try-error")	{#
+		print(Fossil)#
+	}#
+	if (class(newTree) == "phylo")	{#
+		salTree <- newTree#
+		cat(Fossil, ":", count, ": Tips =", Ntip(salTree), ": Nodes =", Nnode(salTree), "\n")#
+	}#
+	if (class(newTree_uni) == "try-error")	{#
+		cat(Fossil, " Uniform error\n")#
+	}#
+	if (class(newTree_uni) == "phylo")	{#
+		salTree_uni <- newTree_uni#
+	}#
+}#
+#
+	# Remove the cursed frog!#
+	salTree <- drop.tip(salTree, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", hynTipN, plethTipN, "Ichthyophis_bombayensis", "Rana_alticola"))#
+	salTree_uni <- drop.tip(salTree_uni, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", hynTipN, plethTipN, "Ichthyophis_bombayensis", "Rana_alticola"))#
+	if (Ntip(salTree) >= 170)	{#
+		dir.create(paste("output-", simN, sep=""))#
+		setwd(paste("output-", simN, sep=""))#
+		write.tree(salTree, "fossilTree.tre")#
+		write.tree(salTree_uni, "fossilTree_uni.tre")	#
+		setwd(paste(Path_base, "bamm/control_file/", sep=""))#
+		z <- read.table("control.txt", stringsAsFactors=F, row.names=1)#
+		setwd(paste(Path_base, "bamm/output-", simN, sep=""))#
+		phy <- salTree#
+		priors <- setBAMMpriors(phy, outfile=NULL)#
+		z[names(priors)[2:4],2] <- priors[2:4]#
+		totalTime <- max(nodeHeights(phy))#
+		z["observationTime",2] <- totalTime#
+		z["numberOccurrences",2] <- sum(fossil$numOcc) + 26	# current count of unique pleth fossils#
+		write.table(z, file="control.txt", quote=FALSE, row.names=T, col.names=F, sep=" ")#
+		z["numberOccurrences",2] <- sum(fossil$numOcc)*10#
+		write.table(z, file="control_hi.txt", quote=FALSE, row.names=T, col.names=F, sep=" ")#
+		samp <- read.table(paste(Path_base, "bamm/control_file/sampling_nopleth.txt", sep=""), sep="\t", row.names=1)#
+		samp_uni <- samp#
+		Droptips <- setdiff(phy$tip.label, rownames(samp))#
+		if (length(Droptips) >= 1)	{#
+			cat("Dropping from tree: ", Droptips, "\n")#
+			phy <- drop.tip(phy, Droptips)#
+			write.tree(phy, "fossilTree.tre")#
+		}#
+		samp <- samp[phy$tip.label,]#
+		samp <- cbind(rownames(samp), samp)#
+		colnames(samp) <- c("0.1697575","","")#
+		write.table(samp, "sampling.txt", row.names=F, col.names=T, quote=FALSE)		#
+		Droptips <- setdiff(salTree_uni$tip.label, rownames(samp_uni))#
+		if (length(Droptips) >= 1)	{#
+			cat("Dropping from tree: ", Droptips, "\n")#
+			salTree_uni <- drop.tip(salTree_uni, Droptips)#
+			write.tree(salTree_uni, "fossilTree_uni.tre")#
+		}#
+		samp <- samp_uni[salTree_uni$tip.label,]#
+		samp <- cbind(rownames(samp), samp)#
+		colnames(samp) <- c("0.1697575","","")#
+		write.table(samp, "sampling_uni.txt", row.names=F, col.names=T, quote=FALSE)				#
+		sim <- sim + 1#
+	}#
+	if (sim >= 11)	{#
+		Stop <- TRUE#
+		break;#
+	}#
+}#
+}
+Base <- "~/Documents/Salamanders/bamm/output-"#
+#
+pullN <- function(count, Tree="fossilTree.tre", Base="~/Documents/Salamanders/bamm/output-")	{#
+	require(phytools)#
+	Tree <- read.tree(paste(Base, count, "/", Tree, sep="")#
+	N <- Ntip(Tree)#
+	return(N)#
+}#
+#
+Total <- sapply(1:5, pullN)
+Base <- "~/Documents/Salamanders/bamm/output-"#
+#
+pullN <- function(count, Tree="fossilTree.tre", Base="~/Documents/Salamanders/bamm/output-")	{#
+	require(phytools)#
+	Tree <- read.tree(paste(Base, count, "/", Tree, sep="")#
+	N <- Ntip(Tree)#
+	return(N)#
+}
+Base <- "~/Documents/Salamanders/bamm/output-"#
+#
+pullN <- function(count, Tree="fossilTree.tre", Base="~/Documents/Salamanders/bamm/output-")	{#
+	require(phytools)#
+	Tree <- read.tree(paste(Base, count, "/", Tree, sep=""))#
+	N <- Ntip(Tree)#
+	return(N)#
+}
+Total <- sapply(1:70, pullN)
+plot(Total)
+plot(Total,type='l')
+plot(Total,type='l', ylim=c(175,200))
+uniTotal <- sapply(1:70, pullN, Tree="fossilTree_uni.tre")
+lines(uniTotal, col='red')
+salTree
+saveTree
+471 / 688
+salTree <- saveTree
+Topologies <- c("fossilSalamanders.csv", "fossilSalamanders_BS+E.csv", "fossilSalamanders_BSE.csv", "fossilSalamanders_S+BE.csv", "fossilSalamanders_SBE.csv", "fossilSalamanders_SD+BHC.csv", "fossilSalamanders_SHC+BD.csv")#
+for (tcount in 1:length(Topologies))	{#
+setwd(paste(Path_base, "datafiles/", sep=""))#
+fossil <- read.csv(Topologies[tcount], stringsAsFactors=FALSE)#
+fossilSp <- apply(fossil,1,function(x) paste(x[1], x[2], sep="_", collapse=""))#
+fossil2 <- cbind(fossil$svl, fossil$head_width, fossil$age_min, fossil$age_max)#
+rownames(fossil2) <- fossilSp#
+#
+# Generate trees#
+Stop <- FALSE#
+sim <- 1#
+while (Stop == FALSE)	{#
+	simN <- sim + ( (tcount - 1) * 10 )#
+#	Opt <- "bamm/"#
+	Opt <- "full/"#
+	setwd(paste(Path_base, Opt, sep=""))#
+	salTree <- saveTree#
+	salTree_uni <- saveTree#
+# Add each fossil iteratively, as some are sister to other fossils#
+for (count in 1:length(unique(fossilSp)))	{#
+	Row <- which(fossilSp == unique(fossilSp)[count])[1]#
+	Children <- fossil[Row,c("lchild", "rchild")]#
+	Fossil <- unique(fossilSp)[count]#
+#
+	# Draw age from bounds#
+	#Age <- runif(1, min=fossil[Row, "age_min"], max=fossil[Row, "age_max"])#
+	# Set age to min age#
+	Age <- fossil[Row, "age_min"]#
+	if (Children$rchild == "")	{#
+		Children <- Children$lchild#
+		lTips <- salTree$tip.label[grep(Children[1], salTree$tip.label)]#
+		Tips <- lTips#
+	}#
+	else	{#
+		lTips <- salTree$tip.label[grep(Children[1], salTree$tip.label)]#
+		rTips <- salTree$tip.label[grep(Children[2], salTree$tip.label)]#
+		Tips <- unique(c(lTips, rTips))#
+	}#
+	newTree <- try(placeFossil(salTree, Age, Name=Fossil, taxa=Tips, grain=0.01, rates=c(rates$par, psi_rate), maxAge=310))#
+	newTree_uni <- try(placeFossil(salTree_uni, Age, Name=Fossil, taxa=Tips, grain=0.01, rates=NULL, maxAge=310))#
+#
+	if (class(newTree) == "try-error")	{#
+		print(Fossil)#
+	}#
+	if (class(newTree) == "phylo")	{#
+		salTree <- newTree#
+		cat(Fossil, ":", count, ": Tips =", Ntip(salTree), ": Nodes =", Nnode(salTree), "\n")#
+	}#
+	if (class(newTree_uni) == "try-error")	{#
+		cat(Fossil, " Uniform error\n")#
+	}#
+	if (class(newTree_uni) == "phylo")	{#
+		salTree_uni <- newTree_uni#
+	}#
+}#
+#
+	# Remove the cursed frog! Remove crazy extants#
+	#salTree <- drop.tip(salTree, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", hynTipN, plethTipN, "Ichthyophis_bombayensis", "Rana_alticola"))#
+	#salTree_uni <- drop.tip(salTree_uni, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", hynTipN, plethTipN, "Ichthyophis_bombayensis", "Rana_alticola"))#
+	# Remove the cursed frog! Retain crazy extants#
+	salTree <- drop.tip(salTree, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", "Ichthyophis_bombayensis", "Rana_alticola"))#
+	salTree_uni <- drop.tip(salTree_uni, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", "Ichthyophis_bombayensis", "Rana_alticola"))#
+	if (Ntip(salTree) >= 170)	{#
+		dir.create(paste("output-", simN, sep=""))#
+		setwd(paste("output-", simN, sep=""))#
+		write.tree(salTree, "fossilTree.tre")#
+		write.tree(salTree_uni, "fossilTree_uni.tre")	#
+		setwd(paste(Path_base, Opt, "control_file/", sep=""))#
+		z <- read.table("control.txt", stringsAsFactors=F, row.names=1)#
+		setwd(paste(Path_base, Opt, "output-", simN, sep=""))#
+		phy <- salTree#
+		priors <- setBAMMpriors(phy, outfile=NULL)#
+		z[names(priors)[2:4],2] <- priors[2:4]#
+		totalTime <- max(nodeHeights(phy))#
+		z["observationTime",2] <- totalTime#
+		z["numberOccurrences",2] <- sum(fossil$numOcc) + 26	# current count of unique pleth fossils#
+		write.table(z, file="control.txt", quote=FALSE, row.names=T, col.names=F, sep=" ")#
+		z["numberOccurrences",2] <- sum(fossil$numOcc)*10#
+		write.table(z, file="control_hi.txt", quote=FALSE, row.names=T, col.names=F, sep=" ")#
+		samp <- read.table(paste(Path_base, Opt, "control_file/sampling_nopleth.txt", sep=""), sep="\t", row.names=1)#
+		samp_uni <- samp#
+		Droptips <- setdiff(phy$tip.label, rownames(samp))#
+		if (length(Droptips) >= 1)	{#
+			cat("Dropping from tree: ", Droptips, "\n")#
+			phy <- drop.tip(phy, Droptips)#
+			write.tree(phy, "fossilTree.tre")#
+		}#
+		samp <- samp[phy$tip.label,]#
+		samp <- cbind(rownames(samp), samp)#
+		#colnames(samp) <- c("0.1697575","","")#
+		colnames(samp) <- c("0.684593","","")		#
+		write.table(samp, "sampling.txt", row.names=F, col.names=T, quote=FALSE)		#
+		Droptips <- setdiff(salTree_uni$tip.label, rownames(samp_uni))#
+		if (length(Droptips) >= 1)	{#
+			cat("Dropping from tree: ", Droptips, "\n")#
+			salTree_uni <- drop.tip(salTree_uni, Droptips)#
+			write.tree(salTree_uni, "fossilTree_uni.tre")#
+		}#
+		samp <- samp_uni[salTree_uni$tip.label,]#
+		samp <- cbind(rownames(samp), samp)#
+		#colnames(samp) <- c("0.1697575","","")#
+		colnames(samp) <- c("0.684593","","")		#
+		write.table(samp, "sampling_uni.txt", row.names=F, col.names=T, quote=FALSE)				#
+		sim <- sim + 1#
+	}#
+	if (sim >= 11)	{#
+		Stop <- TRUE#
+		break;#
+	}#
+}#
+}

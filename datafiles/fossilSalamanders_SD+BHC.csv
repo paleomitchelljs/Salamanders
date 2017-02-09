@@ -1,0 +1,90 @@
+genus,species,specimen,age_max,age_min,fm,lat,long,country,lith,pres,svl,head_width,lchild,rchild,numOcc,phyloSource,author,journal,year,neotenic,ENA,WNA,Neo,Eur,CASIA,EASIA,notes
+Notophthalmus,crassus,,20.4,13.8,,43.1,-101.9,USA,,isolated,NA,NA,Notophthalmus,,1,ML2014,,,,,?,1,?,?,?,?,
+Notophthalmus,robustus,,20.4,13.8,,29.7,-82.6,USA,,isolated,NA,NA,Notophthalmus,,3,ML2014,,,,,1,?,?,?,?,?,
+Carpathotriton,matraensis,,13,11,SajoValley,47.880108,19.975,Hungary,,isolated,NA,NA,Paramesotriton,Mesotriton,1,ML2014,,,,,?,?,?,1,?,?,
+Ommatriton,roehrsi,,20.4,5.3,,NA,NA,Eur,,isolated,NA,NA,Ommatotriton,,4,ML2014,,,,,?,?,?,1,?,?,
+Triturus,aff.marmoratus,,13.6,11.6,,NA,NA,Eur,,isolated,NA,NA,Triturus_marmoratus,Triturus_pygmaeus,1,ML2014,,,,,?,?,?,1,?,?,probably should not be sister to pygmaeus as well
+Lissotriton,aff.helveticus,,12.7,11.6,,46.3,21.9,Romania,,isolated,NA,NA,Lissotriton_helveticus,,1,ML2014,,,,,?,?,?,1,?,?,
+Procynops,miocenicus,,16,11.6,Shanwang,36.5,118.5,China,,isolated,NA,NA,Cynops,Hypselotriton,1,ML2014,,,,,?,?,?,?,?,1,
+Pseudobranchus,vetustus,,13.6,10.3,,29.8,-82.1,USA,,isolated,NA,NA,Pseudobranchus,,1,Bennett2013,,,,,1,?,?,?,?,?,
+Siren,simpsoni,,13.6,10.3,,29.8,-82.1,USA,,isolated,NA,NA,Siren,,1,Bennett2013,,,,,1,?,?,?,?,?,
+Siren,miotexana,,15.97,13.6,,30.5,-84.5,USA,,isolated,NA,NA,Siren,Pseudobranchus,1,Bennett2013,,,,,1,?,?,?,?,?,
+Siren,hesterna,,20.4,16,Alachua,29.7,82.6,USA,,isolated,NA,NA,Siren,Pseudobranchus,1,Bennett2013,,,,,1,?,?,?,?,?,
+Siren,dunni,,50.3,46.2,Bridger,41.7,-109,USA,,isolated,NA,NA,Siren,Pseudobranchus,1,Bennett2013,,,,,?,1,?,?,?,?,Bennett et al have this sister to Siren+Pseudobranchus contra Marjanovic
+Paleoamphiuma,tetradactylum,FMNHPR1810,52,52,GreenRiver,41.7956,-110.597568,USA,,full_skeleton,200,NA,Siren,Pseudobranchus,1,ML2014,,,,,?,1,?,?,?,?,
+Habrosaurus,dilatus,,63.3,61.7,FortUnion,45.8,-109.8,USA,,isolated,NA,NA,Paleoamphiuma,Siren,4,ML2014,,,,,?,1,?,?,?,?,
+Habrosaurus,prodilatus,,84.9,70.6,DinoPark,50,-110.3,USA,,isolated,NA,NA,Habrosaurus,,1,ML2014,,,,,?,1,?,?,?,?,
+Kababisha,humarensis,,99.7,94.3,WadiMilk,16.7,31.1,Sudan,,isolated,NA,NA,Habrosaurus,Siren,1,ML2014,,,,,?,?,?,1,?,?,
+Kababisha,sudanensis,,99.7,94.3,WadiMilk,16.7,31.1,Sudan,,isolated,NA,NA,Kababisha,,1,ML2014,,,,,?,?,?,1,?,?,
+Kababisha,cf.kabab,,99.7,94.3,Aoufous,31.8,-5.9,Morocco,,isolated,NA,NA,Kababisha,,1,ML2014,,,,,?,?,?,1,?,?,
+Noterpeton,bolivianum,,70.6,66,ElMolino,-17.9,-65.5,Bolivia,,isolated,NA,NA,Kababisha,,1,ML2014,,,,,?,?,1,?,?,?,
+Beiyanerpeton,jianpingensis,PKUPV0601,164,157,Tiaojishan,41.4077,119.459,China,lac,full_skeleton,101,38.38,Siren,Cynops,1,,GaoShubin,PNAS,2012,1,?,?,?,?,?,1,
+Archaeotriton,basalticus,MMGD Hw 97,33.9,28.1,Blatterkole,50.444,13.013,Germany,maar,full_skeleton,50.3,6.1,Salamandrina,,1,,BohmeMunchenRobler,Veroff Museum fur Naturkunde Chemnitz,2002,0,?,?,?,1,?,?,
+Brachycormus,noachicus,PIUB Ro 4429,33.9,28.1,Blatterkole,50.59,7.24,Germany,maar,full_skeleton,23.11,7.26,Tylototriton,Echinotriton,1,ML2014,Rocek,Palaeontology,1996,1,?,?,?,1,?,?,
+Chelotriton,paradoxus,PW2010/5000-LS,17.2,13,Enspel&Rendeck,48.574,9.514,Germany,maar,partial_skeleton,80.8,29.71,Brachycormus_noachicus,,6,ML2014,SchochPoschmannKupfer,P3,2015,0,?,?,?,1,?,?,
+Chelotriton,robustus,,47.8,41.3,Messel,49.9134,8.754,Germany,,isolated,NA,NA,Chelotriton,,1,ML2014,,,,,?,?,?,1,?,?,Chelotriton robustus n. sp. ein Salamandride aus dem Eozan der Grube Messel bei Darmstadt
+Chelotriton,weigelti,,48.6,40.4,,51.3,12,Germany,,isolated,NA,NA,Chelotriton,,1,ML2014,,,,,?,?,?,1,?,?,
+Ichthyosaura,randeckensis,SMNS 95461,17.2,15,Randeck Maar,48.635,9.4257,Germany,maar,full_skeleton,24.06,6.99,Ichthyosaura,,1,,ShochRasser,JVP,2013,0,?,?,?,1,?,?,really nice specimen
+Ichthyosaura,wintershofi,,23,20,,NA,NA,Eur,,isolated,NA,NA,Ichthyosaura,,1,,,,,,?,?,?,1,?,?,
+Mioproteus,caucasicus,,11.1,9.7,,48.4,20.6,Hungary,,isolated,NA,NA,Proteus,,1,ML2014,,,,,?,?,?,1,?,?,
+Orthophyia,longa,,11.1,9.7,,47.281,7.714,Switzlerand,,isolated,NA,NA,Mioproteus,Proteus,1,ML2014,,,,,?,?,?,1,?,?,
+Necturus,krausei,,61.7,56.8,,49.1,-102.7,USA,,isolated,NA,NA,Necturus,,1,ML2014,,,,,?,1,?,?,?,?,
+Valdotriton,gracilis,LH 928061a-b,116,114,Huerguina,40.1,-1.9,Spain,lac,full_skeleton,35.23333333,10.13666667,Necturus,Cynops,1,,EvansMilner,PhilTransBioSci,1996,0,?,?,?,1,?,?,
+Apricosiren,ensomi,,145.5,140.2,,50.6,-2,UK,,isolated,NA,NA,Valdotriton,Cynops,1,ML2014,,,,,?,?,?,1,?,?,
+Liaoxitriton,daohugouensis,IVPPV13393,165,154,Daohugou,42.6737,121.3636,China,lac,full_skeleton,75.2,20.64,Onychodactylus,Salamandrella,1,ML2014,Yuan,ChineseSciBulletin,2004,0,?,?,?,?,?,1,
+Liaoxitriton,zhongjiani,,125,113,,41.233,117.2666,China,,isolated,NA,NA,Liaoxitriton_daohugouensis,,1,ML2014,,,,,?,?,?,?,?,1,ask Gao for measurements
+Palaeopleurodeles,hauffi,,23,20.4,,48.5648,9.531,Germany,,isolated,NA,NA,Pleurodeles,,1,ML2014,,,,,?,?,?,1,?,?,
+Pleurodeles,cf.waltl,,2.58,0.781,,33.435887,-6.687,Morocco,,isolated,NA,NA,Pleurodeles_waltl,,1,ML2014,,,,,?,?,?,1,?,?,
+Salamandra,sansaniensis,,13.7,11.6,,48.2,18,Slovakia,,isolated,NA,NA,Salamandra,,4,ML2014,,,,,?,?,?,1,?,?,
+Chioglossa,meini,,28.4,23,,50.3,9.8,Germany,,isolated,NA,NA,Chioglossa,,1,ML2014,,,,,?,?,?,1,?,?,
+Semniobatrachus,boltishki,PIN3991/14,59.2,56,Boltyshka_sapropelite,48.2277728,34.180278,Ukraine,lac,full_skeleton,38.2,10.4,Ambystoma,Ambystoma,1,ML2014,SkutschasGubin,ActaPalPolon,2012,0,?,?,?,1,?,?,SVL uncertain; snout-tip missing in complete specimens. Measure is based on other complete skulls.
+Qinglongtriton,gangouensis,PKUPV0226,161.8,159.5,Tiaojishan,40.53111,119.486388,China,lac,full_skeleton,142.97,40.15,Beiyanerpeton,Taricha,1,ML2014,JiaGao,PLOSONE,2016,1,?,?,?,?,?,1,Gills preserved; very cool
+Palaeoplethodon,hispaniolae,AM-3-15,45,15,Mamey,19.616516,-70.681066,Dominican Republic,amber,body,9,1.3,Bolitoglossa,Batrachoseps,1,PoinarWake,PoinarWake,Palaeodiversity,2015,0,?,?,1,?,?,?,
+Celtedens,ibericus,LH6020,129.4,125,Las Hoyas,40.069192,-2.128714,Spain,lac,full_skeleton,51,7.5,Rana,Plethodon,2,ML2014,McGowan,LinZooJ,2002,0,?,?,?,1,?,?,
+Taricha,oligocenica,UOMNF59812AB,33,32.7,John Day,45.377525,-120.694917,Oregon,lac,full_skeleton,62,13,Taricha,Taricha,1,ML2014,Jacisin,Diss,2014,0,?,1,?,?,?,?,placement within Taricha is uncertain
+Taricha,lindoei,UOMNHF38883,33,32.7,John Day,45.377525,-120.694917,Oregon,lac,full_skeleton,54,11,Taricha_oligocenica,,1,ML2014,Jacisin,Diss,2014,0,?,1,?,?,?,?,placement within Taricha is uncertain
+Andrias,scheuchzeri,,16,13.7,,50.9,6.5,Germany,,full_skeleton,387,86,Andrias,,3,ML2014,,,,,?,?,?,1,?,?,measurements are from The Primaeval World of Switzerland pub 1876
+Andrias,matthewi,,20.4,16,,42.8,-103.1,USA,,isolated,NA,NA,Andrias,,1,ML2014,,,,,?,1,?,?,?,?,
+Zaissanurus,beliajevae,,38,33.9,,50,85,Kazakhstan,,isolated,NA,NA,Andrias,Cryptobranchus,1,ML2014,,,,,?,?,?,?,1,?,
+Aviturus,exsecratus,,58.7,55.8,,43.5,100.5,Mongolia,,isolated,NA,NA,Andrias,Zaissanurus,1,ML2014,,,,,?,?,?,?,1,?,
+Ukrainurus,hypsognathus,,11.6,10,,49.962101,27.238164,Ukraine,,isolated,NA,NA,Andrias,Aviturus,1,ML2014,,,,,?,?,?,1,?,?,
+cfCryptobranchus,saskatchewanensis,,61.7,56.8,,49.1,-102.7,Canada,,isolated,NA,NA,Andrias,Ukrainurus,1,ML2014,,,,,?,1,?,?,?,?,
+Eoscapherpeton,superum,,85.8,84.9,,40.5,69.7,Tajikistan,,isolated,NA,NA,Andrias,cfCryptobranchus,3,ML2014,,,,,?,?,?,?,1,?,
+Horezmia,gracilis,,105.3,99.7,,40.1,65.8,Tajikistan,,isolated,NA,NA,Eoscapherpeton_superum,,1,ML2014,,,,,?,?,?,?,1,?,
+Jeholotriton,paradoxus,0012B,164.7,161.2,Daohugou,42.6737,121.3636,China,lac,full_skeleton+,59.2,16.18,Horezmia,Cryptobranchus,1,ML2014,CarrollZheng,ZooJLinSoc,2012,1,?,?,?,?,?,1,
+Pangerpeton,sinensis,IVPPV14244,161.2,145.5,Daohugou,41.135229,118.807711,China,lac,impression,36.4,12.9,Jeholotriton,,1,ML2014,WangEvans,ActaPalPolon,2006,0,?,?,?,?,?,1,sister to Jeholotriton
+Regalerpeton,weichangensis,IVPPV14391,130,112.6,Huajiying,40.929213,116.630836,China,lac,full_skeleton,60,27.69,Jeholotriton,Andrias,1,ML2014,ZhangWangJonesEvans,CretRes,2008,0,?,?,?,?,?,1,SVL highly speculative--sacrum isn't preserved; but the femur is. Location of hip is literally guessed.
+Chunerpeton,tianyiensis,CAGSIG02051,161.2,150.8,Jiulongshan,40.942,118.712,China,lac,full_skeleton,80.8,25.91,Regalerpeton,Cryptobranchus,1,ML2014,GaoShubin,Nature,2003,1,?,?,?,?,?,1,
+Dicamptodon,antiquus,UALVP32387,58.7,55.8,Paskapoo,54.10112,-115.7156,Canada,lac,partial_skeleton,NA,15,Dicamptodon,,1,ML2014,NaylorFox,CanJEarthSci,1993,1,?,1,?,?,?,?,possibly just a juvenile?
+Iridotriton,hechti,DINO16453ab,150,148,Morrison,40.473367,-108.954238,USA,flood,partial_skeleton,55,NA,Hynobius,Liaoxitriton,1,ML2014,Evansetal,ZooJLinSoc,2005,0,?,1,?,?,?,?,fully metamorphosed; SVL an estimate from paper due to fragmentary nature of specimen
+Koaliella,genzeli,,55.8,48.6,ArgilesdligniteduSoissonnais,49.3,2.7,France,,isolated,NA,NA,Notophthalmus,Cynops,1,ML2014,,,,,?,?,?,1,?,?,
+Phosphotriton,sigei,MNHNFQU17755,37.2,33.9,Quercy,44.259897,1.557,France,phos,partial_skeleton,NA,NA,Salamandra,Taricha,1,,Tissieretal,ZooJLinSoc,2016,0,?,?,?,1,?,?,may be a plethodontid; no head
+Amphiuma,jepseni,,61.7,56.8,,44.9,-108.9,USA,,isolated,NA,NA,Amphiuma,,1,ML2014,,,,,?,1,?,?,?,?,
+Proamphiuma,cretacea,MCZ3504,70.6,66.043,Hell Creek,47.5865,-105.792971,USA,flood,isolated,NA,NA,Amphiuma,,3,ML2014,Gardner,JVP,2003,0,?,1,?,?,?,?,
+Ambystoma,gfs,Unk,7,4.5,GrayFossilSite,36.386267,-82.498312,USA,mud,full_skeleton+,NA,NA,Ambystoma,,1,,HannahDarcy,MS,2016,0,1,?,?,?,?,?,undescribed sp of Amybstoma from GrayFossilSite; complete skeleton but measurements not published
+Ambystoma,minshalli,,16,7.2,,42.8,-100,USA,,isolated,NA,NA,Ambystoma,,2,ML2014,,,,,?,1,?,?,?,?,
+Kokartus,honorarius,ZINPH4/47,168.3,166.1,BalabansaiSvita,40.974658,73.965473,Kyrgyzstan,mud,isolated,NA,NA,Plethodon,Cryptobranchus,2,ML2014,Averianovetal,Palaeontology,2008,0,?,?,?,?,1,?,many isolated elements
+Karaurus,sharovi,PIN2585/2,157,152,KarabastauSvita,54.275426,69.875308,Kazakhstan,ss,full_skeleton,125.92,58.78,Kokartus,,1,ML2014,Ivenkhov,PaleontZhur,1978,0,?,?,?,?,1,?,paper in russian in paleo library QE701 .P83
+Marmorerpeton,kermacki,,167.7,164.7,ForestMarble,51.9,-1.3,UK,clay,isolated,NA,NA,Kokartus,Karaurus,1,ML2014,Evansetal,Geobios,1988,,?,?,?,1,?,?,
+Marmorerpeton,freemani,,167.7,164.7,ForestMarble,51.9,-1.3,UK,clay,isolated,NA,NA,Marmorerpeton,,2,ML2014,Evansetal,Geobios,1988,,?,?,?,1,?,?,
+Urupia,monstrosa,ZINph1/144,168.3,166.1,Itat,55.7,89.2,Russia,clay,isolated,NA,NA,Kokartus,Cryptobranchus,1,ML2014,SkutschasKrasnolutskii,ProcZooInstRAS,2011,0,?,?,?,?,1,?,very large but isolated elements
+Scapherpeton,tectum,,70.6,56.8,,49.3,-108.4,USA,,isolated,NA,NA,Salamandra,Beiyanerpeton,6,ML2014,,,,,?,1,?,?,?,?,
+Lisserpeton,bairdi,,83.6,56,,47.8,-106.1,USA,,isolated,NA,NA,Scapherpeton,,5,ML2014,,,,,?,1,?,?,?,?,
+Piceoerpeton,naylori,,70.6,66,,47.8,-106.1,USA,,isolated,NA,NA,Scapherpeton,Lisserpeton,1,ML2014,,,,,?,1,?,?,?,?,
+Piceoerpeton,wilwoodense,,56.8,50.3,,44.58,-108.416,USA,,isolated,NA,NA,Piceoerpeton,,2,ML2014,,,,,?,1,?,?,?,?,
+Opithisthotriton,kayi,UALVP16274,66,61,Scollard,51.938611,-112.92694,Canada,lac,full_skeleton,188,14.1,Hynobius,Andrias,4,ML2014,Gardner,PersComm,2016,0,?,1,?,?,?,?,pers comm 2016 Jim Gardner for measures
+Batrachosauroides,gotoi,,55.8,50.3,,46.9,-102.8,USA,,isolated,NA,NA,Opithisthotriton,,1,ML2014,,,,,?,1,?,?,?,?,
+Batrachosauroides,dissimulans,,15.97,13.6,,30.5,-84.5,USA,,isolated,NA,NA,Batrachosauroides,,1,ML2014,,,,,1,?,?,?,?,?,
+Palaeoproteus,gallicus,,58.7,55.8,,49.3,4.1,France,,isolated,NA,NA,Batrachosauroides,,1,ML2014,,,,,?,?,?,1,?,?,
+Palaeoproteus,klatti,,48.6,40.4,,51.3,12,Germany,,isolated,NA,NA,Palaeoproteus,,1,ML2014,,,,,?,?,?,1,?,?,
+Prodesmodon,copei,,84.9,63.3,,36.5,-108.5,USA,,isolated,NA,NA,Opithisthotriton,Palaeoproteus,2,ML2014,,,,,?,1,?,?,?,?,
+Peratosauroides,problematica,,5.3,2.5,,38.3148,-122.365,USA,,isolated,NA,NA,Opisthotriton,Prodesmodon,1,ML2014,,,,,?,1,?,?,?,?,
+Parrisia,neocaesariensis,,84.9,70.6,,40.3,-74.3,USA,,isolated,NA,NA,Opisthotriton,Peratosauroides,1,ML2014,,,,,1,?,?,?,?,?,
+Hylaeobatrachus,croyi,,130,122.5,,40.7,13.7,Belgium,clay,isolated,NA,NA,Peratosauroides,Batrachosauroides,1,ML2014,,,,,?,?,?,1,?,?,
+Nesovtriton,mynbulakensis,,93.9,89.8,,42.1,62.7,Uzbekistan,,isolated,NA,NA,Iridotriton,Andrias,1,ML2014,,,,,?,?,?,?,1,?,
+Kiyatriton,leshchinsktyi,,130,112.6,,55.9,88,Russia,,isolated,NA,NA,Nesovtriton,Andrias,1,ML2014,,,,,?,?,?,?,1,?,
+Laccotriton,subsolanus,GMV1602,132.9,129.4,Huajiying,41.435062,116.984205,China,lac,full_skeleton,48.3,13.48,Kiyatriton,Cryptobranchus,1,ML2014,GaoShubin,Nature,2001,0,?,?,?,?,?,1,
+Sinerpeton,fengshanensis,GMV1606,132.9,129.4,Huajiying,41.435062,116.984205,China,lac,full_skeleton,41.81,13.82,Laccotriton,Cryptobranchus,1,ML2014,GaoShubin,Nature,2001,1,?,?,?,?,?,1,
+Parahynobius,kordosi,,11.1,9.7,,48,20.4,Hungary,,isolated,NA,NA,Salamandrella,Hynobius,2,ML2014,,,,,?,?,?,1,?,?,
+Gerobatrachus,hottoni,USNM489135,279.5,272.5,Clear Fork,33.7,-99.4,USA,ss,full_skeleton,69.25,27,Rana,Ichthyophis,1,ML2014,AndersonEtAl,Nature,2008,0,?,1,?,?,?,?,
+Nuominerpeton,aquilonaris,PKUPV0421,129,122,,48,123,China,shale,full_skeleton,77.61,23,Hynobius,Cryptobranchus,1,JiaGao,JiaGao,PeerJ,2016,0,?,?,?,?,?,1,

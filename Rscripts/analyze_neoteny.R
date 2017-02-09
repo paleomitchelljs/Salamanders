@@ -27,17 +27,32 @@ neoteny <- neoteny[,3]
 names(neoteny) <- spNames
 
 Alpha <- 1
-Cols <- c(rgb(254/255,232/255,200/255,Alpha), rgb(253/255,187/255,132/255,Alpha), rgb(227/255, 74/255, 51/255, Alpha))
-names(Cols) <- c("0", "1", "2")
+#Cols <- c(rgb(254/255, 232/255, 200/255, Alpha), rgb(253/255, 187/255, 132/255, Alpha), rgb(227/255, 74/255, 51/255, Alpha))
+#names(Cols) <- c("0", "1", "2")
+Cols <- c(rgb(254/255, 237/255, 222/255, Alpha), rgb(253/255, 190/255, 133/255, Alpha), rgb(253/255, 141/255, 60/255, Alpha), rgb(217/255, 71/255, 1/255, Alpha))
+names(Cols) <- c("-1", "0", "1", "2")
+PrA <- matrix(rep(0.01666667, length(Cols)), nrow=1)
+colnames(PrA) <- names(Cols)
+rownames(PrA) <- Ntip(tree) + 1
+PrA[1,"0"] <- 1 - (3 * PrA[1,"1"])
+
+# extant tree
+#tree <- read.tree(paste(Path_base, "bamm/extant_only/no_pleth.tre", sep=""))
+tree <- read.tree(paste(Path_base, "bamm/extant_only/modernSal.tre", sep=""))
+
+Ngen <- 5e6
+
+ACE <- ancThresh(tree, neoteny[tree$tip.label], ngen=Ngen, sequence=colnames(PrA), control=list(sample=Ngen/1e3, propthresh=0.15*max(nodeHeights(tree)), propliab=0.75*max(nodeHeights(tree)), burnin=Ngen*0.1, piecol=Cols, tipcol="input", pr.anc=PrA))
+save(ACE, file=paste(Path_base, "output/neotAnc/neotAnc_extant.RData", sep=""))
 
 # Load trees
 trees <- list()
-for (count in 1:5)	{
+for (count in 1:70)	{
 	setwd(paste(Path_base, "bamm/output-", count, sep=""))
-	tree <- read.tree("fossilTree.tre")
+#	tree <- read.tree("fossilTree.tre")
+	tree <- read.tree("fullTree.tre")
 	trees[[count]] <- tree
-	Ngen <- 1e6
-	ACE <- ancThresh(tree, neoteny[tree$tip.label], ngen=Ngen, control=list(sample=Ngen/1e3, burnin=Ngen*0.2, piecol=Cols))
+	ACE <- ancThresh(tree, neoteny[tree$tip.label], ngen=Ngen, sequence=colnames(PrA), control=list(sample=Ngen/1e3, propthresh=0.15*max(nodeHeights(tree)), propliab=0.75*max(nodeHeights(tree)), burnin=Ngen*0.1, piecol=Cols, tipcol="input", pr.anc=PrA))
 	setwd(paste(Path_base, "output", sep=""))
 	save(ACE, file=paste(Path_base, "output/neotAnc/neotAnc", count, ".RData", sep=""))
 }

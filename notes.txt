@@ -39,3 +39,9 @@ Madagascar (NULL)
 Australasia (NULL)
 Southeast Asia (EASIA)
 South Asia (NULL)
+
+
+### TO DO:
+Collapse plethodontidae for SPEX analyses
+Compare rates in young vs old nodes to look at ephemerality
+Uniform scaling for branches
