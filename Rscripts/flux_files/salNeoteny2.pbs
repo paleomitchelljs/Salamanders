@@ -1,16 +1,15 @@
 #!/bin/bash
-#PBS -N neoteny
+#PBS -N neoteny_par
 #PBS -M jonsmitc@umich.edu
 #PBS -m abe
 
-#PBS -l procs=1,tpn=2,pmem=1gb,walltime=300:00:00
+#PBS -l procs=70,pmem=4gb,walltime=300:00:00
 #PBS -j oe
 #PBS -V
 
 #PBS -A drabosky_flux
 #PBS -l qos=flux
 #PBS -q flux
-#PBS -t 1-70
 
 ####  End PBS preamble
 #  Include the next three lines always
@@ -19,4 +18,5 @@ if [ "x${PBS_NODEFILE}" != "x" ] ; then
 fi
 
 export OMP_NUM_THREADS=${PBS_NP}
-Rscript --vanilla /scratch/drabosky_flux/jonsmitc/Salamanders/Rscripts/flux_files/extinct_neot.R ${PBS_ARRAYID}
+module load R
+Rscript /scratch/drabosky_flux/jonsmitc/Salamanders/Rscripts/flux_files/extinct_neot_parallel.R
