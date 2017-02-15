@@ -41,8 +41,8 @@ for (count in 1:70)	{
 	load(file=paste(Path_base, "output/neotAnc/neotAnc", count, ".RData", sep=""))
 	Heights <- nodeHeights(tree)
 	rownames(Heights) <- tree$edge[,2]
-	Liabs <- apply(ACE$liab[10:101,], 2, mean)
-	Thresh <- apply(ACE$par[10:101,], 2, mean)
+	Liabs <- apply(ACE$liab[100:1001,], 2, mean)
+	Thresh <- apply(ACE$par[100:1001,], 2, mean)
 
 	# SpEx
 	edata <- getEventData(tree, "base_event_data.txt", burnin=0.1, nsamples=500)

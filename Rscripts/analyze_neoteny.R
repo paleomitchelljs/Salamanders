@@ -19,6 +19,8 @@ addFamily <- function(Taxa, Family, Cex=2, centering=T, Top=T)	{
 library(phytools)
 library(BAMMtools)
 
+source(paste(Path_base, "Rscripts/ancThresh_write.R", sep=""), chdir = TRUE)
+
 # Read in neoteny scores
 setwd(paste(Path_base, "neoteny", sep=""))
 neoteny <- read.csv("neoteny.csv", stringsAsFactors=F)
@@ -40,10 +42,11 @@ PrA[1,"0"] <- 1 - (3 * PrA[1,"1"])
 #tree <- read.tree(paste(Path_base, "bamm/extant_only/no_pleth.tre", sep=""))
 tree <- read.tree(paste(Path_base, "bamm/extant_only/modernSal.tre", sep=""))
 
-Ngen <- 5e6
+Ngen <- 5e3
 
+setwd(paste(Path_base, "bamm/extant_only", sep=""))
 ACE <- ancThresh(tree, neoteny[tree$tip.label], ngen=Ngen, sequence=colnames(PrA), control=list(sample=Ngen/1e3, propthresh=0.15*max(nodeHeights(tree)), propliab=0.75*max(nodeHeights(tree)), burnin=Ngen*0.1, piecol=Cols, tipcol="input", pr.anc=PrA))
-save(ACE, file=paste(Path_base, "output/neotAnc/neotAnc_extant.RData", sep=""))
+#save(ACE, file=paste(Path_base, "output/neotAnc/neotAnc_extant.RData", sep=""))
 
 # Load trees
 trees <- list()

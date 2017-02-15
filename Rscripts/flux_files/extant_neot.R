@@ -20,6 +20,9 @@ rownames(PrA) <- Ntip(tree) + 1
 PrA[1,"0"] <- 1 - (3 * PrA[1,"1"])
 Ngen <- 5e6
 
+setwd(paste(Path_base, "bamm/extant_only/", sep=""))
+source(paste(Path_base, "Rscripts/ancThresh_write.R", sep=""), chdir = TRUE)
+
 ACE <- ancThresh(tree, neoteny[tree$tip.label], ngen=Ngen, sequence=colnames(PrA), control=list(sample=Ngen/1e3, propthresh=0.15*max(nodeHeights(tree)), propliab=0.75*max(nodeHeights(tree)), burnin=Ngen*0.1, piecol=Cols, tipcol="input", pr.anc=PrA, plot=F))
 save(ACE, file=paste(Path_base, "output/neotAnc/neotAnc_extant.RData", sep=""))
 

@@ -1,717 +1,1672 @@
-## Run BioGeoBEARS on salamander data#
-# Load the package (after installation, see above).#
-library(optimx)         # You need to have some version of optimx available#
-                        # as it is a BioGeoBEARS dependency; however, if you#
-                        # don't want to use optimx, and use optim() (from R core) #
-                        # you can set:#
-                        # BioGeoBEARS_run_object$use_optimx = FALSE#
-                        # ...everything should work either way -- NJM 2014-01-08#
-library(FD)       # for FD::maxent() (make sure this is up-to-date)#
-library(snow)     # (if you want to use multicore functionality; some systems/R versions prefer library(parallel), try either)#
-library(parallel)#
-library(BioGeoBEARS)#
-###########################################################################################
-#### Source all of the annoying BGB stuff#
-source("http://phylo.wdfiles.com/local--files/biogeobears/cladoRcpp.R") # (needed now that traits model added; source FIRST!)#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_add_fossils_randomly_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_basics_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_calc_transition_matrices_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_classes_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_detection_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_DNA_cladogenesis_sim_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_extract_Qmat_COOmat_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_generics_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_models_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_on_multiple_trees_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_plots_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_readwrite_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_simulate_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_makePlots_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stochastic_mapping_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stratified_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_univ_model_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/calc_uppass_probs_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/calc_loglike_sp_v01.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/get_stratified_subbranch_top_downpass_likelihoods_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/runBSM_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/stochastic_map_given_inputs.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/summarize_BSM_tables_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_traits_v1.R") # added traits model#
-calc_loglike_sp = compiler::cmpfun(calc_loglike_sp_prebyte)    # crucial to fix bug in uppass calculations#
-calc_independent_likelihoods_on_each_branch = compiler::cmpfun(calc_independent_likelihoods_on_each_branch_prebyte)#
-    # slight speedup hopefully#
-# However, you can find the extdata directory like this:#
-extdata_dir <- np(system.file("extdata", package="BioGeoBEARS"))#
-scriptdir <- np(system.file("extdata/a_scripts", package="BioGeoBEARS"))#
-list.files(extdata_dir)#
-###########################################################################################
+z$Akaike.wt
+z$Akaike.wt[2]
+data2 <- data[!is.na(data$sd_tmt_L),]#
+Spnames <- apply(data2,1,function(x) paste(x[1], x[2], sep="_"))#
+counter <- 1#
+Spnames_uni <- unique(Spnames)#
+Out <- list()#
+Wt <- c()#
+for (sp in Spnames_uni)	{#
+	Subset <- data2[which(Spnames == sp),]#
+	if (nrow(Subset) > 1)	{#
+		Subset <- Subset[order(Subset[,"age_min"]),]#
+		Obj <- as.paleoTS(Subset[,"mean_tmt_L"], Subset[,"sd_tmt_L"], Subset[,"n_tmt_L"], Subset[,"age_min"])#
+		Models <- try(opt.URW(Obj))#
+		if (class(Models) != "try-error")	{#
+			Models$NAME <- sp#
+			Out[[counter]] <- Models#
+			counter <- counter + 1#
+			Wt[counter] <- fit3models(Obj)$Akaike.wt[2]#
+		}#
+	}#
+}#
+#
+Rates <- sapply(Out, function(x) x$parameters)#
+names(Rates) <- sapply(Out, function(x) as.character(x$NAME))
+Rates
+Wt
+plot(Rates[Int], mean_extantRates[Int], xlim=c(0,0.008), ylim=c(0, 0.008), cex=Wt)
+sort(Rates)
+max(Rates)
+max(mean_extantRates[Int])
+max(Rates[Int])
+Rates <- sapply(Out, function(x) x$parameters)#
+names(Rates) <- sapply(Out, function(x) as.character(x$NAME))#
+names(Wt) <- names(Rates)#
+#
+extantRates <- read.csv("~/Documents/BirdBM_jump/output/tars_tipRates.csv")#
+mean_extantRates <- tapply(extantRates$V2, extantRates$V3, median)#
+Int <- intersect(names(Rates), names(mean_extantRates))#
+plot(Rates[Int], mean_extantRates[Int], xlim=c(0,0.008), ylim=c(0, 0.008), cex=Wt[Int])
+cor(Rates[Int], cor(mean_extantRates[Int]))
+Rates[Int]
+mean_extantRates[Int]
+hi <- read.csv("~/Documents/BAMM_fossilBAMM_description/results/hi_Marg.csv", stringsAsFactors=F)
+hi <- read.csv("~/Documents/BAMM_fossilBAMM_description/results/hi_Marg.csv", stringsAsFactors=F, row.names=1)
+lo <- read.csv("~/Documents/BAMM_fossilBAMM_description/results/lo_Marg.csv", stringsAsFactors=F, row.names=1)
+head(lo)
+plot(lo[,"Ntips"], lo[,"obs_marginal_prob"])
+unique(lo[,"tree"])
+length(unique(lo[,"tree"]))
+lo <- read.csv("~/Documents/BAMM_fossilBAMM_description/results/mid_Marg.csv", stringsAsFactors=F, row.names=1)
+length(unique(lo[,"tree"]))
+lo <- read.csv("~/Documents/BAMM_fossilBAMM_description/results/stg_Marg.csv", stringsAsFactors=F, row.names=1)
+length(unique(lo[,"tree"]))
+load('~/Documents/BAMM_fossilBAMM_description/results/extant.RData')
+300 / 50
+6 * 50
+library(paleoTS)#
+#
+### Fossil Rates#
+Path_base <- "~/Documents/BirdBM_jump/"#
+#
+data <- read.csv("~/Documents/BirdBM_jump/fossilBirdRefs/fossilExtant.csv", stringsAsFactors=F)#
+data <- data[order(data$age_min),]#
+Spnames <- apply(data,1,function(x) paste(x[1], x[2], sep="_"))#
+#
+SpnamesGeo <- apply(cbind(Spnames, data[,"country"]), 1, paste, collapse="_")#
+spMeans <- tapply(data$mean_tmt_L, SpnamesGeo, mean)#
+#
+Cols <- rainbow(length(spMeans))#
+plot(0, 0, xlim=c(50000,0), ylim=c(0,1.5), type="n", xlab="", ylab="")#
+for (count in 1:length(spMeans))	{#
+	Mean <- spMeans[count]#
+	Vals <- which(Spnames == names(spMeans)[count])#
+	points(data$age_min[Vals], data$mean_tmt_L[Vals] / Mean, pch=16, type="b", col=Cols[count])#
+}#
+legend("bottomleft", legend=names(spMeans), col=Cols, pch=16, bty="n", cex=1)#
+#
+data2 <- data[!is.na(data$sd_tmt_L),]#
+Spnames <- apply(data2,1,function(x) paste(x[1], x[2], x[13], sep="_"))#
+counter <- 1#
+Spnames_uni <- unique(Spnames)#
+Out <- list()#
+Wt <- c()#
+Ns <- c()#
+Ages <- c()#
+urwRates <- c()#
+statRates <- c()#
+for (sp in Spnames_uni)	{#
+	Subset <- data2[which(Spnames == sp),]#
+	if (nrow(Subset) > 1)	{#
+		cat(sp)#
+		Subset <- Subset[order(Subset[,"age_min"]),]#
+		if (sum(duplicated(Subset[,"age_min"])) == 0)	{#
+			Obj <- as.paleoTS(Subset[,"mean_tmt_L"], Subset[,"sd_tmt_L"], Subset[,"n_tmt_L"], Subset[,"age_min"])#
+			Obj <- ln.paleoTS(Obj)#
+			Models <- try(opt.URW(Obj, pool=F))#
+			if (class(Models) != "try-error")	{#
+				Models$NAME <- sp#
+				Out[[counter]] <- Models#
+				Ns[counter] <- nrow(Subset)#
+				urwRates[counter] <- Models$parameters["vstep"]#
+				statRates[counter] <- opt.Stasis(Obj)$parameters["omega"]#
+				Ages[counter] <- max(diff(Subset[,"age_min"]))#
+				Wt[counter] <- fit3models(Obj, pool=FALSE)$Akaike.wt[2]#
+				counter <- counter + 1#
+			}#
+		}#
+	}#
+}#
+#
+Rates <- sapply(Out, function(x) x$parameters)#
+names(Rates) <- sapply(Out, function(x) as.character(x$NAME))#
+names(statRates) <- names(Rates)#
+NameGuide <- sapply(names(Rates), function(x) paste(strsplit(x, "_")[[1]][1:2], collapse="_"))#
+Rates_red <- tapply(Rates, NameGuide, mean)
+extantRates <- read.csv("~/Documents/BirdBM_jump/output/tars_tipRates.csv")#
+mean_extantRates <- tapply(extantRates$V2, extantRates$V3, median)#
+Int <- intersect(names(Rates_red), names(mean_extantRates))#
+Guide <- NameGuide %in% Int#
+par(mfrow=c(1,1), mar=c(4,5,1,1), bty="n", las=1, tck=-0.01, mgp=c(2,0.25,0))#
+plot(Rates[Guide], mean_extantRates[NameGuide[Guide]], xlim=c(1e-9,1e-2), ylim=c(1e-9,1e-2), log="xy", xlab="fossil occurrence rates", ylab="extant phylogeny rates", pch=21, bg='gray80', cex=1.25)#
+abline(0,1)#
+text(Rates[Guide], mean_extantRates[NameGuide[Guide]], gsub("_", " ", NameGuide[Guide]), pos=sample(c(1,3), size=sum(Guide), replace=T), cex=0.5, font=3)
+tree <- read.tree("~/Documents/BirdBM_jump/output/trees/tree-1/aves_mass_tree.tre")
+library(BAMMtools)
+tree <- read.tree("~/Documents/BirdBM_jump/output/trees/tree-1/aves_mass_tree.tre")
+Ntip(tree)
+edata <- getEventData(tree, "~/Documents/BirdBM_jump/output/trees/tree-1/full_jump_event_data.txt", burnin=0.1, nsamples=200)
+tree <- read.tree("~/Documents/BirdBM_jump/output/trees/tree-1/dinosauria_tree.tre")
+edata <- getEventData(tree, "~/Documents/BirdBM_jump/output/trees/tree-1/full_jump_event_data.txt", burnin=0.1, nsamples=200)
+edata <- getEventData(tree, "~/Documents/BirdBM_jump/output/trees/tree-1/full_jump_event_data.txt", burnin=0.1, nsamples=200, type="trait")
+plot(edata, breaks="quantile")
+RTT <- getRateThroughTimeMatrix(edata, nslices=250)
+str(RTT)
+Beta <- apply(RTT$beta, 2, mean)
+plot(RTT$times, RTT$beta, type="l")
+plot(RTT$times, Beta, type="l")
+max(RTT$times)
+246 - 66
+abline(v=180, col='red')
+z <- read.csv("~/Documents/BirdBM_jump/output/trees/tree-1/full_jump_event_data.txt")
+head(z)
+Jumps <- z[,"jump"]
+hist(Jumps[which(abs(Jumps)>0.001)])
+noS <- read.csv("~/Downloads/recompute_no_survival_condition_mcmc_out.txt", stringsAsFactors=F)
+S <- read.csv("~/Downloads/recompute_mcmc_out.txt", stringsAsFactors=F)
+head(noS)
+plot(noS[,1], noS[,2], type='l')
+plot(S[,1], S[,2], type='l')
+plot(S[,1], S[,4], type='l')
+plot(noS[,1], noS[,4], type='l')
+Base <- "~/Documents/BAMM_fossilBAMM_description/simulations/trueOneRateTrees-Hi/sim-"#
+#
+par(mfrow=c(5,5), mar=c(0,0,0,0))#
+for (count in 1:200)		{#
+	if (count %in% 25)	{#
+		dev.new()#
+		par(mfrow=c(5,5), mar=c(0,0,0,0))#
+	}#
+	mcmc <- read.csv(paste(Base, count, "hi_mcmc_out.txt", sep=""))#
+	plot(mcmc[,1], mcmc[,4], type='l')#
+}
+Base <- "~/Documents/BAMM_fossilBAMM_description/simulations/trueOneRateTrees-Hi/sim-"#
+#
+par(mfrow=c(5,5), mar=c(0,0,0,0))#
+for (count in 1:200)		{#
+	if (count %in% 25)	{#
+		dev.new()#
+		par(mfrow=c(5,5), mar=c(0,0,0,0))#
+	}#
+	mcmc <- read.csv(paste(Base, count, "/hi_mcmc_out.txt", sep=""))#
+	plot(mcmc[,1], mcmc[,4], type='l')#
+}
+Base <- "~/Documents/BAMM_fossilBAMM_description/simulations/trueOneRateTrees-Hi/sim-"#
+#
+par(mfrow=c(5,5), mar=c(0,0,0,0))#
+for (count in 1:200)		{#
+	if (count %in% 25)	{#
+		dev.new()#
+		par(mfrow=c(5,5), mar=c(0,0,0,0))#
+	}#
+	mcmc <- read.csv(paste(Base, count, "/hi_mcmc_out.txt", sep=""))#
+	plot(mcmc[,1], mcmc[,2], type='l')#
+}
+Base <- "~/Documents/BAMM_fossilBAMM_description/simulations/trueOneRateTrees-Hi/sim-"#
+#
+par(mfrow=c(5,5), mar=c(0,0,0,0))#
+for (count in 1:200)		{#
+	if (count %in% 25)	{#
+		dev.new()#
+		par(mfrow=c(5,5), mar=c(0,0,0,0))#
+	}#
+	mcmc <- read.csv(paste(Base, count, "/hi_mcmc_out.txt", sep=""))#
+	plot(mcmc[,1], mcmc[,2], type='l')#
+	legend("center", legend=count, col='red', bty="n")#
+}
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+library(BAMMtools)#
+#
+Trees <- read.csv(paste(Base, "/summary_data/trees.csv", sep=""), stringsAsFactors=F)#
+Regimes <- read.csv(paste(Base, "/summary_data/regimes.csv", sep=""), stringsAsFactors=F)#
+#
+Versions <- c("v1.0", "v2.0", "v2.3.1", "v2.5")	# Version of BAMM used#
+Priors <- c("p0.1", "p1", "p100")	# Prior for the expected number of shifts used#
+eventRates <- c("_0.001", "_0.01", "_0.1")	# Event rate tree was simulated under#
+#
+vCols <- c(rgb(166/255, 206/255, 227/255, 1), rgb(31/255, 120/255, 180/255, 1), rgb(178/255, 223/255, 138/255, 1), rgb(51/255, 160/255, 44/255, 1))#
+vCEX <- c(1.2, 1, 0.8, 0.6)#
+LABCEX <- 1#
+legCEX <- 1.5#
+lineY <- 2.5#
+lineX <- 2#
+lineLab <- 2.75#
+Opt <- "infBF"#
+#
+customHist <- function(Vec, Width=0.2, xadj=0, yadj=0, xoff=0.1, yoff=0.025, Xmin=0, Xmax=0, Ymin=0, Ymax=1, Xstart=0, Xend=0, setAxes=c(F,F), xlabs=F, Col='black', Border='black', axisCex=1)	{#
+	Minmax <- max(abs(range(Vec)))#
+	Yheight <- 0#
+	for (Value in unique(Vec))	{#
+		YH <- length(which(Vec==Value))/length(Vec)#
+		Yheight <- c(Yheight, YH)#
+		polygon(x=c(-1 * Width + Value, -1 * Width + Value, Width + Value, Width + Value), y=c(yadj, yadj + YH, yadj + YH, yadj), col=Col, border=Border)#
+	}#
+	if (setAxes[1])	{#
+		segments(xadj, yadj, Xmax, yadj)#
+#
+		BY <- 1#
+		if (Xend - Xstart > 10)	{#
+			BY <- 2#
+		}#
+#
+		if (Xend - Xstart > 20)	{#
+			BY <- 5#
+		}#
+		tckVec <- seq(from=Xstart, to=Xend, by=BY)#
+		silent <- sapply(tckVec, function(tck) segments(tck, yadj, tck, yadj-yoff))#
+		if (xlabs)	{#
+			silent <- sapply(tckVec, function(tck) text(tck, yadj, labels=tck, pos=1, cex=axisCex, xpd=NA))#
+		}#
+	}#
+	if (setAxes[2])	{#
+		Pts <- pretty(c(0, Ymax), n=4)#
+		segments(xadj, yadj, xadj, yadj+Ymax)#
+		silent <- sapply(Pts, function(pt) segments(xadj, yadj+pt, xadj-xoff, yadj+pt))#
+		silent <- sapply(Pts, function(PT) text(xadj-xoff, yadj+PT, labels=PT, pos=2, cex=axisCex, xpd=NA))#
+	}#
+}
+eventRate <- "_0.01"
+Prior <- "p1"
+minN <- 1#
+	maxN <- 100#
+	Vec <- seq(from=minN, to=maxN, by=1)#
+	for (count3 in 1:length(Versions))	{#
+		Version <- Versions[count3]#
+		Retained <- intersect(which(Regimes$X==Version), which(Regimes$eventRate==eventRate))#
+		Retained <-  intersect(Retained, which(Regimes$prior==Prior))#
+		Regimes_retained <- Regimes[Retained,]#
+#
+		Ntips <- Regimes_retained$N_taxa#
+		Slopes <- c()#
+		counter <- 1#
+		for (count4 in Vec)	{#
+			Rows <- which(Ntips > count4)#
+			Slopes[counter] <- lm(Regimes_retained[Rows,"inferred_lambda_mid"]~Regimes_retained[Rows, "true_lambda"])$coefficients[2]#
+			counter <- counter + 1#
+		}#
+		points(Vec, Slopes, col=vCols[count3], pch=16, type="b")#
+	}
+Vec
+Slopes
+mean(Slopes)
+for (count3 in 1:length(Versions))	{#
+		Version <- Versions[count3]#
+		Retained <- intersect(which(Regimes$X==Version), which(Regimes$eventRate==eventRate))#
+		Retained <-  intersect(Retained, which(Regimes$prior==Prior))#
+		Regimes_retained <- Regimes[Retained,]#
+#
+		Ntips <- Regimes_retained$N_taxa#
+		Slopes <- c()#
+		counter <- 1#
+		for (count4 in Vec)	{#
+			Rows <- which(Ntips > count4)#
+			Slopes[counter] <- lm(Regimes_retained[Rows,"inferred_lambda_mid"]~Regimes_retained[Rows, "true_lambda"]+0)$coefficients[2]#
+			counter <- counter + 1#
+		}#
+		points(Vec, Slopes, col=vCols[count3], pch=16, type="b")#
+	}
+mean(Slopes)
+Slopes
+for (count3 in 1:length(Versions))	{#
+		Version <- Versions[count3]#
+		Retained <- intersect(which(Regimes$X==Version), which(Regimes$eventRate==eventRate))#
+		Retained <-  intersect(Retained, which(Regimes$prior==Prior))#
+		Regimes_retained <- Regimes[Retained,]#
+#
+		Ntips <- Regimes_retained$N_taxa#
+		Slopes <- c()#
+		counter <- 1#
+		for (count4 in Vec)	{#
+			Rows <- which(Ntips > count4)#
+			Slopes[counter] <- lm(Regimes_retained[Rows,"inferred_lambda_mid"]~Regimes_retained[Rows, "true_lambda"]+0)$coefficients[1]#
+			counter <- counter + 1#
+		}#
+		points(Vec, Slopes, col=vCols[count3], pch=16, type="b")#
+	}
+mean(Slopes)
+Slopes
+# Set up plot for lambda cor by regime#
+	plot(1, 1, type="n", xlim=c(0, 100), ylim=c(0, 1.25), axes=F, xlab="", ylab="")#
+	axis(1, at=c(-1000, 0, 25, 50, 75, 100))#
+	axis(2, at=c(-1000, 0, 0.25, 0.5, 0.75, 1, 1.25), labels=c("", "0", "0.25", "0.5", "0.75", "1", "1.25"))#
+	mtext("minimum regime size", side=1, line=lineX, cex=LABCEX)#
+	mtext("regime speciation slope", side=2, line=lineY, las=0, cex=LABCEX)#
+	mtext(bquote(gamma == .(strsplit(Prior, "p")[[1]][2])), side=2, line=2*lineY, las=0, cex=1.5*LABCEX, las=0)#
+#
+	mtext(paste(letters[letter_counter], ")", sep=""), side=2, at=1.25, line=lineLab, xpd=NA)#
+	letter_counter <- letter_counter + 1#
+#
+	minN <- 1#
+	maxN <- 200#
+	Vec <- seq(from=minN, to=maxN, by=1)#
+	for (count3 in 1:length(Versions))	{#
+		Version <- Versions[count3]#
+		Retained <- intersect(which(Regimes$X==Version), which(Regimes$eventRate==eventRate))#
+		Retained <-  intersect(Retained, which(Regimes$prior==Prior))#
+		Regimes_retained <- Regimes[Retained,]#
+#
+		Ntips <- Regimes_retained$N_taxa#
+		Slopes <- c()#
+		counter <- 1#
+		for (count4 in Vec)	{#
+			Rows <- which(Ntips > count4)#
+			Slopes[counter] <- lm(Regimes_retained[Rows,"inferred_lambda_mid"]~Regimes_retained[Rows, "true_lambda"])$coefficients[2]#
+			counter <- counter + 1#
+		}#
+		points(Vec, Slopes, col=vCols[count3], pch=16, type="b")#
+	}
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+#
+library(BAMMtools)#
+#
+Trees <- read.csv(paste(Base, "/summary_data/trees.csv", sep=""), stringsAsFactors=F)#
+Regimes <- read.csv(paste(Base, "/summary_data/regimes.csv", sep=""), stringsAsFactors=F)#
+#
+Versions <- c("v1.0", "v2.0", "v2.3.1", "v2.5")	# Version of BAMM used#
+Priors <- c("p0.1", "p1", "p100")	# Prior for the expected number of shifts used#
+eventRates <- c("_0.001", "_0.01", "_0.1")	# Event rate tree was simulated under#
+#
+# Need: #
+# Number of shifts inferred by v2.5#
+# Number of shifts inferred by v1.0, v2.0, v2.3.1#
+#
+for (eventRate in eventRates)	{#
+	## Matrix of version, prior, true and inferred # of shift values#
+	eNs <- c(0.1, 1, 100)#
+	Mat <- NA#
+	for (count4 in 1:length(Versions))	{#
+		for (count5 in 1:length(Priors))	{#
+			Prior <- Priors[count5]#
+			eN <- eNs[count5]#
+			Version <- Versions[count4]#
+			Retained <- intersect(which(Trees$X==Version), which(Trees$eventRate==eventRate))#
+			Retained <-  intersect(Retained, which(Trees$prior==Prior))#
+			Trees_sub <- Trees[Retained,]#
+#
+			infBF <- c()#
+			MAP <- c()#
+			trueK <- c()#
+			TREE <- c()#
+			for (count6 in 1:nrow(Trees_sub))	{#
+				Cols <- which(colnames(Trees_sub) == "X0")#
+				Vec <- Trees_sub[count6, Cols:ncol(Trees_sub)]#
+				Post <- as.numeric(Vec / sum(Vec))#
+				Keeps <- which(Post > 0)#
+				Post <- Post[Keeps]#
+				names(Post) <- c(0:200)[Keeps]#
+				if (length(Post)==1)	{#
+					infBF[count6] <- as.numeric(names(Post))#
+					MAP[count6] <- as.numeric(names(Post))#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]	#
+					TREE[count6] <- count6					#
+				}#
+				else if (length(Post) > 1)	{	#
+					infBF[count6] <- stepBF(Post, step.size=20, expectedNumberOfShifts=eN, calc=T)[1]#
+					MAP[count6] <- as.numeric(names(Post)[which(Post==max(Post))])#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]#
+					TREE[count6] <- count6#
+				}#
+			}#
+			Vers <- rep(Version, length(infBF))#
+			PRIOR <- rep(Prior, length(infBF))#
+			Mat_test <- cbind(Vers, PRIOR, TREE, trueK, infBF, MAP)#
+			if (is.na(Mat))	{#
+				Mat <- Mat_test#
+			}#
+			else	{#
+				Mat <- rbind(Mat, Mat_test)#
+			}#
+	}#
+}
+}
+library(BAMMtools)
+update.packages("BAMMtools")
+library(BAMMtools)
+?stepBF
+update.packages("BAMMtools")
+update.packages(BAMMtools)
+library(BAMMtools)
+?stepBF
+library(devtools)
+install_github("macroevolution/bammtools/BAMMtools")
+?stepBF
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+#
+library(BAMMtools)#
+#
+Trees <- read.csv(paste(Base, "/summary_data/trees.csv", sep=""), stringsAsFactors=F)#
+Regimes <- read.csv(paste(Base, "/summary_data/regimes.csv", sep=""), stringsAsFactors=F)#
+#
+Versions <- c("v1.0", "v2.0", "v2.3.1", "v2.5")	# Version of BAMM used#
+Priors <- c("p0.1", "p1", "p100")	# Prior for the expected number of shifts used#
+eventRates <- c("_0.001", "_0.01", "_0.1")	# Event rate tree was simulated under#
+#
+# Need: #
+# Number of shifts inferred by v2.5#
+# Number of shifts inferred by v1.0, v2.0, v2.3.1#
+#
+Mat <- NA#
+for (eventRate in eventRates)	{#
+	## Matrix of version, prior, true and inferred # of shift values#
+	eNs <- c(0.1, 1, 100)#
+	for (count4 in 1:length(Versions))	{#
+		for (count5 in 1:length(Priors))	{#
+			Prior <- Priors[count5]#
+			eN <- eNs[count5]#
+			Version <- Versions[count4]#
+			Retained <- intersect(which(Trees$X==Version), which(Trees$eventRate==eventRate))#
+			Retained <-  intersect(Retained, which(Trees$prior==Prior))#
+			Trees_sub <- Trees[Retained,]#
+#
+			infBF <- c()#
+			MAP <- c()#
+			trueK <- c()#
+			TREE <- c()#
+			for (count6 in 1:nrow(Trees_sub))	{#
+				Cols <- which(colnames(Trees_sub) == "X0")#
+				Vec <- Trees_sub[count6, Cols:ncol(Trees_sub)]#
+				Post <- as.numeric(Vec / sum(Vec))#
+				Keeps <- which(Post > 0)#
+				Post <- Post[Keeps]#
+				names(Post) <- c(0:200)[Keeps]#
+				if (length(Post)==1)	{#
+					infBF[count6] <- as.numeric(names(Post))#
+					MAP[count6] <- as.numeric(names(Post))#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]	#
+					TREE[count6] <- count6					#
+				}#
+				else if (length(Post) > 1)	{	#
+					infBF[count6] <- stepBF(Post, step.size=20, expectedNumberOfShifts=eN, calc=T)[1]#
+					MAP[count6] <- as.numeric(names(Post)[which(Post==max(Post))])#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]#
+					TREE[count6] <- count6#
+				}#
+			}#
+			Vers <- rep(Version, length(infBF))#
+			PRIOR <- rep(Prior, length(infBF))#
+			Mat_test <- cbind(Vers, PRIOR, TREE, trueK, infBF, MAP)#
+			if (is.na(Mat))	{#
+				Mat <- Mat_test#
+			}#
+			else	{#
+				Mat <- rbind(Mat, Mat_test)#
+			}#
+		}#
+	}#
+}#
+#
+write.table(Mat, file=paste(Base, "summary_data/Shifts_by_version.csv"), sep=",", quote=F, row.names=F)#
+verShiftMat <- Mat
+?stepBF
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+#
+library(BAMMtools)#
+#
+Trees <- read.csv(paste(Base, "/summary_data/trees.csv", sep=""), stringsAsFactors=F)#
+Regimes <- read.csv(paste(Base, "/summary_data/regimes.csv", sep=""), stringsAsFactors=F)#
+#
+Versions <- c("v1.0", "v2.0", "v2.3.1", "v2.5")	# Version of BAMM used#
+Priors <- c("p0.1", "p1", "p100")	# Prior for the expected number of shifts used#
+eventRates <- c("_0.001", "_0.01", "_0.1")	# Event rate tree was simulated under#
+#
+# Need: #
+# Number of shifts inferred by v2.5#
+# Number of shifts inferred by v1.0, v2.0, v2.3.1#
+#
+Mat <- NA#
+for (eventRate in eventRates)	{#
+	## Matrix of version, prior, true and inferred # of shift values#
+	eNs <- c(0.1, 1, 100)#
+	for (count4 in 1:length(Versions))	{#
+		for (count5 in 1:length(Priors))	{#
+			Prior <- Priors[count5]#
+			eN <- eNs[count5]#
+			Version <- Versions[count4]#
+			Retained <- intersect(which(Trees$X==Version), which(Trees$eventRate==eventRate))#
+			Retained <-  intersect(Retained, which(Trees$prior==Prior))#
+			Trees_sub <- Trees[Retained,]#
+#
+			infBF <- c()#
+			MAP <- c()#
+			trueK <- c()#
+			TREE <- c()#
+			for (count6 in 1:nrow(Trees_sub))	{#
+				Cols <- which(colnames(Trees_sub) == "X0")#
+				Vec <- Trees_sub[count6, Cols:ncol(Trees_sub)]#
+				Post <- as.numeric(Vec / sum(Vec))#
+				Keeps <- which(Post > 0)#
+				Post <- Post[Keeps]#
+				names(Post) <- c(0:200)[Keeps]#
+				if (length(Post)==1)	{#
+					infBF[count6] <- as.numeric(names(Post))#
+					MAP[count6] <- as.numeric(names(Post))#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]	#
+					TREE[count6] <- count6					#
+				}#
+				else if (length(Post) > 1)	{	#
+					infBF[count6] <- stepBF(Post, step.size=20, expectedNumberOfShifts=eN, inputType="postProb")[1]#
+					MAP[count6] <- as.numeric(names(Post)[which(Post==max(Post))])#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]#
+					TREE[count6] <- count6#
+				}#
+			}#
+			Vers <- rep(Version, length(infBF))#
+			PRIOR <- rep(Prior, length(infBF))#
+			Mat_test <- cbind(Vers, PRIOR, TREE, trueK, infBF, MAP)#
+			if (is.na(Mat))	{#
+				Mat <- Mat_test#
+			}#
+			else	{#
+				Mat <- rbind(Mat, Mat_test)#
+			}#
+		}#
+	}#
+}#
+#
+write.table(Mat, file=paste(Base, "summary_data/Shifts_by_version.csv"), sep=",", quote=F, row.names=F)
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+#
+library(BAMMtools)#
+#
+Trees <- read.csv(paste(Base, "/summary_data/trees.csv", sep=""), stringsAsFactors=F)#
+Regimes <- read.csv(paste(Base, "/summary_data/regimes.csv", sep=""), stringsAsFactors=F)#
+#
+Versions <- c("v1.0", "v2.0", "v2.3.1", "v2.5")	# Version of BAMM used#
+Priors <- c("p0.1", "p1", "p100")	# Prior for the expected number of shifts used#
+eventRates <- c("_0.001", "_0.01", "_0.1")	# Event rate tree was simulated under#
+#
+# Need: #
+# Number of shifts inferred by v2.5#
+# Number of shifts inferred by v1.0, v2.0, v2.3.1#
+#
+Mat <- NA#
+for (eventRate in eventRates)	{#
+	## Matrix of version, prior, true and inferred # of shift values#
+	eNs <- c(0.1, 1, 100)#
+	for (count4 in 1:length(Versions))	{#
+		for (count5 in 1:length(Priors))	{#
+			Prior <- Priors[count5]#
+			eN <- eNs[count5]#
+			Version <- Versions[count4]#
+			Retained <- intersect(which(Trees$X==Version), which(Trees$eventRate==eventRate))#
+			Retained <-  intersect(Retained, which(Trees$prior==Prior))#
+			Trees_sub <- Trees[Retained,]#
+#
+			infBF <- c()#
+			MAP <- c()#
+			trueK <- c()#
+			TREE <- c()#
+			for (count6 in 1:nrow(Trees_sub))	{#
+				Cols <- which(colnames(Trees_sub) == "X0")#
+				Vec <- Trees_sub[count6, Cols:ncol(Trees_sub)]#
+				Post <- as.numeric(Vec / sum(Vec))#
+				Keeps <- which(Post > 0)#
+				Post <- Post[Keeps]#
+				names(Post) <- c(0:200)[Keeps]#
+				if (length(Post)==1)	{#
+					infBF[count6] <- as.numeric(names(Post))#
+					MAP[count6] <- as.numeric(names(Post))#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]	#
+					TREE[count6] <- count6					#
+				}#
+				else if (length(Post) > 1)	{	#
+					infBF[count6] <- stepBF(Post, step.size=20, expectedNumberOfShifts=eN, inputType="postProb")[1]#
+					MAP[count6] <- as.numeric(names(Post)[which(Post==max(Post))])#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]#
+					TREE[count6] <- count6#
+				}#
+			}#
+			Vers <- rep(Version, length(infBF))#
+			PRIOR <- rep(Prior, length(infBF))#
+			Mat_test <- cbind(Vers, PRIOR, TREE, trueK, infBF, MAP)#
+			if (!file.exists(paste(Base, "/summary_data/Shifts_by_version.csv", sep="")))	{#
+				Mat <- Mat_test#
+				write.table(Mat, file=paste(Base, "/summary_data/Shifts_by_version.csv", sep=""), sep=",", quote=F, row.names=F)#
+			}#
+			else	{#
+				Mat <- read.csv(paste(Base, "/summary_data/Shifts_by_version.csv", sep=""))#
+				Mat <- rbind(Mat, Mat_test)#
+				write.table(Mat, file=paste(Base, "/summary_data/Shifts_by_version.csv", sep=""), sep=",", quote=F, row.names=F)#
+			}#
+		}#
+	}#
+}
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+#
+library(BAMMtools)#
+#
+Trees <- read.csv(paste(Base, "/summary_data/trees.csv", sep=""), stringsAsFactors=F)#
+Regimes <- read.csv(paste(Base, "/summary_data/regimes.csv", sep=""), stringsAsFactors=F)#
+#
+Versions <- c("v1.0", "v2.0", "v2.3.1", "v2.5")	# Version of BAMM used#
+Priors <- c("p0.1", "p1", "p100")	# Prior for the expected number of shifts used#
+eventRates <- c("_0.001", "_0.01", "_0.1")	# Event rate tree was simulated under#
+#
+# Need: #
+# Number of shifts inferred by v2.5#
+# Number of shifts inferred by v1.0, v2.0, v2.3.1#
+#
+Mat <- NA#
+for (eventRate in eventRates)	{#
+	## Matrix of version, prior, true and inferred # of shift values#
+	eNs <- c(0.1, 1, 100)#
+	for (count4 in 1:length(Versions))	{#
+		for (count5 in 1:length(Priors))	{#
+			Prior <- Priors[count5]#
+			eN <- eNs[count5]#
+			Version <- Versions[count4]#
+			Retained <- intersect(which(Trees$X==Version), which(Trees$eventRate==eventRate))#
+			Retained <-  intersect(Retained, which(Trees$prior==Prior))#
+			Trees_sub <- Trees[Retained,]#
+#
+			infBF <- c()#
+			MAP <- c()#
+			trueK <- c()#
+			TREE <- c()#
+			for (count6 in 1:nrow(Trees_sub))	{#
+				Cols <- which(colnames(Trees_sub) == "X0")#
+				Vec <- Trees_sub[count6, Cols:ncol(Trees_sub)]#
+				Post <- as.numeric(Vec / sum(Vec))#
+				Keeps <- which(Post > 0)#
+				Post <- Post[Keeps]#
+				names(Post) <- c(0:200)[Keeps]#
+				if (length(Post)==1)	{#
+					infBF[count6] <- as.numeric(names(Post))#
+					MAP[count6] <- as.numeric(names(Post))#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]	#
+					TREE[count6] <- count6					#
+				}#
+				else if (length(Post) > 1)	{	#
+					infBF[count6] <- stepBF(Post, step.size=20, expectedNumberOfShifts=eN, inputType="postProb")[1]#
+					MAP[count6] <- as.numeric(names(Post)[which(Post==max(Post))])#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]#
+					TREE[count6] <- count6#
+				}#
+			}#
+			Vers <- rep(Version, length(infBF))#
+			PRIOR <- rep(Prior, length(infBF))#
+			Mat_test <- cbind(Vers, PRIOR, TREE, trueK, infBF, MAP)#
+			if (is.na(Mat))	{#
+				Mat <- rbind(Mat, Mat_test)#
+			}#
+			else	{#
+				Mat <- rbind(Mat, Mat_test)#
+			}#
+		}#
+	}#
+}#
+write.table(Mat, file=paste(Base, "/summary_data/Shifts_by_version.csv", sep=""), sep=",", quote=F, row.names=F)
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+#
+library(BAMMtools)#
+#
+Trees <- read.csv(paste(Base, "/summary_data/trees.csv", sep=""), stringsAsFactors=F)#
+Regimes <- read.csv(paste(Base, "/summary_data/regimes.csv", sep=""), stringsAsFactors=F)#
+#
+Versions <- c("v1.0", "v2.0", "v2.3.1", "v2.5")	# Version of BAMM used#
+Priors <- c("p0.1", "p1", "p100")	# Prior for the expected number of shifts used#
+eventRates <- c("_0.001", "_0.01", "_0.1")	# Event rate tree was simulated under#
+#
+# Need: #
+# Number of shifts inferred by v2.5#
+# Number of shifts inferred by v1.0, v2.0, v2.3.1#
+#
+Mat <- NA#
+for (eventRate in eventRates)	{#
+	## Matrix of version, prior, true and inferred # of shift values#
+	eNs <- c(0.1, 1, 100)#
+	for (count4 in 1:length(Versions))	{#
+		for (count5 in 1:length(Priors))	{#
+			Prior <- Priors[count5]#
+			eN <- eNs[count5]#
+			Version <- Versions[count4]#
+			Retained <- intersect(which(Trees$X==Version), which(Trees$eventRate==eventRate))#
+			Retained <-  intersect(Retained, which(Trees$prior==Prior))#
+			Trees_sub <- Trees[Retained,]#
+#
+			infBF <- c()#
+			MAP <- c()#
+			trueK <- c()#
+			TREE <- c()#
+			for (count6 in 1:nrow(Trees_sub))	{#
+				Cols <- which(colnames(Trees_sub) == "X0")#
+				Vec <- Trees_sub[count6, Cols:ncol(Trees_sub)]#
+				Post <- as.numeric(Vec / sum(Vec))#
+				Keeps <- which(Post > 0)#
+				Post <- Post[Keeps]#
+				names(Post) <- c(0:200)[Keeps]#
+				if (length(Post)==1)	{#
+					infBF[count6] <- as.numeric(names(Post))#
+					MAP[count6] <- as.numeric(names(Post))#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]	#
+					TREE[count6] <- count6					#
+				}#
+				else if (length(Post) > 1)	{	#
+					infBF[count6] <- stepBF(Post, step.size=20, expectedNumberOfShifts=eN, inputType="postProb")[1]#
+					MAP[count6] <- as.numeric(names(Post)[which(Post==max(Post))])#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]#
+					TREE[count6] <- count6#
+				}#
+			}#
+			Vers <- rep(Version, length(infBF))#
+			PRIOR <- rep(Prior, length(infBF))#
+			Mat_test <- cbind(Vers, PRIOR, TREE, trueK, infBF, MAP)#
+			if (is.na(Mat))	{#
+				Mat <- Mat_test#
+			}#
+			else	{#
+				Mat <- rbind(Mat, Mat_test)#
+			}#
+		}#
+	}#
+}#
+write.table(Mat, file=paste(Base, "/summary_data/Shifts_by_version.csv", sep=""), sep=",", quote=F, row.names=F)
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+#
+Mat <- read.csv(paste(Base, "/summary_data/Shifts_by_version.csv", sep=""))
+head(Mat)
+Base <- "~/Documents/BAMM_benchmarks/SOM_section_6"#
+#
+library(BAMMtools)#
+#
+Trees <- read.csv(paste(Base, "/summary_data/trees.csv", sep=""), stringsAsFactors=F)#
+Regimes <- read.csv(paste(Base, "/summary_data/regimes.csv", sep=""), stringsAsFactors=F)#
+#
+Versions <- c("v1.0", "v2.0", "v2.3.1", "v2.5")	# Version of BAMM used#
+Priors <- c("p0.1", "p1", "p100")	# Prior for the expected number of shifts used#
+eventRates <- c("_0.001", "_0.01", "_0.1")	# Event rate tree was simulated under#
+#
+# Need: #
+# Number of shifts inferred by v2.5#
+# Number of shifts inferred by v1.0, v2.0, v2.3.1#
+#
+Mat <- NA#
+for (eventRate in eventRates)	{#
+	## Matrix of version, prior, true and inferred # of shift values#
+	eNs <- c(0.1, 1, 100)#
+	for (count4 in 1:length(Versions))	{#
+		for (count5 in 1:length(Priors))	{#
+			Prior <- Priors[count5]#
+			eN <- eNs[count5]#
+			Version <- Versions[count4]#
+			Retained <- intersect(which(Trees$X==Version), which(Trees$eventRate==eventRate))#
+			Retained <-  intersect(Retained, which(Trees$prior==Prior))#
+			Trees_sub <- Trees[Retained,]#
+#
+			infBF <- c()#
+			MAP <- c()#
+			trueK <- c()#
+			TREE <- c()#
+			for (count6 in 1:nrow(Trees_sub))	{#
+				Cols <- which(colnames(Trees_sub) == "X0")#
+				Vec <- Trees_sub[count6, Cols:ncol(Trees_sub)]#
+				Post <- as.numeric(Vec / sum(Vec))#
+				Keeps <- which(Post > 0)#
+				Post <- Post[Keeps]#
+				names(Post) <- c(0:200)[Keeps]#
+				if (length(Post)==1)	{#
+					infBF[count6] <- as.numeric(names(Post))#
+					MAP[count6] <- as.numeric(names(Post))#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]	#
+					TREE[count6] <- count6					#
+				}#
+				else if (length(Post) > 1)	{	#
+					infBF[count6] <- stepBF(Post, step.size=20, expectedNumberOfShifts=eN, inputType="postProb")[1]#
+					MAP[count6] <- as.numeric(names(Post)[which(Post==max(Post))])#
+					trueK[count6] <- Trees_sub[count6, "unique_Kshifts"]#
+					TREE[count6] <- count6#
+				}#
+			}#
+			Vers <- rep(Version, length(infBF))#
+			PRIOR <- rep(Prior, length(infBF))#
+			eventrate <- rep(eventRate, length(infBF))#
+			Mat_test <- cbind(Vers, PRIOR, eventrate, TREE, trueK, infBF, MAP)#
+			if (is.na(Mat))	{#
+				Mat <- Mat_test#
+			}#
+			else	{#
+				Mat <- rbind(Mat, Mat_test)#
+			}#
+		}#
+	}#
+}#
+write.table(Mat, file=paste(Base, "/summary_data/Shifts_by_version.csv", sep=""), sep=",", quote=F, row.names=F)
+entropy <- function(x)	{#
+	z <- x * log(x)#
+	y <- sum(z)#
+	out <- -1 * y#
+	return(out)#
+}
+entropy(c(0.25,0.25,0.25,0.25))
+entropy(c(0,0,0,1))
+entropy(c(0.001,0.001,0.001,0.997))
+sum(c(0.001,0.001,0.001,0.997))
+entropy(c(0.0001,0.0001,0.0001,0.9997))
+0.25 / 3
+entropy(c(0.0833, 0.0833, 0.0833, 0.75))
+0.21 / 3
+entropy(c(0.07, 0.07, 0.07, 0.79))
+entropy(c(0.1, 0.1, 0.1, 0.70))
+entropy(c(0.06, 0.06, 0.06, 0.82))
+entropy(c(0.12, 0.12, 0.12, 0.64))
+revEntropy <- function(H)	{#
+	y <- -1 * H#
+	y <- y / 4#
+	x <- exp(y)#
+	y <- y / x#
+	return(y)#
+}
+revEntropy(1.386294)
+exp(revEntropy(1.386294))
+x <- read.csv("~/Downloads/Dataset_S1_Benson2017")
+head(x)
+x <- read.csv("~/Downloads/Dataset_S1_Benson2017", header-T)
+x <- read.csv("~/Downloads/Dataset_S1_Benson2017", header=T)
+head(x)
+x
+x[1,1]
+x <- read.csv("~/Downloads/Dataset_S1_Benson2017", header=T, stringsAsFactors=F)
+head(x)
+Path_base <- "~/Documents/BirdEcomorph/"#
+#
+CenBirds <- read.csv(paste(Path_base, "CenozoicBirds2.csv"), stringsAsFactors=F)
+Path_base <- "~/Documents/BirdEcomorph/"#
+#
+CenBirds <- read.csv(paste(Path_base, "CenozoicBirds2.csv", sep=""), stringsAsFactors=F)
+head(CenBirds)
+Path_base <- "~/Documents/BirdEcomorph/"#
+#
+CenBirds <- read.csv(paste(Path_base, "CenozoicBirds2.csv", sep=""), stringsAsFactors=F)#
+ChinaBirds <- read.csv(paste(Path_base, "ChinaBirds.csv", sep=""), stringsAsFactors=F)#
+ExBirds <- read.csv(paste(Path_base, "FMNHBirds2.csv", sep=""), stringsAsFactors=F)
+head(ExBirds)
+CenBirds <- read.csv(paste(Path_base, "CenozoicBirds2.csv", sep=""), stringsAsFactors=F)
+head(CenBirds)
+tail(CenBirds)
+ChinaBirds <- read.csv(paste(Path_base, "ChinaBirds.csv", sep=""), stringsAsFactors=F)
+head(ChinaBirds)
+ChinaBirds <- t(ChinaBirds)
+head(ChinaBirds)
+ChinaBirds <- read.csv(paste(Path_base, "ChinaBirds.csv", sep=""), stringsAsFactors=F, row.names=1)#
+ChinaBirds <- t(ChinaBirds)
+head(ChinaBirds)
+ChinaBirds <- read.csv(paste(Path_base, "ChinaBirds.csv", sep=""), stringsAsFactors=F, row.names=1, header=F)#
+ChinaBirds <- t(ChinaBirds)
+head(ChinaBirds)
+CenBirds <- read.csv(paste(Path_base, "CenozoicBirds2.csv", sep=""), stringsAsFactors=F)
+head(CenBirds)
+colnames(CenBirds)
+CenBirds <- CenBirds[,-c("X", "Formation", "Sternum.W", "Diet", "Teeth", "Beak.shape.", "Gut.contents.", "Primary.Length", "Break.Height", "Beak.Length")]
+119.02 + 68.49
+rbind(1:ncol(CenBirds), colnames(CenBirds))
+CenBirds <- read.csv(paste(Path_base, "CenozoicBirds2.csv", sep=""), stringsAsFactors=F)#
+CenBirds <- CenBirds[,-c(3,5,7,30,31,32,33,34,35,36)]
+head(CenBirds)
+head(ChinaBirds)
+ChinaBirds <- read.csv(paste(Path_base, "ChinaBirds.csv", sep=""), stringsAsFactors=F, row.names=1, header=F)#
+ChinaBirds <- t(ChinaBirds)#
+ChinaBirds <- ChinaBirds[,-c(4,6)]
+ncol(ChinaBirds)
+ncol(CenBirds)
+Path_base <- "~/Documents/BirdEcomorph/"#
+#
+CenBirds <- read.csv(paste(Path_base, "CenozoicBirds2.csv", sep=""), stringsAsFactors=F)#
+CenBirds <- CenBirds[,-c(3,5,7,30,31,32,33,34,35,36)]#
+#
+ChinaBirds <- read.csv(paste(Path_base, "ChinaBirds.csv", sep=""), stringsAsFactors=F, row.names=1, header=F)#
+ChinaBirds <- t(ChinaBirds)#
+ChinaBirds <- ChinaBirds[,-c(4,6)]#
+colnames(CenBirds) <- colnames(ChinaBirds)#
+FosBirds <- rbind(ChinaBirds, CenBirds)
+warnings()
+head(FosBirds)
+tail(FosBirds)
+CenBirds <- read.csv(paste(Path_base, "CenozoicBirds2.csv", sep=""), stringsAsFactors=F)#
+CenBirds <- CenBirds[,-c(3,5,7,30,31,32,33,34,35,36)]#
+#
+ChinaBirds <- read.csv(paste(Path_base, "ChinaBirds.csv", sep=""), stringsAsFactors=F, row.names=1, header=F)#
+ChinaBirds <- t(ChinaBirds)#
+ChinaBirds <- ChinaBirds[,-c(4,6)]
+head(ChinaBirds)
+class(ChinaBirds)
+class(ChinaBirds[1,6])
+head(CenBirds)
+class(CenBirds[1,6])
+CenBirds <- apply(CenBirds, 2, as.character)
+head(CenBirds)
+Path_base <- "~/Documents/BirdEcomorph/"#
+#
+CenBirds <- read.csv(paste(Path_base, "CenozoicBirds2.csv", sep=""), stringsAsFactors=F)#
+CenBirds <- CenBirds[,-c(3,5,7,30,31,32,33,34,35,36)]#
+CenBirds <- apply(CenBirds, 2, as.character)#
+#
+ChinaBirds <- read.csv(paste(Path_base, "ChinaBirds.csv", sep=""), stringsAsFactors=F, row.names=1, header=F)#
+ChinaBirds <- t(ChinaBirds)#
+ChinaBirds <- ChinaBirds[,-c(4,6)]#
+#
+colnames(CenBirds) <- colnames(ChinaBirds)#
+FosBirds <- rbind(ChinaBirds, CenBirds)
+head(FosBirds)
+tail(FosBirds)
+head(ExBirds)
+setwd("~/Downloads")
+write.csv("fossil_birds.csv", FosBirds, quote=F, row.names=F, col.names=T)
+write.csv(FosBirds, "fossil_birds.csv", quote=F, row.names=F, col.names=T)
+ExBirds <- read.csv(paste(Path_base, "FMNHBirds2.csv", sep=""), stringsAsFactors=F)#
+write.csv(ExBirds, "extant_birds.csv", quote=F, row.names=F, col.names=T)
 Path_base <- "~/Documents/Salamanders/"#
-setwd(paste(Path_base, "datafiles", sep=""))#
 #
-#z <- define_BioGeoBEARS_run(trfn="http://phylo.wdfiles.com/local--files/biogeobears/Psychotria_5.2.newick", geogfn="http://phylo.wdfiles.com/local--files/biogeobears/Psychotria_geog.data")#
-#frP <- bears_2param_standard_fast(trfn="Psychotria_5.2.newick", geogfn="Psychotria_geog.data")#
+library(phytools)#
+library(BAMMtools)#
+library(coda)#
 #
-tree <- read.tree("fossilTree.tre")#
-inputGeog <- read.table("sal_geog.data", stringsAsFactors=F, header=T, row.names=1)#
-inputGeog <- cbind(tree$tip.label, inputGeog[tree$tip.label,])#
-colnames(inputGeog) <- c(Ntip(tree), 6)#
-#inputGeog[,2] <- gsub("\\?","0",inputGeog[,2])#
-write.table(inputGeog, file="input_geog.data", quote=F, row.names=F, col.names=T, sep="\t")#
-# d = dispersal, e= extinction (these two are LaGrange), next is j = founder-event speciation (bears_3param), then v = vicariance proportion, then max_ent_constraint_05 which impacts the probability of different range sizes (low=small sizes, hi=big sizes)#
-z_dec <- define_BioGeoBEARS_run()#
+# PBDB data#
+setwd(paste(Path_base, "fossilSalamanders/pbdb", sep=""))#
+fosRTT <- read.csv("raw_curve_data.csv", stringsAsFactors=F)#
+fosNetDiv <- fosRTT$X3T_lambda - fosRTT$X3T_mu#
+fosRelExt <- fosRTT$X3T_mu/fosRTT$X3T_lambda#
 #
-z_dec$geogfn <- "input_geog.data"#
-z_dec$trfn <- "fossilTree.tre"#
+# Extant-only data#
+setwd(paste(Path_base, "bamm/extant_only", sep=""))#
+exTree <- read.tree("no_pleth.tre")#
+exMCMC <- read.csv("np_mcmc_out.txt", stringsAsFactors=F)#
+exEdata <- getEventData(exTree, "np_event_data.txt", burnin=0.5)#
+maxT <- max(nodeHeights(exTree))#
 #
-z_dec$use_optimx <- T#
-z_dec$num_cores_to_use <- 2#
-z_dec$max_range_size <- 6#
-z_dec$force_sparse <- FALSE#
-z_dec$include_null_range <- TRUE#
-z_dec$useAmbiguities <- TRUE#
-z_dec <- readfiles_BioGeoBEARS_run(z_dec)#
-z_dec$return_condlikes_table <- TRUE#
-z_dec$calc_TTL_loglike_from_condlikes_table <- TRUE#
-z_dec$calc_ancprobs <- TRUE#
-tipranges <- getranges_from_LagrangePHYLIP(lgdata_fn=z_dec$geogfn)#
-#
-check_BioGeoBEARS_run(z_dec)#
-#
-y_dec <- bears_optim_run(z_dec)#
-#
-z_decjv <- z_dec#
-z_decjv$BioGeoBEARS_model_object@params_table["j", "type"] <- "free"#
-z_decjv$BioGeoBEARS_model_object@params_table["j", "init"] <- 1e-4#
-z_decjv$BioGeoBEARS_model_object@params_table["v", "type"] <- "free"#
-z_decjv$BioGeoBEARS_model_object@params_table["v", "init"] <- 1e-4#
-check_BioGeoBEARS_run(z_decjv)#
-z_decjv <- readfiles_BioGeoBEARS_run(z_decjv)#
-#
-y_decjv <- bears_optim_run(z_dec)#
-#
-########
-plot_BioGeoBEARS_results(y, analysis_titletxt="", plotwhat="text", label.offset=0.15, tipcex=0.1, statecex=0.5, splitcex=0.5, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z$trfn), plotlegend=T)
-plot_BioGeoBEARS_results(z_dec, analysis_titletxt="", plotwhat="text", label.offset=0.15, tipcex=0.1, statecex=0.5, splitcex=0.5, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z$trfn), plotlegend=T)
-plot_BioGeoBEARS_results(z_decjv, analysis_titletxt="", plotwhat="text", label.offset=0.15, tipcex=0.1, statecex=0.5, splitcex=0.5, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z$trfn), plotlegend=T)
-plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="text", label.offset=0.15, tipcex=0.1, statecex=0.5, splitcex=0.5, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z$trfn), plotlegend=T)
-plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="text", label.offset=0.15, tipcex=0.1, statecex=0.5, splitcex=0.5, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)
-plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.15, tipcex=0.1, statecex=0.5, splitcex=0.5, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)
-plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.1, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)
-########
 setwd(paste(Path_base, "figures", sep=""))#
-pdf("sal_dec.pdf", height=10, width=10)#
-plot_BioGeoBEARS_results(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.1, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)#
+pdf("extant_sp.pdf", height=10, width=10)#
+addFamily <- function(Taxa, Family, Cex=2, centering=T, Top=T)	{#
+	Names <- unique(c(tree$tip.label[grep(Taxa[1], tree$tip.label)], tree$tip.label[grep(Taxa[2], tree$tip.label)], tree$tip.label[grep(Taxa[3], tree$tip.label)]))#
+	allNames <- na.omit(tree$tip.label[getDescendants(tree, findMRCA(tree, tips=Names))])#
+	if (centering == T)		{#
+		Center <- allNames[round(mean(1:length(allNames)))]#
+		tiplabels(Family, tip=which(tree$tip.label == Center), bg='white', frame='none', xpd=NA, adj=-0.05, cex=Cex)#
+	}#
+	else	 if (centering == F){#
+		if (Top == T)	{#
+			Center <- rev(allNames)[1]#
+		}#
+		else	{#
+			Center <- allNames[1]#
+		}#
+		tiplabels(Family, tip=which(tree$tip.label == Center), bg='white', frame='none', xpd=NA, adj=-0.05, cex=Cex)#
+	}#
+}#
+par(mar=c(0,0,0,0), oma=c(0,0,0,14))#
+exPlot <- plot(exEdata, breaks="quantile")#
+addBAMMlegend(exPlot)#
+#
+# Add family labels#
+tree <- as.phylo(exEdata)#
+#addFamily(c("Rhyacotriton", "Rhyacotriton", "Rhyacotriton"), "Rhyacotritonidae")#
+addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T)#
+#addFamily(c("Dicamptodon", "Dicamptodon", "Dicamptodon"), "Dicamptodontidae")#
+addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T)#
+addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T)#
+addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")#
+addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")#
+addFamily(c("Salamandra", "Neurergus", "Chioglossa"), "Salamandridae")#
+addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae")#
+addFamily(c("Hynobius", "Onychodactylus", "Liua"), "Hynobiidae")#
+#addFamily(c("Proteus", "Necturus", "Necturus"), "Proteidae", centering=F, Top=F)#
 dev.off()#
 #
-pdf("sal_decjv.pdf", height=10, width=10)#
-plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.1, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
-dev.off()
-setwd(paste(Path_base, "datafiles", sep=""))
-pdf((paste(Path_base, "figures/sal_dec.pdf",sep=""), height=10, width=10)#
-plot_BioGeoBEARS_results(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.1, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)#
+setwd(paste(Path_base, "check_tree_files", sep=""))#
+pdf("bamm_ex_output.pdf", height=10, width=10)#
+par(mar=c(0,0,0,0), oma=c(0,0,0,2))#
+exPlot <- plot(exEdata, breaks="quantile")#
+addBAMMlegend(exPlot)#
+tiplabels(text=exEdata$tip.label, cex=0.15, adj=-0.1, frame="none", bg=rgb(0,0,0,0))#
 dev.off()#
 #
-pdf((paste(Path_base, "figures/sal_decjv.pdf",sep=""), height=10, width=10)#
-plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.1, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
-dev.off()
-pdf(paste(Path_base, "figures/sal_dec.pdf", sep=""), height=10, width=10)
-plot_BioGeoBEARS_results(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.1, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)#
-dev.off()
-pdf(paste(Path_base, "figures/sal_decjv.pdf",sep=""), height=10, width=10)#
-plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.1, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
-dev.off()
-y_dec
-str(y_dec)
-y_dec$optim_result$value
-y_decjv$optim_result
-pdf(paste(Path_base, "figures/sal_dec.pdf", sep=""), height=10, width=10)#
-plot_BioGeoBEARS_results(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.1, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)#
+# Extant-only rates through time#
+exRTT <- getRateThroughTimeMatrix(exEdata)#
+#
+# fossilBAMM runs#
+### Post-generation addition of files#
+fbEdata <- list()#
+fbEdata_hi <- list()#
+fbRTT <- list()#
+fbRTT_hi <- list()#
+fmax <- c()#
+llES <- c()#
+nsES <- c()#
+for (count in 1:70)	{#
+	setwd(paste(Path_base, "bamm/output-", count, sep=""))#
+	fbTree <- read.tree("fossilTree.tre")#
+	MCMC_dat <- read.csv("base_mcmc_out.txt")#
+	fbEdata[[count]] <- getEventData(fbTree, "base_event_data.txt", burnin=0.1, nsamples=200)#
+	fbRTT[[count]] <- getRateThroughTimeMatrix(fbEdata[[count]])#
+	llES[count] <- effectiveSize(MCMC_dat$logLik)#
+	nsES[count] <- effectiveSize(MCMC_dat$N_shifts)#
+#
+	fullTree <- read.tree("fullTree_uni.tre")#
+	fbEdata_hi[[count]] <- getEventData(fullTree, "full_event_data.txt", burnin=0.1, nsamples=200)#
+	fbRTT_hi[[count]] <- getRateThroughTimeMatrix(fbEdata_hi[[count]])#
+	fmax[count] <- max(nodeHeights(fbTree))#
+}#
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("fossil_sp.pdf", height=10, width=10)#
+fosEdata <- fbEdata[[1]]#
+par(mar=c(0,0,0,0), oma=c(0,0,0,14))#
+fosPlot <- plot(fosEdata, colorbreaks=exPlot$colorbreaks)#
+#addBAMMlegend(fosPlot, location="bottomleft")#
+#
+# Add family labels#
+tree <- as.phylo(fosEdata)#
+#addFamily(c("Rhyacotriton", "Rhyacotriton", "Rhyacotriton"), "Rhyacotritonidae")#
+addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T)#
+#addFamily(c("Dicamptodon", "Dicamptodon", "Dicamptodon"), "Dicamptodontidae")#
+addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T)#
+addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T)#
+addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")#
+addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")#
+addFamily(c("Notophthalmus", "Neurergus", "Taricha"), "Salamandridae")#
+addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae")#
+addFamily(c("Hynobius", "Onychodactylus", "Liua"), "Hynobiidae")#
+#addFamily(c("Necturus", "Necturus", "Necturus"), "Proteidae", centering=T, Top=F)#
 dev.off()#
-#
-pdf(paste(Path_base, "figures/sal_decjv.pdf",sep=""), height=10, width=10)#
-plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.1, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
-dev.off()
-?plot_BioGeoBEARS_results
-head(inputGeog)
-inputGeog <- read.table("sal_geog.data", stringsAsFactors=F, header=T, row.names=1)
-head(inputGeog)
-get_LnL_from_BioGeoBEARS_results_object(y_decjv)
-get_LnL_from_BioGeoBEARS_results_object(y_dec)
-### Make a PHYLIP style file#
-Path_base <- "~/Documents/Salamanders/"#
-#
-setwd(paste(Path_base, "datafiles", sep=""))#
-#
-geo1 <- read.csv("geography_morph.csv", stringsAsFactors=F)#
-geo2 <- read.csv("geography_tree.csv", stringsAsFactors=F)#
-#
-fos <- read.csv("fossilSalamanders.csv", stringsAsFactors=F)[,c("genus", "species", "ENA", "WNA", "Neo", "Eur", "CASIA", "EASIA")]#
-fos_names <- apply(fos[,1:2], 1, paste, collapse="_")#
-fosMat <- cbind(fos_names, fos[,3:8])#
-colnames(fosMat) <- c("X", "ENA", "WNA", "NEO", "EUR", "CASIA", "EASIA")
-head(fosMat)
-fosMat
-## Run BioGeoBEARS on salamander data#
-# Load the package (after installation, see above).#
-library(optimx)         # You need to have some version of optimx available#
-                        # as it is a BioGeoBEARS dependency; however, if you#
-                        # don't want to use optimx, and use optim() (from R core) #
-                        # you can set:#
-                        # BioGeoBEARS_run_object$use_optimx = FALSE#
-                        # ...everything should work either way -- NJM 2014-01-08#
-library(FD)       # for FD::maxent() (make sure this is up-to-date)#
-library(snow)     # (if you want to use multicore functionality; some systems/R versions prefer library(parallel), try either)#
-library(parallel)#
-library(BioGeoBEARS)#
-###########################################################################################
-#### Source all of the annoying BGB stuff#
-source("http://phylo.wdfiles.com/local--files/biogeobears/cladoRcpp.R") # (needed now that traits model added; source FIRST!)#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_add_fossils_randomly_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_basics_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_calc_transition_matrices_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_classes_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_detection_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_DNA_cladogenesis_sim_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_extract_Qmat_COOmat_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_generics_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_models_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_on_multiple_trees_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_plots_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_readwrite_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_simulate_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_makePlots_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stochastic_mapping_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stratified_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_univ_model_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/calc_uppass_probs_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/calc_loglike_sp_v01.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/get_stratified_subbranch_top_downpass_likelihoods_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/runBSM_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/stochastic_map_given_inputs.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/summarize_BSM_tables_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_traits_v1.R") # added traits model#
-calc_loglike_sp = compiler::cmpfun(calc_loglike_sp_prebyte)    # crucial to fix bug in uppass calculations#
-calc_independent_likelihoods_on_each_branch = compiler::cmpfun(calc_independent_likelihoods_on_each_branch_prebyte)#
-    # slight speedup hopefully#
-# However, you can find the extdata directory like this:#
-extdata_dir <- np(system.file("extdata", package="BioGeoBEARS"))#
-scriptdir <- np(system.file("extdata/a_scripts", package="BioGeoBEARS"))#
-list.files(extdata_dir)#
-###########################################################################################
-Path_base <- "~/Documents/Salamanders/"#
-setwd(paste(Path_base, "datafiles", sep=""))#
-#
-tree <- read.tree("fossilTree.tre")#
-inputGeog <- read.table("sal_geog.data", stringsAsFactors=F, header=T, row.names=1)#
-inputGeog <- cbind(tree$tip.label, inputGeog[tree$tip.label,])#
-inputGeog[,2] <- gsub("\\?","0",inputGeog[,2])#
-#
-inputGeog <- cbind(inputGeog, rep("", nrow(inputGeog)))#
-colnames(inputGeog) <- c(Ntip(tree), 6, "(A W S Er C E)")#
-#
-write.table(inputGeog, file="input_geog.data", quote=F, row.names=F, col.names=T, sep="\t")#
-colnames(minorProb) <- c("X", "ENA", "WNA", "NEO", "EUR", "CASIA", "EASIA")#
-# d = dispersal, e= extinction (these two are LaGrange), next is j = founder-event speciation (bears_3param), then v = vicariance proportion, then max_ent_constraint_05 which impacts the probability of different range sizes (low=small sizes, hi=big sizes)#
-z_dec <- define_BioGeoBEARS_run()#
-#
-z_dec$geogfn <- "input_geog.data"#
-z_dec$trfn <- "fossilTree.tre"#
-#
-z_dec$use_optimx <- T#
-z_dec$num_cores_to_use <- 2#
-z_dec$max_range_size <- 6#
-z_dec$force_sparse <- FALSE#
-z_dec$include_null_range <- TRUE#
-z_dec$useAmbiguities <- TRUE#
-z_dec <- readfiles_BioGeoBEARS_run(z_dec)#
-z_dec$return_condlikes_table <- TRUE#
-z_dec$calc_TTL_loglike_from_condlikes_table <- TRUE#
-z_dec$calc_ancprobs <- TRUE#
-tipranges <- getranges_from_LagrangePHYLIP(lgdata_fn=z_dec$geogfn)#
-#
-check_BioGeoBEARS_run(z_dec)#
-#
-y_dec <- bears_optim_run(z_dec)#
-#
-z_decjv <- z_dec#
-z_decjv$BioGeoBEARS_model_object@params_table["j", "type"] <- "free"#
-z_decjv$BioGeoBEARS_model_object@params_table["j", "init"] <- 1e-4#
-z_decjv$BioGeoBEARS_model_object@params_table["v", "type"] <- "free"#
-z_decjv$BioGeoBEARS_model_object@params_table["v", "init"] <- 1e-4#
-check_BioGeoBEARS_run(z_decjv)#
-z_decjv <- readfiles_BioGeoBEARS_run(z_decjv)#
-#
-y_decjv <- bears_optim_run(z_dec)#
-#
-########
-pdf(paste(Path_base, "figures/sal_dec_hardFos.pdf", sep=""), height=10, width=10)#
-plot_BioGeoBEARS_results(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.1, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)#
-dev.off()#
-#
-pdf(paste(Path_base, "figures/sal_decjv_hardFos.pdf",sep=""), height=10, width=10)#
-plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.15, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
-dev.off()
-z <- read.tree("~/Documents/Salamanders/pyron_2014/pyron2014.tre")
-Ntip(z)
-max(nodeHeights(z))
-## Run BioGeoBEARS on salamander data#
-# Load the package (after installation, see above).#
-library(optimx)         # You need to have some version of optimx available#
-                        # as it is a BioGeoBEARS dependency; however, if you#
-                        # don't want to use optimx, and use optim() (from R core) #
-                        # you can set:#
-                        # BioGeoBEARS_run_object$use_optimx = FALSE#
-                        # ...everything should work either way -- NJM 2014-01-08#
-library(FD)       # for FD::maxent() (make sure this is up-to-date)#
-library(snow)     # (if you want to use multicore functionality; some systems/R versions prefer library(parallel), try either)#
-library(parallel)#
-library(BioGeoBEARS)#
-###########################################################################################
-#### Source all of the annoying BGB stuff#
-source("http://phylo.wdfiles.com/local--files/biogeobears/cladoRcpp.R") # (needed now that traits model added; source FIRST!)#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_add_fossils_randomly_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_basics_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_calc_transition_matrices_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_classes_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_detection_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_DNA_cladogenesis_sim_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_extract_Qmat_COOmat_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_generics_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_models_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_on_multiple_trees_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_plots_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_readwrite_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_simulate_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_makePlots_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stochastic_mapping_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stratified_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_univ_model_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/calc_uppass_probs_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/calc_loglike_sp_v01.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/get_stratified_subbranch_top_downpass_likelihoods_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/runBSM_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/stochastic_map_given_inputs.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/summarize_BSM_tables_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_traits_v1.R") # added traits model#
-calc_loglike_sp = compiler::cmpfun(calc_loglike_sp_prebyte)    # crucial to fix bug in uppass calculations#
-calc_independent_likelihoods_on_each_branch = compiler::cmpfun(calc_independent_likelihoods_on_each_branch_prebyte)#
-    # slight speedup hopefully#
-# However, you can find the extdata directory like this:#
-extdata_dir <- np(system.file("extdata", package="BioGeoBEARS"))#
-scriptdir <- np(system.file("extdata/a_scripts", package="BioGeoBEARS"))#
-list.files(extdata_dir)#
-###########################################################################################
-Path_base <- "~/Documents/Salamanders/"#
-setwd(paste(Path_base, "datafiles", sep=""))#
-#
-tree <- read.tree("fossilTree.tre")#
-inputGeog <- read.table("sal_geog.data", stringsAsFactors=F, header=T, row.names=1)#
-inputGeog <- cbind(tree$tip.label, inputGeog[tree$tip.label,])#
-inputGeog[,2] <- gsub("\\?","0",inputGeog[,2])#
-#
-inputGeog <- cbind(inputGeog, rep("", nrow(inputGeog)))#
-colnames(inputGeog) <- c(Ntip(tree), 6, "(A W S Er C E)")#
-#
-write.table(inputGeog, file="input_geog.data", quote=F, row.names=F, col.names=T, sep="\t")#
-colnames(minorProb) <- c("X", "ENA", "WNA", "NEO", "EUR", "CASIA", "EASIA")#
-# d = dispersal, e= extinction (these two are LaGrange), next is j = founder-event speciation (bears_3param), then v = vicariance proportion, then max_ent_constraint_05 which impacts the probability of different range sizes (low=small sizes, hi=big sizes)#
-z_dec <- define_BioGeoBEARS_run()#
-#
-z_dec$geogfn <- "input_geog.data"#
-z_dec$trfn <- "fossilTree.tre"#
-#
-z_dec$use_optimx <- T#
-z_dec$num_cores_to_use <- 1#
-z_dec$max_range_size <- 6#
-z_dec$force_sparse <- FALSE#
-z_dec$include_null_range <- FALSE#
-z_dec$useAmbiguities <- TRUE#
-z_dec <- readfiles_BioGeoBEARS_run(z_dec)#
-z_dec$return_condlikes_table <- TRUE#
-z_dec$calc_TTL_loglike_from_condlikes_table <- TRUE#
-z_dec$calc_ancprobs <- TRUE#
-tipranges <- getranges_from_LagrangePHYLIP(lgdata_fn=z_dec$geogfn)#
-#
-check_BioGeoBEARS_run(z_dec)#
-#
-y_dec <- bears_optim_run(z_dec)#
-#
-z_decjv <- z_dec#
-z_decjv$BioGeoBEARS_model_object@params_table["j", "type"] <- "free"#
-z_decjv$BioGeoBEARS_model_object@params_table["j", "init"] <- 1e-4#
-z_decjv$BioGeoBEARS_model_object@params_table["v", "type"] <- "free"#
-z_decjv$BioGeoBEARS_model_object@params_table["v", "init"] <- 1e-4#
-check_BioGeoBEARS_run(z_decjv)#
-z_decjv <- readfiles_BioGeoBEARS_run(z_decjv)#
-#
-y_decjv <- bears_optim_run(z_dec)#
-#
-########
-pdf(paste(Path_base, "figures/sal_dec*_hardFos.pdf", sep=""), height=10, width=10)#
-plot_BioGeoBEARS_results(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.1, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)#
-dev.off()#
-#
-pdf(paste(Path_base, "figures/sal_dec*jv_hardFos.pdf",sep=""), height=10, width=10)#
-plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.15, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
-dev.off()
-## Run BioGeoBEARS on salamander data#
-# Load the package (after installation, see above).#
-library(optimx)         # You need to have some version of optimx available#
-                        # as it is a BioGeoBEARS dependency; however, if you#
-                        # don't want to use optimx, and use optim() (from R core) #
-                        # you can set:#
-                        # BioGeoBEARS_run_object$use_optimx = FALSE#
-                        # ...everything should work either way -- NJM 2014-01-08#
-library(FD)       # for FD::maxent() (make sure this is up-to-date)#
-library(snow)     # (if you want to use multicore functionality; some systems/R versions prefer library(parallel), try either)#
-library(parallel)#
-library(BioGeoBEARS)#
-###########################################################################################
-#### Source all of the annoying BGB stuff#
-source("http://phylo.wdfiles.com/local--files/biogeobears/cladoRcpp.R") # (needed now that traits model added; source FIRST!)#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_add_fossils_randomly_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_basics_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_calc_transition_matrices_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_classes_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_detection_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_DNA_cladogenesis_sim_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_extract_Qmat_COOmat_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_generics_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_models_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_on_multiple_trees_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_plots_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_readwrite_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_simulate_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_makePlots_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stochastic_mapping_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stratified_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_univ_model_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/calc_uppass_probs_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/calc_loglike_sp_v01.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/get_stratified_subbranch_top_downpass_likelihoods_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/runBSM_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/stochastic_map_given_inputs.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/summarize_BSM_tables_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_traits_v1.R") # added traits model#
-calc_loglike_sp = compiler::cmpfun(calc_loglike_sp_prebyte)    # crucial to fix bug in uppass calculations#
-calc_independent_likelihoods_on_each_branch = compiler::cmpfun(calc_independent_likelihoods_on_each_branch_prebyte)#
-    # slight speedup hopefully#
-# However, you can find the extdata directory like this:#
-extdata_dir <- np(system.file("extdata", package="BioGeoBEARS"))#
-scriptdir <- np(system.file("extdata/a_scripts", package="BioGeoBEARS"))#
-list.files(extdata_dir)#
-###########################################################################################
-Path_base <- "~/Documents/Salamanders/"#
-setwd(paste(Path_base, "datafiles", sep=""))#
-#
-tree <- read.tree("fossilTree.tre")#
-inputGeog <- read.table("sal_geog.data", stringsAsFactors=F, header=T, row.names=1)#
-inputGeog <- cbind(tree$tip.label, inputGeog[tree$tip.label,])#
-#inputGeog[,2] <- gsub("\\?","0",inputGeog[,2])#
-#
-inputGeog <- cbind(inputGeog, rep("", nrow(inputGeog)))#
-colnames(inputGeog) <- c(Ntip(tree), 6, "(A W S Er C E)")#
-#
-write.table(inputGeog, file="input_geog.data", quote=F, row.names=F, col.names=T, sep="\t")#
-colnames(minorProb) <- c("X", "ENA", "WNA", "NEO", "EUR", "CASIA", "EASIA")#
-# d = dispersal, e= extinction (these two are LaGrange), next is j = founder-event speciation (bears_3param), then v = vicariance proportion, then max_ent_constraint_05 which impacts the probability of different range sizes (low=small sizes, hi=big sizes)#
-z_dec <- define_BioGeoBEARS_run()#
-#
-z_dec$geogfn <- "input_geog.data"#
-z_dec$trfn <- "fossilTree.tre"#
-#
-z_dec$use_optimx <- T#
-z_dec$num_cores_to_use <- 1#
-z_dec$max_range_size <- 6#
-z_dec$force_sparse <- FALSE#
-z_dec$include_null_range <- FALSE#
-z_dec$useAmbiguities <- TRUE#
-z_dec <- readfiles_BioGeoBEARS_run(z_dec)#
-z_dec$return_condlikes_table <- TRUE#
-z_dec$calc_TTL_loglike_from_condlikes_table <- TRUE#
-z_dec$calc_ancprobs <- TRUE#
-tipranges <- getranges_from_LagrangePHYLIP(lgdata_fn=z_dec$geogfn)#
-#
-check_BioGeoBEARS_run(z_dec)#
-#
-y_dec <- bears_optim_run(z_dec)#
-#
-z_decjv <- z_dec#
-z_decjv$BioGeoBEARS_model_object@params_table["j", "type"] <- "free"#
-z_decjv$BioGeoBEARS_model_object@params_table["j", "init"] <- 1e-4#
-z_decjv$BioGeoBEARS_model_object@params_table["v", "type"] <- "free"#
-z_decjv$BioGeoBEARS_model_object@params_table["v", "init"] <- 1e-4#
-check_BioGeoBEARS_run(z_decjv)#
-z_decjv <- readfiles_BioGeoBEARS_run(z_decjv)#
-#
-y_decjv <- bears_optim_run(z_dec)#
-#
-########
-pdf(paste(Path_base, "figures/sal_dec*.pdf", sep=""), height=10, width=10)#
-plot_BioGeoBEARS_results(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.1, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T)#
-dev.off()#
-#
-pdf(paste(Path_base, "figures/sal_dec*jv.pdf",sep=""), height=10, width=10)#
-plot_BioGeoBEARS_results(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.15, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
-dev.off()
-str(y_decjv)
-nrow(tree$edge)
-apply(y_decjv$relative_probs_of_each_state_at_branch_top_AT_node_DOWNPASS,2,mean)
-barplot(apply(y_decjv$relative_probs_of_each_state_at_branch_top_AT_node_DOWNPASS,2,mean))
-plot(tree)
-plot(tree, show.tip.label=F)
-nodelabels(pie=y_decjv$relative_probs_of_each_state_at_branch_top_AT_node_DOWNPASS)
-y_decjv$relative_probs_of_each_state_at_branch_top_AT_node_DOWNPASS[1,]
-head(inputGeog)
-unique(inputGeog[,2])
-mean(c(27,102))
-mean(c(158,166))
-119+30
-149/2
-(231+217)/2
-(41+95)/2
-(217+117)/2
-(95+112)/255
-(95+112)/2
-181/2
 Alpha <- 1#
-Colors <- c(rgb(1,1,1,1),	# Null#
-			rgb(27/255,158/255,119/255,Alpha),	#Eastern NA#
-			rgb(102/255, 166/255,30/255, Alpha),	#Western NA#
-			rgb(230/255, 171/255, 2/255, Alpha),	# Central & South America#
-			rgb(231/255, 41/255, 138/255, Alpha),	# Europe & NAfrica (and subSaharan Africa for a couple fossils)#
-			rgb(217/255, 95/255, 2/255, Alpha),	#Central Asia#
-			rgb(117/255, 112/255, 179/255, Alpha),	# Eastern Asia#
-			rgb(64.5/255, 162/255, 74.5/255, Alpha),	#Pan-North America#
-			rep(rgb(0,0,0, Alpha),11),	# Unobserved combos#
-			rgb(224/255, 68/255, 70/255, Alpha),	#Europe + Central Asia#
-			rgb(0,0,0, Alpha),	# Unobserved (Europe + East Asia)#
-			rgb(167/255, 103.5/255, 90.5/255, Alpha),	# Pan-Asia#
-			rep(rgb(0,0,0,Alpha), 42) # Unobserved combos#
-)#
-#names(Colors) <- c("A", "W", "S", "Er", "C", "E", "AW", "")#
-plot(tree, cex=0.15, label.offset=0.1)#
-nodelabels(pie=y_decjv$relative_probs_of_each_state_at_branch_top_AT_node_DOWNPASS, piecol=Colors)
-#names(Colors) <- c("A", "W", "S", "Er", "C", "E", "AW", "")#
-plot(tree, cex=0.15, label.offset=0.1)#
-nodelabels(pie=y_decjv$relative_probs_of_each_state_at_branch_top_AT_node_DOWNPASS, piecol=Colors, cex=0.15)
-plot_BioGeoBEARS_results
-plot_BioGeoBEARS_results(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T, skiplabels=T)
-Path_base <- "~/Documents/Salamanders/"#
-setwd(paste(Path_base, "Rscripts/", sep=""))#
-source("plot_BGB.R")
-plot_BGB(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.15, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)
-setwd(paste(Path_base, "datafiles", sep=""))
-plot_BGB(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.15, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)
-## Run BioGeoBEARS on salamander data#
-# Load the package (after installation, see above).#
-library(optimx)         # You need to have some version of optimx available#
-                        # as it is a BioGeoBEARS dependency; however, if you#
-                        # don't want to use optimx, and use optim() (from R core) #
-                        # you can set:#
-                        # BioGeoBEARS_run_object$use_optimx = FALSE#
-                        # ...everything should work either way -- NJM 2014-01-08#
-library(FD)       # for FD::maxent() (make sure this is up-to-date)#
-library(snow)     # (if you want to use multicore functionality; some systems/R versions prefer library(parallel), try either)#
-library(parallel)#
-library(BioGeoBEARS)#
-###########################################################################################
-#### Source all of the annoying BGB stuff#
-source("http://phylo.wdfiles.com/local--files/biogeobears/cladoRcpp.R") # (needed now that traits model added; source FIRST!)#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_add_fossils_randomly_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_basics_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_calc_transition_matrices_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_classes_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_detection_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_DNA_cladogenesis_sim_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_extract_Qmat_COOmat_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_generics_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_models_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_on_multiple_trees_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_plots_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_readwrite_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_simulate_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_makePlots_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stochastic_mapping_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stratified_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_univ_model_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/calc_uppass_probs_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/calc_loglike_sp_v01.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/get_stratified_subbranch_top_downpass_likelihoods_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/runBSM_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/stochastic_map_given_inputs.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/summarize_BSM_tables_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_traits_v1.R") # added traits model#
-calc_loglike_sp = compiler::cmpfun(calc_loglike_sp_prebyte)    # crucial to fix bug in uppass calculations#
-calc_independent_likelihoods_on_each_branch = compiler::cmpfun(calc_independent_likelihoods_on_each_branch_prebyte)#
-    # slight speedup hopefully#
-# However, you can find the extdata directory like this:#
-extdata_dir <- np(system.file("extdata", package="BioGeoBEARS"))#
-scriptdir <- np(system.file("extdata/a_scripts", package="BioGeoBEARS"))#
-list.files(extdata_dir)#
-###########################################################################################
-Path_base <- "~/Documents/Salamanders/"#
-setwd(paste(Path_base, "Rscripts/", sep=""))#
-source("plot_BGB.R")#
+exCol <- rgb(217/255, 95/255, 2/255, Alpha)#
+hiCol <- rgb(27/255, 158/255, 119/255, Alpha)#
+loCol <- rgb(117/255, 112/255, 179/255, Alpha)#
 #
-setwd(paste(Path_base, "datafiles", sep=""))#
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("spex.pdf", height=5, width=10)#
+par(mfcol=c(1,2), mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, bty="n", las=1, cex.lab=1.5)#
+# Speciation plot#
+tDiff <- max(fmax) - maxT#
+plot(exRTT$times + tDiff, apply(exRTT$lambda,2,mean), type='l', ylim=c(0,0.1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("speciation rate (", lambda, ")", sep="")), col=exCol, lwd=1.5)#
+silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$lambda, 2, mean), col=hiCol))#
+silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x], apply(fbRTT[[x]]$lambda, 2, mean), col=loCol))#
+Xax <- c(-100, 0, 50, 100, 150, 204, 240, 270)#
+axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))#
+axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08, 0.1))#
 #
-tree <- read.tree("fossilTree.tre")#
-inputGeog <- read.table("sal_geog.data", stringsAsFactors=F, header=T, row.names=1)#
-inputGeog <- cbind(tree$tip.label, inputGeog[tree$tip.label,])#
-#inputGeog[,2] <- gsub("\\?","0",inputGeog[,2])#
-#
-inputGeog <- cbind(inputGeog, rep("", nrow(inputGeog)))#
-colnames(inputGeog) <- c(Ntip(tree), 6, "(A W S Er C E)")#
-#
-write.table(inputGeog, file="input_geog.data", quote=F, row.names=F, col.names=T, sep="\t")#
-colnames(minorProb) <- c("X", "ENA", "WNA", "NEO", "EUR", "CASIA", "EASIA")#
-# d = dispersal, e= extinction (these two are LaGrange), next is j = founder-event speciation (bears_3param), then v = vicariance proportion, then max_ent_constraint_05 which impacts the probability of different range sizes (low=small sizes, hi=big sizes)#
-z_dec <- define_BioGeoBEARS_run()#
-#
-z_dec$geogfn <- "input_geog.data"#
-z_dec$trfn <- "fossilTree.tre"#
-#
-z_dec$use_optimx <- T#
-z_dec$num_cores_to_use <- 1#
-z_dec$max_range_size <- 6#
-z_dec$force_sparse <- FALSE#
-z_dec$include_null_range <- FALSE#
-z_dec$useAmbiguities <- TRUE#
-z_dec <- readfiles_BioGeoBEARS_run(z_dec)#
-z_dec$return_condlikes_table <- TRUE#
-z_dec$calc_TTL_loglike_from_condlikes_table <- TRUE#
-z_dec$calc_ancprobs <- TRUE#
-tipranges <- getranges_from_LagrangePHYLIP(lgdata_fn=z_dec$geogfn)#
-#
-check_BioGeoBEARS_run(z_dec)#
-#
-y_dec <- bears_optim_run(z_dec)#
-#
-z_decjv <- z_dec#
-z_decjv$BioGeoBEARS_model_object@params_table["j", "type"] <- "free"#
-z_decjv$BioGeoBEARS_model_object@params_table["j", "init"] <- 1e-4#
-z_decjv$BioGeoBEARS_model_object@params_table["v", "type"] <- "free"#
-z_decjv$BioGeoBEARS_model_object@params_table["v", "init"] <- 1e-4#
-check_BioGeoBEARS_run(z_decjv)#
-z_decjv <- readfiles_BioGeoBEARS_run(z_decjv)#
-#
-y_decjv <- bears_optim_run(z_dec)#
-#
-########
-pdf(paste(Path_base, "figures/sal_dec*.pdf", sep=""), height=10, width=10)#
-plot_BGB(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T, skiplabels=T)#
+# Extinction plot#
+plot(exRTT$times + tDiff, apply(exRTT$mu,2,mean), type='l', ylim=c(0,0.1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("extinction rate (", mu, ")", sep="")), col=exCol, lwd=1.5)#
+#points(max(fmax) - fosRTT$Midpoint_Ma, fosRTT$X3T_mu, pch=16, type='b')#
+silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$mu, 2, mean), col=hiCol))#
+silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x], apply(fbRTT[[x]]$mu, 2, mean), col=loCol))#
+axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))#
+axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08, 0.1))#
+legend("topright", bty="n", legend=c("extant", "fossils"), lty=1, col=c(exCol, loCol))#
 dev.off()#
 #
-pdf(paste(Path_base, "figures/sal_dec*jv.pdf",sep=""), height=10, width=10)#
-plot_BGB(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.15, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
-dev.off()
-## Run BioGeoBEARS on salamander data#
-# Load the package (after installation, see above).#
-library(optimx)         # You need to have some version of optimx available#
-                        # as it is a BioGeoBEARS dependency; however, if you#
-                        # don't want to use optimx, and use optim() (from R core) #
-                        # you can set:#
-                        # BioGeoBEARS_run_object$use_optimx = FALSE#
-                        # ...everything should work either way -- NJM 2014-01-08#
-library(FD)       # for FD::maxent() (make sure this is up-to-date)#
-library(snow)     # (if you want to use multicore functionality; some systems/R versions prefer library(parallel), try either)#
-library(parallel)#
-library(BioGeoBEARS)#
-###########################################################################################
-#### Source all of the annoying BGB stuff#
-source("http://phylo.wdfiles.com/local--files/biogeobears/cladoRcpp.R") # (needed now that traits model added; source FIRST!)#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_add_fossils_randomly_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_basics_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_calc_transition_matrices_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_classes_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_detection_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_DNA_cladogenesis_sim_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_extract_Qmat_COOmat_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_generics_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_models_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_on_multiple_trees_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_plots_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_readwrite_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_simulate_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_makePlots_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_SSEsim_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stochastic_mapping_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_stratified_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_univ_model_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/calc_uppass_probs_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/calc_loglike_sp_v01.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/get_stratified_subbranch_top_downpass_likelihoods_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/runBSM_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/stochastic_map_given_inputs.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/summarize_BSM_tables_v1.R")#
-source("http://phylo.wdfiles.com/local--files/biogeobears/BioGeoBEARS_traits_v1.R") # added traits model#
-calc_loglike_sp = compiler::cmpfun(calc_loglike_sp_prebyte)    # crucial to fix bug in uppass calculations#
-calc_independent_likelihoods_on_each_branch = compiler::cmpfun(calc_independent_likelihoods_on_each_branch_prebyte)#
-    # slight speedup hopefully#
-# However, you can find the extdata directory like this:#
-extdata_dir <- np(system.file("extdata", package="BioGeoBEARS"))#
-scriptdir <- np(system.file("extdata/a_scripts", package="BioGeoBEARS"))#
-list.files(extdata_dir)#
-###########################################################################################
-Path_base <- "~/Documents/Salamanders/"#
-setwd(paste(Path_base, "Rscripts/", sep=""))#
-source("plot_BGB.R")#
+pdf("derivedPars.pdf", height=5, width=10)#
+par(mfcol=c(1,2), mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, bty="n", las=1, cex.lab=1.5)#
+# Net div plot#
+plot(exRTT$times + tDiff, apply(exRTT$lambda,2,mean) - apply(exRTT$mu,2,mean), type='l', ylim=c(0,0.1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("net diversification (", lambda, "-", mu, ")", sep="")), col=exCol, lwd=1.5)#
+#points(max(fmax) - fosRTT$Midpoint_Ma, fosRTT$X3T_mu, pch=16, type='b')#
+silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$lambda, 2, mean) - apply(fbRTT_hi[[x]]$mu, 2, mean), col=hiCol))#
+silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x], apply(fbRTT[[x]]$lambda, 2, mean) - apply(fbRTT[[x]]$mu, 2, mean), col=loCol))#
+axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))#
+axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08, 0.1))#
+legend("topright", bty="n", legend=c("extant", "fossils"), lty=1, col=c(exCol, loCol))#
 #
-setwd(paste(Path_base, "datafiles", sep=""))#
-#
-tree <- read.tree("fossilTree.tre")#
-inputGeog <- read.table("sal_geog.data", stringsAsFactors=F, header=T, row.names=1)#
-inputGeog <- cbind(tree$tip.label, inputGeog[tree$tip.label,])#
-inputGeog[,2] <- gsub("\\?","0",inputGeog[,2])	# Toggle this for hardFos or softFos#
-#
-inputGeog <- cbind(inputGeog, rep("", nrow(inputGeog)))#
-colnames(inputGeog) <- c(Ntip(tree), 6, "(A W S Er C E)")#
-#
-write.table(inputGeog, file="input_geog.data", quote=F, row.names=F, col.names=T, sep="\t")#
-colnames(minorProb) <- c("X", "ENA", "WNA", "NEO", "EUR", "CASIA", "EASIA")#
-# d = dispersal, e= extinction (these two are LaGrange), next is j = founder-event speciation (bears_3param), then v = vicariance proportion, then max_ent_constraint_05 which impacts the probability of different range sizes (low=small sizes, hi=big sizes)#
-z_dec <- define_BioGeoBEARS_run()#
-#
-z_dec$geogfn <- "input_geog.data"#
-z_dec$trfn <- "fossilTree.tre"#
-#
-z_dec$use_optimx <- T#
-z_dec$num_cores_to_use <- 1#
-z_dec$max_range_size <- 6#
-z_dec$force_sparse <- FALSE#
-z_dec$include_null_range <- FALSE#
-z_dec$useAmbiguities <- TRUE#
-z_dec <- readfiles_BioGeoBEARS_run(z_dec)#
-z_dec$return_condlikes_table <- TRUE#
-z_dec$calc_TTL_loglike_from_condlikes_table <- TRUE#
-z_dec$calc_ancprobs <- TRUE#
-tipranges <- getranges_from_LagrangePHYLIP(lgdata_fn=z_dec$geogfn)#
-#
-check_BioGeoBEARS_run(z_dec)#
-#
-y_dec <- bears_optim_run(z_dec)#
-#
-z_decjv <- z_dec#
-z_decjv$BioGeoBEARS_model_object@params_table["j", "type"] <- "free"#
-z_decjv$BioGeoBEARS_model_object@params_table["j", "init"] <- 1e-4#
-z_decjv$BioGeoBEARS_model_object@params_table["v", "type"] <- "free"#
-z_decjv$BioGeoBEARS_model_object@params_table["v", "init"] <- 1e-4#
-check_BioGeoBEARS_run(z_decjv)#
-z_decjv <- readfiles_BioGeoBEARS_run(z_decjv)#
-#
-y_decjv <- bears_optim_run(z_dec)#
-#
-########
-pdf(paste(Path_base, "figures/sal_dec*.pdf", sep=""), height=10, width=10)#
-plot_BGB(y_dec, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.25, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_dec$trfn), plotlegend=T, skiplabels=T)#
+# Rel ext plot#
+plot(exRTT$times + tDiff, apply(exRTT$mu,2,mean) / apply(exRTT$lambda,2,mean), type='l', ylim=c(0,1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("relative extinction (", mu, "/", lambda, ")", sep="")), lwd=1.5, col=exCol)#
+#points(max(fmax) - fosRTT$Midpoint_Ma, fosRTT$X3T_mu, pch=16, type='b')#
+silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$mu, 2, mean) / apply(fbRTT_hi[[x]]$lambda, 2, mean), col=hiCol))#
+silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x],  apply(fbRTT[[x]]$mu, 2, mean) / apply(fbRTT[[x]]$lambda, 2, mean), col=loCol))#
+axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))#
+axis(2, at=c(-10, 0, 0.2, 0.4, 0.6, 0.8, 1))#
 dev.off()#
 #
-pdf(paste(Path_base, "figures/sal_dec*jv.pdf",sep=""), height=10, width=10)#
-plot_BGB(y_decjv, analysis_titletxt="", plotwhat="pie", label.offset=0.25, tipcex=0.15, statecex=0.15, splitcex=0.15, titlecex=0, plotsplits=FALSE, cornercoords_loc=scriptdir, include_null_range=TRUE, tr=read.tree(z_decjv$trfn), plotlegend=T)#
+sPlot <- plot(fbEdata[[1]], breaks="jenks", spex="s")#
+ePlot <- plot(fbEdata[[1]], breaks="jenks", spex="e")#
+#
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("spexComparison.pdf", height=10, width=10)#
+par(mfrow=c(2,2), mar=c(0,0,0,7), oma=c(0,5,2,0), pty="s")#
+plot(exEdata, colorbreaks=sPlot$colorbreaks)#
+addBAMMlegend(sPlot, location=c(-36,-30,152,313))#
+tree <- as.phylo(exEdata)#
+CEX <- 1#
+addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T, Cex=CEX)#
+addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T, Cex=CEX)#
+addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T, Cex=CEX)#
+#addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")#
+#addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")#
+addFamily(c("Salamandra", "Neurergus", "Chioglossa"), "Salamandridae", Cex=CEX)#
+addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae", Cex=CEX)#
+addFamily(c("Hynobius", "Onychodactylus", "Liua"), "Hynobiidae", Cex=CEX)#
+mtext("extant-only", side=3, line=0, xpd=NA, cex=1.5)#
+mtext("speciation rate", side=2, line=3, xpd=NA, cex=1.5)#
+segments(219, 177, 302, 475, xpd=NA, lty=2)#
+segments(215, -14, 519, -14, xpd=NA, lty=2)#
+#
+plot(fbEdata[[1]], colorbreaks=sPlot$colorbreaks)#
+tree <- as.phylo(fbEdata[[1]])#
+addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T, Cex=CEX)#
+addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T, Cex=CEX)#
+addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T, Cex=CEX)#
+#addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")#
+#addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")#
+addFamily(c("Paramesotriton", "Paramesotriton", "Pachytriton"), "Salamandridae", Cex=CEX)#
+addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae", Cex=CEX)#
+mtext("extant + extinct", side=3, line=0, xpd=NA, cex=1.5)#
+#
+#plot(fbEdata_hi[[1]], colorbreaks=sPlot$colorbreaks)#
+#tree <- as.phylo(fbEdata_hi[[1]])#
+#addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T, Cex=CEX)#
+#addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T, Cex=CEX)#
+#addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T, Cex=CEX)#
+#addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")#
+#addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")#
+#addFamily(c("Paramesotriton", "Paramesotriton", "Pachytriton"), "Salamandridae", Cex=CEX)#
+#addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae", Cex=CEX)#
+#
+plot(exEdata, colorbreaks=ePlot$colorbreaks, spex="e")#
+addBAMMlegend(ePlot, location=c(-36,-30,152,313))#
+tree <- as.phylo(exEdata)#
+CEX <- 1#
+addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T, Cex=CEX)#
+addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T, Cex=CEX)#
+addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T, Cex=CEX)#
+#addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")#
+#addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")#
+addFamily(c("Salamandra", "Neurergus", "Chioglossa"), "Salamandridae", Cex=CEX)#
+addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae", Cex=CEX)#
+addFamily(c("Hynobius", "Onychodactylus", "Liua"), "Hynobiidae", Cex=CEX)#
+mtext("extinction rate", side=2, line=3, xpd=NA, cex=1.5)#
+segments(219, 177, 302, 475, xpd=NA, lty=2)#
+segments(215, -14, 519, -14, xpd=NA, lty=2)#
+#
+plot(fbEdata[[1]], colorbreaks=ePlot$colorbreaks, spex="e")#
+tree <- as.phylo(fbEdata[[1]])#
+addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T, Cex=CEX)#
+addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T, Cex=CEX)#
+addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T, Cex=CEX)#
+#addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")#
+#addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")#
+addFamily(c("Paramesotriton", "Paramesotriton", "Pachytriton"), "Salamandridae", Cex=CEX)#
+addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae", Cex=CEX)#
+dev.off()#
+# Tip rates between fossil and extant-only species#
+edata <- fbEdata[[1]]#
+Ext <- edata$meanTipMu#
+names(Ext) <- edata$tip.label#
+Spec <- edata$meanTipLambda#
+names(Spec) <- edata$tip.label#
+exSpec <- exEdata$meanTipLambda#
+names(exSpec) <- exEdata$tip.label#
+exExt <- exEdata$meanTipMu#
+names(exExt) <- exEdata$tip.label#
+#
+Inter <- intersect(exEdata$tip.label, edata$tip.label)#
+#
+par(mfrow=c(1,2))#
+hist(exSpec[Inter], xlim=c(0,0.14), border=rgb(0,0,0,0), col=rgb(0,0,0,0.5), main="", ylim=c(0, 60))#
+hist(Spec[Inter], xlim=c(0,0.14), ylim=c(0,60), add=T, axes=F, col=rgb(1, 0, 0, 0.5), border=rgb(0, 0, 0, 0))#
+#
+hist(exExt[Inter], xlim=c(0,0.1), border=rgb(0,0,0,0), col=rgb(0,0,0,0.5), main="", ylim=c(0, 60))#
+hist(Ext[Inter], xlim=c(0,0.1), add=T, axes=F, ylim=c(0,60), col=rgb(1,0,0,0.5), border=rgb(0,0,0,0))#
+##########################################################################################
+# IUCN#
+IUCN <- read.csv(paste(Path_base, "datafiles/IUCN_list.csv", sep=""), stringsAsFactors=F)#
+IUCN_sp <- apply(IUCN, 1, function(x) paste(c(x[which(colnames(IUCN)=="Genus")], x[which(colnames(IUCN)=="Species")]), sep="_", collapse="_"))#
+Scores <- IUCN$Red.List.status#
+names(Scores) <- IUCN_sp#
+#
+# Key: DD= data deficient, NE= not evaluated, #
+# then: LC -> CD -> NT -> VU -> EN -> CR -> EW -> EX#
+#
+#Inter <- intersect(names(Scores), edata$tip.label)#
+#
+meanSp <- tapply(Spec[Inter], Scores[Inter], mean)#
+sdSp <- tapply(Spec[Inter], Scores[Inter], sd)#
+meanEx <- tapply(Ext[Inter], Scores[Inter], mean)#
+sdEx <- tapply(Ext[Inter], Scores[Inter], sd)#
+#
+Cats <- c("LC", "NT", "VU", "EN")#
+plot(meanSp[Cats], axes=F)#
+#
+plot(meanEx[Cats], axes=F, xlim=c(0,4), ylim=c(0,0.15))#
+silent <- sapply(1:length(Cats), function(x) segments(x, meanEx[Cats[x]]-sdEx[Cats[x]], x, meanEx[Cats[x]]+sdEx[Cats[x]]))
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("spex.pdf", height=5, width=10)#
+par(mfcol=c(1,2), mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, bty="n", las=1, cex.lab=1.5)#
+# Speciation plot#
+tDiff <- max(fmax) - maxT#
+plot(exRTT$times + tDiff, apply(exRTT$lambda,2,mean), type='l', ylim=c(0,0.1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("speciation rate (", lambda, ")", sep="")), col=exCol, lwd=1.5)#
+silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$lambda, 2, mean), col=hiCol))#
+silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x], apply(fbRTT[[x]]$lambda, 2, mean), col=loCol))#
+Xax <- c(-100, 0, 50, 100, 150, 204, 240, 270)#
+axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))#
+axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08, 0.1))#
+#
+# Extinction plot#
+plot(exRTT$times + tDiff, apply(exRTT$mu,2,mean), type='l', ylim=c(0,0.1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("extinction rate (", mu, ")", sep="")), col=exCol, lwd=1.5)#
+#points(max(fmax) - fosRTT$Midpoint_Ma, fosRTT$X3T_mu, pch=16, type='b')#
+silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$mu, 2, mean), col=hiCol))#
+silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x], apply(fbRTT[[x]]$mu, 2, mean), col=loCol))#
+axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))#
+axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08, 0.1))#
+legend("topright", bty="n", legend=c("extant", "fossils", "fossils-full"), lty=1, col=c(exCol, loCol, hiCol))#
+dev.off()#
+#
+pdf("derivedPars.pdf", height=5, width=10)#
+par(mfcol=c(1,2), mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, bty="n", las=1, cex.lab=1.5)#
+# Net div plot#
+plot(exRTT$times + tDiff, apply(exRTT$lambda,2,mean) - apply(exRTT$mu,2,mean), type='l', ylim=c(0,0.1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("net diversification (", lambda, "-", mu, ")", sep="")), col=exCol, lwd=1.5)#
+#points(max(fmax) - fosRTT$Midpoint_Ma, fosRTT$X3T_mu, pch=16, type='b')#
+silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$lambda, 2, mean) - apply(fbRTT_hi[[x]]$mu, 2, mean), col=hiCol))#
+silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x], apply(fbRTT[[x]]$lambda, 2, mean) - apply(fbRTT[[x]]$mu, 2, mean), col=loCol))#
+axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))#
+axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08, 0.1))#
+legend("topright", bty="n", legend=c("extant", "fossils", "fossils-full"), lty=1, col=c(exCol, loCol, hiCol))#
+#
+# Rel ext plot#
+plot(exRTT$times + tDiff, apply(exRTT$mu,2,mean) / apply(exRTT$lambda,2,mean), type='l', ylim=c(0,1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("relative extinction (", mu, "/", lambda, ")", sep="")), lwd=1.5, col=exCol)#
+#points(max(fmax) - fosRTT$Midpoint_Ma, fosRTT$X3T_mu, pch=16, type='b')#
+silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$mu, 2, mean) / apply(fbRTT_hi[[x]]$lambda, 2, mean), col=hiCol))#
+silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x],  apply(fbRTT[[x]]$mu, 2, mean) / apply(fbRTT[[x]]$lambda, 2, mean), col=loCol))#
+axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))#
+axis(2, at=c(-10, 0, 0.2, 0.4, 0.6, 0.8, 1))#
 dev.off()
+0.05 / 0.04
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("spex.pdf", height=5, width=10)#
+par(mfcol=c(1,2), mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, bty="n", las=1, cex.lab=1.5)#
+# Speciation plot#
+tDiff <- max(fmax) - maxT#
+plot(exRTT$times + tDiff, apply(exRTT$lambda,2,mean), type='l', ylim=c(0,0.1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("speciation rate (", lambda, ")", sep="")), col=exCol, lwd=1.5)#
+#silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$lambda, 2, mean), col=hiCol))#
+silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x], apply(fbRTT[[x]]$lambda, 2, mean), col=loCol))#
+Xax <- c(-100, 0, 50, 100, 150, 204, 240, 270)#
+axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))#
+axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08, 0.1))#
+segments(66, 0, 66, 0.04, lty=3, lwd=1.2)#
+#
+# Extinction plot#
+plot(exRTT$times + tDiff, apply(exRTT$mu,2,mean), type='l', ylim=c(0,0.1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("extinction rate (", mu, ")", sep="")), col=exCol, lwd=1.5)#
+#points(max(fmax) - fosRTT$Midpoint_Ma, fosRTT$X3T_mu, pch=16, type='b')#
+#silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$mu, 2, mean), col=hiCol))#
+silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x], apply(fbRTT[[x]]$mu, 2, mean), col=loCol))#
+axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))#
+axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08, 0.1))#
+#legend("topright", bty="n", legend=c("extant", "fossils", "fossils-full"), lty=1, col=c(exCol, loCol, hiCol))#
+legend("topright", bty="n", legend=c("extant", "fossils"), lty=1, col=c(exCol, loCol))#
+segments(66, 0, 66, 0.04, lty=3, lwd=1.2)#
+dev.off()
+223 - 66
+tDiff
+fmax
+maxT
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("spex.pdf", height=5, width=10)#
+par(mfcol=c(1,2), mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, bty="n", las=1, cex.lab=1.5)#
+# Speciation plot#
+tDiff <- max(fmax) - maxT#
+plot(exRTT$times + tDiff, apply(exRTT$lambda,2,mean), type='l', ylim=c(0,0.1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("speciation rate (", lambda, ")", sep="")), col=exCol, lwd=1.5)#
+#silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$lambda, 2, mean), col=hiCol))#
+silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x], apply(fbRTT[[x]]$lambda, 2, mean), col=loCol))#
+Xax <- c(-100, 0, 50, 100, 150, 204, 240, 270)#
+axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))#
+axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08, 0.1))#
+segments(max(fmax) - 66, 0, max(fmax) - 66, 0.1, lty=3, lwd=1.2)#
+#
+# Extinction plot#
+plot(exRTT$times + tDiff, apply(exRTT$mu,2,mean), type='l', ylim=c(0,0.1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("extinction rate (", mu, ")", sep="")), col=exCol, lwd=1.5)#
+#points(max(fmax) - fosRTT$Midpoint_Ma, fosRTT$X3T_mu, pch=16, type='b')#
+#silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$mu, 2, mean), col=hiCol))#
+silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x], apply(fbRTT[[x]]$mu, 2, mean), col=loCol))#
+axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))#
+axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08, 0.1))#
+#legend("topright", bty="n", legend=c("extant", "fossils", "fossils-full"), lty=1, col=c(exCol, loCol, hiCol))#
+legend("topright", bty="n", legend=c("extant", "fossils"), lty=1, col=c(exCol, loCol))#
+segments(max(fmax) - 66, 0, max(fmax) - 66, 0.1, lty=3, lwd=1.2)#
+dev.off()
+llES
+range(llES)
+range(nsES)
+?stepBF
+# fossilBAMM runs#
+### Post-generation addition of files#
+fbEdata <- list()#
+fbEdata_hi <- list()#
+fbRTT <- list()#
+fbRTT_hi <- list()#
+fmax <- c()#
+llES <- c()#
+nsES <- c()#
+Nshifts <- c()#
+for (count in 1:70)	{#
+	setwd(paste(Path_base, "bamm/output-", count, sep=""))#
+	fbTree <- read.tree("fossilTree.tre")#
+	MCMC_dat <- read.csv("base_mcmc_out.txt")#
+	MCMC_dat <- MCMC_dat[floor(0.1*nrow(MCMC_dat)):nrow(MCMC_dat),]#
+	fbEdata[[count]] <- getEventData(fbTree, "base_event_data.txt", burnin=0.1, nsamples=200)#
+	fbRTT[[count]] <- getRateThroughTimeMatrix(fbEdata[[count]])#
+	llES[count] <- effectiveSize(MCMC_dat$logLik)#
+	nsES[count] <- effectiveSize(MCMC_dat$N_shifts)#
+	BFmat <- computeBayesFactors(MCMC_dat, 200, burnin=0)#
+	Nshifts[count] <- stepBF(BFmat, step.size=20, expectedNumberOfShifts=20, inputType="matrix")#
+	fullTree <- read.tree("fullTree_uni.tre")#
+	fbEdata_hi[[count]] <- getEventData(fullTree, "full_event_data.txt", burnin=0.1, nsamples=200)#
+	fbRTT_hi[[count]] <- getRateThroughTimeMatrix(fbEdata_hi[[count]])#
+	fmax[count] <- max(nodeHeights(fbTree))#
+}
+count
+Nshifts
+z <- unlist(Nshifts)
+range()
+range(z)
+setwd(paste(Path_base, "bamm/output-", count, sep=""))
+fbTree <- read.tree("fossilTree.tre")
+MCMC_dat <- read.csv("base_mcmc_out.txt")
+MCMC_dat <- MCMC_dat[floor(0.1*nrow(MCMC_dat)):nrow(MCMC_dat),]
+plot(MCMC_dat[,2])
+mean(MCMC_dat[,2])
+fbEdata[[count]] <- getEventData(fbTree, "base_event_data.txt", burnin=0.1, nsamples=200)
+fbRTT[[count]] <- getRateThroughTimeMatrix(fbEdata[[count]])
+fullTree <- read.tree("fullTree_uni.tre")#
+	fbEdata_hi[[count]] <- getEventData(fullTree, "full_event_data.txt", burnin=0.1, nsamples=200)
+Ntip(fullTree)
+x <- read.csv("full_event_data.txt")
+x <- read.csv("full_event_data.txt", stringsAsFactors=F)
+setdiff(x[,"leftchild"], fullTree$tip.label)
+grep("Noterpeton", fullTree$tip.label)
+grep("Noterpeton", fbTree$tip.label)
+setdiff(fbTree$tip.label, fullTree$tip.label)
+fullTree <- read.tree("fullTree.tre")
+setdiff(x[,"leftchild"], fullTree$tip.label)
+head(MCMC_dat)
+meanNshifts[count] <- mean(MCMC_dat$N_shifts)
+# fossilBAMM runs#
+### Post-generation addition of files#
+fbEdata <- list()#
+fbEdata_hi <- list()#
+fbRTT <- list()#
+fbRTT_hi <- list()#
+fmax <- c()#
+fullmax <- c()#
+llES <- c()#
+nsES <- c()#
+Nshifts <- c()#
+meanNshifts <- c()#
+#
+for (count in 1:70)	{#
+	setwd(paste(Path_base, "bamm/output-", count, sep=""))#
+	fbTree <- read.tree("fossilTree.tre")#
+	MCMC_dat <- read.csv("base_mcmc_out.txt")#
+	MCMC_dat <- MCMC_dat[floor(0.1*nrow(MCMC_dat)):nrow(MCMC_dat),]#
+	fbEdata[[count]] <- getEventData(fbTree, "base_event_data.txt", burnin=0.1, nsamples=200)#
+	fbRTT[[count]] <- getRateThroughTimeMatrix(fbEdata[[count]])#
+	llES[count] <- effectiveSize(MCMC_dat$logLik)#
+	nsES[count] <- effectiveSize(MCMC_dat$N_shifts)#
+	BFmat <- computeBayesFactors(MCMC_dat, 200, burnin=0)#
+	Nshifts[count] <- stepBF(BFmat, step.size=20, expectedNumberOfShifts=20, inputType="matrix")#
+	meanNshifts[count] <- mean(MCMC_dat$N_shifts)#
+	fullTree <- read.tree("fullTree.tre")#
+	fbEdata_hi[[count]] <- getEventData(fullTree, "full_event_data.txt", burnin=0.1, nsamples=200)#
+	fbRTT_hi[[count]] <- getRateThroughTimeMatrix(fbEdata_hi[[count]])#
+	fmax[count] <- max(nodeHeights(fbTree))#
+	fullmax[count] <- max(nodeHeights(fullTree))#
+}
+warnings()
+Nshifts
+unlist(Nshifts)
+meanNshifts
+hist(meanNshifts)
+plot(meanNshifts)
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("fossil_sp.pdf", height=10, width=10)#
+fosEdata <- fbEdata[[1]]#
+par(mar=c(0,0,0,0), oma=c(0,0,0,14))#
+fosPlot <- plot(fosEdata, colorbreaks=exPlot$colorbreaks)#
+#addBAMMlegend(fosPlot, location="bottomleft")#
+#
+# Add family labels#
+tree <- as.phylo(fosEdata)#
+#addFamily(c("Rhyacotriton", "Rhyacotriton", "Rhyacotriton"), "Rhyacotritonidae")#
+addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T)#
+#addFamily(c("Dicamptodon", "Dicamptodon", "Dicamptodon"), "Dicamptodontidae")#
+addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T)#
+addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T)#
+addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")#
+addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")#
+addFamily(c("Notophthalmus", "Neurergus", "Taricha"), "Salamandridae")#
+addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae")#
+addFamily(c("Hynobius", "Onychodactylus", "Liua"), "Hynobiidae")#
+#addFamily(c("Necturus", "Necturus", "Necturus"), "Proteidae", centering=T, Top=F)#
+dev.off()
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("fossil_sp_alt.pdf", height=10, width=10)#
+fosEdata <- fbEdata[[35]]#
+par(mar=c(0,0,0,0), oma=c(0,0,0,14))#
+fosPlot <- plot(fosEdata, colorbreaks=exPlot$colorbreaks)#
+#addBAMMlegend(fosPlot, location="bottomleft")#
+#
+# Add family labels#
+tree <- as.phylo(fosEdata)#
+#addFamily(c("Rhyacotriton", "Rhyacotriton", "Rhyacotriton"), "Rhyacotritonidae")#
+addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T)#
+#addFamily(c("Dicamptodon", "Dicamptodon", "Dicamptodon"), "Dicamptodontidae")#
+addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T)#
+addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T)#
+addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")#
+addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")#
+addFamily(c("Notophthalmus", "Neurergus", "Taricha"), "Salamandridae")#
+addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae")#
+addFamily(c("Hynobius", "Onychodactylus", "Liua"), "Hynobiidae")#
+#addFamily(c("Necturus", "Necturus", "Necturus"), "Proteidae", centering=T, Top=F)#
+dev.off()
+Alpha <- 1#
+exCol <- rgb(217/255, 95/255, 2/255, Alpha)#
+hiCol <- rgb(27/255, 158/255, 119/255, Alpha)#
+loCol <- rgb(117/255, 112/255, 179/255, Alpha)
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("spex.pdf", height=5, width=10)#
+par(mfcol=c(1,2), mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, bty="n", las=1, cex.lab=1.5)#
+# Speciation plot#
+tDiff <- max(fmax) - maxT#
+plot(exRTT$times + tDiff, apply(exRTT$lambda,2,mean), type='l', ylim=c(0,0.1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("speciation rate (", lambda, ")", sep="")), col=exCol, lwd=1.5)#
+#
+silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$lambda, 2, mean), col=hiCol))#
+#
+silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x], apply(fbRTT[[x]]$lambda, 2, mean), col=loCol))#
+Xax <- c(-100, 0, 50, 100, 150, 204, 240, 270)#
+axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))#
+axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08, 0.1))#
+segments(max(fmax) - 66, 0, max(fmax) - 66, 0.1, lty=3, lwd=1.2)#
+#
+# Extinction plot#
+plot(exRTT$times + tDiff, apply(exRTT$mu,2,mean), type='l', ylim=c(0,0.1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("extinction rate (", mu, ")", sep="")), col=exCol, lwd=1.5)#
+#points(max(fmax) - fosRTT$Midpoint_Ma, fosRTT$X3T_mu, pch=16, type='b')#
+#
+silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$mu, 2, mean), col=hiCol))#
+silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x], apply(fbRTT[[x]]$mu, 2, mean), col=loCol))#
+axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))#
+axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08, 0.1))#
+#
+legend("topright", bty="n", legend=c("extant", "fossils", "fossils-full"), lty=1, col=c(exCol, loCol, hiCol))#
+#legend("topright", bty="n", legend=c("extant", "fossils"), lty=1, col=c(exCol, loCol))#
+segments(max(fmax) - 66, 0, max(fmax) - 66, 0.1, lty=3, lwd=1.2)#
+dev.off()#
+#
+pdf("derivedPars.pdf", height=5, width=10)#
+par(mfcol=c(1,2), mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, bty="n", las=1, cex.lab=1.5)#
+# Net div plot#
+plot(exRTT$times + tDiff, apply(exRTT$lambda,2,mean) - apply(exRTT$mu,2,mean), type='l', ylim=c(0,0.1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("net diversification (", lambda, "-", mu, ")", sep="")), col=exCol, lwd=1.5)#
+#points(max(fmax) - fosRTT$Midpoint_Ma, fosRTT$X3T_mu, pch=16, type='b')#
+silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$lambda, 2, mean) - apply(fbRTT_hi[[x]]$mu, 2, mean), col=hiCol))#
+silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x], apply(fbRTT[[x]]$lambda, 2, mean) - apply(fbRTT[[x]]$mu, 2, mean), col=loCol))#
+axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))#
+axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08, 0.1))#
+legend("topright", bty="n", legend=c("extant", "fossils", "fossils-full"), lty=1, col=c(exCol, loCol, hiCol))#
+#
+# Rel ext plot#
+plot(exRTT$times + tDiff, apply(exRTT$mu,2,mean) / apply(exRTT$lambda,2,mean), type='l', ylim=c(0,1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("relative extinction (", mu, "/", lambda, ")", sep="")), lwd=1.5, col=exCol)#
+#points(max(fmax) - fosRTT$Midpoint_Ma, fosRTT$X3T_mu, pch=16, type='b')#
+silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$mu, 2, mean) / apply(fbRTT_hi[[x]]$lambda, 2, mean), col=hiCol))#
+silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x],  apply(fbRTT[[x]]$mu, 2, mean) / apply(fbRTT[[x]]$lambda, 2, mean), col=loCol))#
+axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))#
+axis(2, at=c(-10, 0, 0.2, 0.4, 0.6, 0.8, 1))#
+dev.off()#
+#
+sPlot <- plot(fbEdata[[1]], breaks="jenks", spex="s")#
+ePlot <- plot(fbEdata[[1]], breaks="jenks", spex="e")#
+#
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("spexComparison.pdf", height=10, width=10)#
+par(mfrow=c(2,2), mar=c(0,0,0,7), oma=c(0,5,2,0), pty="s")#
+plot(exEdata, colorbreaks=sPlot$colorbreaks)#
+addBAMMlegend(sPlot, location=c(-36,-30,152,313))#
+tree <- as.phylo(exEdata)#
+CEX <- 1#
+addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T, Cex=CEX)#
+addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T, Cex=CEX)#
+addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T, Cex=CEX)#
+#addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")#
+#addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")#
+addFamily(c("Salamandra", "Neurergus", "Chioglossa"), "Salamandridae", Cex=CEX)#
+addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae", Cex=CEX)#
+addFamily(c("Hynobius", "Onychodactylus", "Liua"), "Hynobiidae", Cex=CEX)#
+mtext("extant-only", side=3, line=0, xpd=NA, cex=1.5)#
+mtext("speciation rate", side=2, line=3, xpd=NA, cex=1.5)#
+segments(219, 177, 302, 475, xpd=NA, lty=2)#
+segments(215, -14, 519, -14, xpd=NA, lty=2)#
+#
+plot(fbEdata[[1]], colorbreaks=sPlot$colorbreaks)#
+tree <- as.phylo(fbEdata[[1]])#
+addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T, Cex=CEX)#
+addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T, Cex=CEX)#
+addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T, Cex=CEX)#
+#addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")#
+#addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")#
+addFamily(c("Paramesotriton", "Paramesotriton", "Pachytriton"), "Salamandridae", Cex=CEX)#
+addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae", Cex=CEX)#
+mtext("extant + extinct", side=3, line=0, xpd=NA, cex=1.5)#
+#
+#plot(fbEdata_hi[[1]], colorbreaks=sPlot$colorbreaks)#
+#tree <- as.phylo(fbEdata_hi[[1]])#
+#addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T, Cex=CEX)#
+#addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T, Cex=CEX)#
+#addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T, Cex=CEX)#
+#addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")#
+#addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")#
+#addFamily(c("Paramesotriton", "Paramesotriton", "Pachytriton"), "Salamandridae", Cex=CEX)#
+#addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae", Cex=CEX)#
+#
+plot(exEdata, colorbreaks=ePlot$colorbreaks, spex="e")#
+addBAMMlegend(ePlot, location=c(-36,-30,152,313))#
+tree <- as.phylo(exEdata)#
+CEX <- 1#
+addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T, Cex=CEX)#
+addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T, Cex=CEX)#
+addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T, Cex=CEX)#
+#addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")#
+#addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")#
+addFamily(c("Salamandra", "Neurergus", "Chioglossa"), "Salamandridae", Cex=CEX)#
+addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae", Cex=CEX)#
+addFamily(c("Hynobius", "Onychodactylus", "Liua"), "Hynobiidae", Cex=CEX)#
+mtext("extinction rate", side=2, line=3, xpd=NA, cex=1.5)#
+segments(219, 177, 302, 475, xpd=NA, lty=2)#
+segments(215, -14, 519, -14, xpd=NA, lty=2)#
+#
+plot(fbEdata[[1]], colorbreaks=ePlot$colorbreaks, spex="e")#
+tree <- as.phylo(fbEdata[[1]])#
+addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T, Cex=CEX)#
+addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T, Cex=CEX)#
+addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T, Cex=CEX)#
+#addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")#
+#addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")#
+addFamily(c("Paramesotriton", "Paramesotriton", "Pachytriton"), "Salamandridae", Cex=CEX)#
+addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae", Cex=CEX)#
+dev.off()
+fbEdata[[35]]
+plot(fbEdata[[35]])
+plot(as.phylo(fbEdata[[35]]))
+plot(as.phylo(fbEdata[[35]]), cex=0.25)
+plot(as.phylo(fbEdata[[35]]), cex=0.25, offset=0.01)
+?plot.phylo
+plot(as.phylo(fbEdata[[35]]), cex=0.25, label.offset=0.01)
+par(mfrow=c(1,2))
+plot(as.phylo(fbEdata[[35]]), cex=0.25, label.offset=0.01)
+plot(as.phylo(fbEdata[[1]]), cex=0.25, label.offset=0.01)
+pdf("fossilTopoComp.pdf", height=8, width=16)
+par(mfrow=c(1,2))
+plot(as.phylo(fbEdata[[1]]), cex=0.25, label.offset=0.01)
+plot(as.phylo(fbEdata[[35]]), cex=0.25, label.offset=0.01)
+dev.off()
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("fossil_topologies.pdf", height=8, width=16)#
+for (i in length(fbEdata))	{#
+	plot(as.phylo(fbEdata[[i]]), cex=0.25, label.offset=0.02)#
+}#
+dev.off()
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("fossil_topologies.pdf")#
+for (i in length(fbEdata))	{#
+	plot(as.phylo(fbEdata[[i]]), cex=0.25, label.offset=0.02)#
+}#
+dev.off()
+dev.off()
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("fossil_topologies.pdf", height=8, width=16)#
+for (i in 1:length(fbEdata))	{#
+	plot(as.phylo(fbEdata[[i]]), cex=0.25, label.offset=0.02)#
+}#
+dev.off()
+setwd(paste(Path_base, "figures", sep=""))#
+pdf("fossil_topologies.pdf", height=8, width=8)#
+for (i in 1:length(fbEdata))	{#
+	plot(as.phylo(fbEdata[[i]]), cex=0.25, label.offset=0.02)#
+}#
+dev.off()
+32 * 70
+2240 / 24
+head(MCMC_dat)
+# fossilBAMM runs#
+### Post-generation addition of files#
+fbEdata <- list()#
+fbEdata_hi <- list()#
+fbRTT <- list()#
+fbRTT_hi <- list()#
+fmax <- c()#
+fullmax <- c()#
+llES <- c()#
+nsES <- c()#
+Nshifts <- c()#
+meanNshifts <- c()#
+presRate <- c()#
+#
+for (count in 1:70)	{#
+	setwd(paste(Path_base, "bamm/output-", count, sep=""))#
+	fbTree <- read.tree("fossilTree.tre")#
+	MCMC_dat <- read.csv("base_mcmc_out.txt")#
+	MCMC_dat <- MCMC_dat[floor(0.1*nrow(MCMC_dat)):nrow(MCMC_dat),]#
+	fbEdata[[count]] <- getEventData(fbTree, "base_event_data.txt", burnin=0.1, nsamples=200)#
+	fbRTT[[count]] <- getRateThroughTimeMatrix(fbEdata[[count]])#
+	llES[count] <- effectiveSize(MCMC_dat$logLik)#
+	nsES[count] <- effectiveSize(MCMC_dat$N_shifts)#
+	BFmat <- computeBayesFactors(MCMC_dat, 200, burnin=0)#
+	Nshifts[count] <- stepBF(BFmat, step.size=20, expectedNumberOfShifts=20, inputType="matrix")#
+	meanNshifts[count] <- mean(MCMC_dat$N_shifts)#
+	presRate[count] <- mean(MCMC_dat$preservationRate)#
+	fullTree <- read.tree("fullTree.tre")#
+	fbEdata_hi[[count]] <- getEventData(fullTree, "full_event_data.txt", burnin=0.1, nsamples=200)#
+	fbRTT_hi[[count]] <- getRateThroughTimeMatrix(fbEdata_hi[[count]])#
+	fmax[count] <- max(nodeHeights(fbTree))#
+	fullmax[count] <- max(nodeHeights(fullTree))#
+}
+presRate
+plot(presRate)
+plot(presRate, ylim=c(0.01,0.02))
+Path_base <- "~/Documents/Salamanders/"#
+setwd(paste(Path_base, "Rscripts", sep=""))#
+source('placeFossil.R', chdir = TRUE)#
+library(phytools)#
+library(TreePar)#
+library(BAMMtools)#
+#
+# Read in the data#
+setwd(paste(Path_base, "datafiles", sep=""))#
+extant <- read.csv("salamanders.csv", stringsAsFactors=FALSE)#
+extant <- rbind(extant, c("Karsenia_koreana", "NA", 41.8, 0.15*41.8))	# From description in Nature, 2005 Min et al.#
+tree <- read.tree("amphibians3309.tre")#
+#
+# Drop tips with no data#
+SalNode <- findMRCA(tree, tips=c("Plethodon_cinereus", "Cryptobranchus_alleganiensis", "Andrias_japonicus"))#
+GetSals <- na.omit(tree$tip.label[getDescendants(tree, SalNode)])#
+#
+Drops <- setdiff(tree$tip.label, GetSals)#
+onlySal <- drop.tip(tree, Drops)#
+totalSal <- 701#
+write.tree(onlySal, "modernSal.tre")#
+#
+salTimes <- getx(onlySal)#
+Frac <- Ntip(onlySal) / totalSal#
+tree_rates <- function(par)	{#
+	Pars <- exp(par)#
+	x <- LikConstant(Pars[1], Pars[2], Frac, salTimes)#
+	return(x)#
+}#
+#
+# Need speciation, extinction and preservation rates to determine branch lengths for fossil tips#
+rates <- optim(c(0.01, 0.005), tree_rates)#
+psi_rate <- 129 / sum(onlySal$edge.length) #sum(fossil$numOcc)
+psi_rate

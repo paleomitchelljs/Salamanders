@@ -78,12 +78,14 @@ llES <- c()
 nsES <- c()
 Nshifts <- c()
 meanNshifts <- c()
+presRate <- c()
 
 for (count in 1:70)	{
 	setwd(paste(Path_base, "bamm/output-", count, sep=""))
 	fbTree <- read.tree("fossilTree.tre")
 	MCMC_dat <- read.csv("base_mcmc_out.txt")
 	MCMC_dat <- MCMC_dat[floor(0.1*nrow(MCMC_dat)):nrow(MCMC_dat),]
+	
 	fbEdata[[count]] <- getEventData(fbTree, "base_event_data.txt", burnin=0.1, nsamples=200)
 	fbRTT[[count]] <- getRateThroughTimeMatrix(fbEdata[[count]])
 	llES[count] <- effectiveSize(MCMC_dat$logLik)
@@ -91,6 +93,8 @@ for (count in 1:70)	{
 	BFmat <- computeBayesFactors(MCMC_dat, 200, burnin=0)
 	Nshifts[count] <- stepBF(BFmat, step.size=20, expectedNumberOfShifts=20, inputType="matrix")
 	meanNshifts[count] <- mean(MCMC_dat$N_shifts)
+	presRate[count] <- mean(MCMC_dat$preservationRate)
+	
 	fullTree <- read.tree("fullTree.tre")
 	fbEdata_hi[[count]] <- getEventData(fullTree, "full_event_data.txt", burnin=0.1, nsamples=200)
 	fbRTT_hi[[count]] <- getRateThroughTimeMatrix(fbEdata_hi[[count]])
