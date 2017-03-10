@@ -469,4 +469,19 @@ axis(1, at=Xax)
 plot(log10(Areas[Inter,1]), Ext[Inter]/Spec[Inter], axes=F, xlim=c(5.5,13.5), pch=Pch, col=Col, xlab=expression(paste(log, "Area")))
 axis(1, at=Xax)
 
+#########################################################################################
+# Neot scores
+Neot <- read.csv(paste(Path_base, "datafiles/neoteny/neoteny.csv", sep=""), stringsAsFactors=F)
+rownames(Neot) <- apply(Neot, 1, function(x) paste(x[1], x[2], sep="_", collapse=""))
+nScores <- Neot[,"neotenic"]
+names(nScores) <- rownames(Neot)
+
+edat <- fbEdata_all[[1]]
+vec <- nScores[edat$tip.label]
+traitDependentBAMM(ephy=edat, traits=vec, rate="extinction", reps=1e4)
+
+
+
+
+
 
