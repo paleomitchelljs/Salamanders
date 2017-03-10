@@ -39,13 +39,27 @@ rownames(PrA) <- Ntip(tree) + 1
 PrA[1,"0"] <- 1 - (3 * PrA[1,"1"])
 
 # extant tree
-#tree <- read.tree(paste(Path_base, "bamm/extant_only/no_pleth.tre", sep=""))
-tree <- read.tree(paste(Path_base, "bamm/extant_only/modernSal.tre", sep=""))
+tree <- read.tree(paste(Path_base, "bamm/extant_only/no_pleth.tre", sep=""))
+#tree <- read.tree(paste(Path_base, "bamm/extant_only/modernSal.tre", sep=""))
 
 Ngen <- 5e3
 
 setwd(paste(Path_base, "bamm/extant_only", sep=""))
-ACE <- ancThresh(tree, neoteny[tree$tip.label], ngen=Ngen, sequence=colnames(PrA), control=list(sample=Ngen/1e3, propthresh=0.15*max(nodeHeights(tree)), propliab=0.75*max(nodeHeights(tree)), burnin=Ngen*0.1, piecol=Cols, tipcol="input", pr.anc=PrA))
+
+x=0.57, y=0.12
+Esizes <- c()
+Xs <- c()
+Ys <- c()	
+for (count in 1:50)	{
+	X <- rnorm(1, mean=0.57, sd=0.01)
+	Y <- rnorm(1, mean=0.11, sd=0.01)
+	ACE <- ancThresh(tree, neoteny[tree$tip.label], ngen=Ngen, sequence=colnames(PrA), control=list(sample=Ngen/1e3, propthresh=X*sum(tree$edge.length), propliab=Y*sum(tree$edge.length), burnin=Ngen*0.1, piecol=Cols, tipcol="input", pr.anc=PrA, pr.th=0.0001))
+	apply(ACE$par,2,mean)
+	Esizes[count] <- effectiveSize(ACE$par[,"0"]) + effectiveSize(ACE$par[,"1"])
+	Xs[count] <- X
+	Ys[count] <- Y
+	cat(X, " ", Y, " ", Esizes[count], "\n")
+}
 #save(ACE, file=paste(Path_base, "output/neotAnc/neotAnc_extant.RData", sep=""))
 
 # Load trees
@@ -55,7 +69,7 @@ for (count in 1:70)	{
 #	tree <- read.tree("fossilTree.tre")
 	tree <- read.tree("fullTree.tre")
 	trees[[count]] <- tree
-	ACE <- ancThresh(tree, neoteny[tree$tip.label], ngen=Ngen, sequence=colnames(PrA), control=list(sample=Ngen/1e3, propthresh=0.15*max(nodeHeights(tree)), propliab=0.75*max(nodeHeights(tree)), burnin=Ngen*0.1, piecol=Cols, tipcol="input", pr.anc=PrA))
+	ACE <- ancThresh(tree, neoteny[tree$tip.label], ngen=Ngen, sequence=colnames(PrA), control=list(sample=Ngen/1e3, propthresh=0.5*sum(tree$edge.length), propliab=0.1sum(tree$edge.length), burnin=Ngen*0.1, piecol=Cols, tipcol="input", pr.anc=PrA))
 	setwd(paste(Path_base, "output", sep=""))
 	save(ACE, file=paste(Path_base, "output/neotAnc/neotAnc", count, ".RData", sep=""))
 }

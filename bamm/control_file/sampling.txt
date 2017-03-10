@@ -554,3 +554,6 @@ Kiyatriton_leshchinsktyi	fossil	1
 Laccotriton_subsolanus	fossil	1
 Sinerpeton_fengshanensis	fossil	1
 Parahynobius_kordosi	fossil	1
+Ranodon_cf.sibiricus	fossil	1
+Salamandrella_sp.	fossil	1
+Nuominerpeton_aquilonaris	fossil	1

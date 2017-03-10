@@ -3,9 +3,10 @@ likLiab <- phytools:::likLiab
 probMatch <- phytools:::probMatch
 to.vector <- phytools:::to.vector
 logPrior <- phytools:::logPrior
+to.matrix <- phytools:::to.matrix
+rstate <- phytools:::rstate
 ancThresh <- function (tree, x, ngen = 1000, sequence = NULL, method = "mcmc", 
-    model = c("BM", "OU", "lambda"), control = list(), ...) 
-{
+    model = c("BM", "OU", "lambda"), control = list(), ...)	{
     if (!inherits(tree, "phylo")) 
         stop("tree should be an object of class \"phylo\".")
     if (method != "mcmc") 

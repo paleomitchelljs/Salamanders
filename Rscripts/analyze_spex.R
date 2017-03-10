@@ -1,5 +1,23 @@
 Path_base <- "~/Documents/Salamanders/"
 
+addFamily <- function(Taxa, Family, Cex=2, centering=T, Top=T)	{
+	Names <- unique(c(tree$tip.label[grep(Taxa[1], tree$tip.label)], tree$tip.label[grep(Taxa[2], tree$tip.label)], tree$tip.label[grep(Taxa[3], tree$tip.label)]))
+	allNames <- na.omit(tree$tip.label[getDescendants(tree, findMRCA(tree, tips=Names))])
+	if (centering == T)		{
+		Center <- allNames[round(mean(1:length(allNames)))]
+		tiplabels(Family, tip=which(tree$tip.label == Center), bg='white', frame='none', xpd=NA, adj=-0.05, cex=Cex)
+	}
+	else	 if (centering == F){
+		if (Top == T)	{
+			Center <- rev(allNames)[1]
+		}
+		else	{
+			Center <- allNames[1]
+		}
+		tiplabels(Family, tip=which(tree$tip.label == Center), bg='white', frame='none', xpd=NA, adj=-0.05, cex=Cex)
+	}
+}
+
 library(phytools)
 library(BAMMtools)
 library(coda)
@@ -12,9 +30,9 @@ fosRelExt <- fosRTT$X3T_mu/fosRTT$X3T_lambda
 
 # Extant-only data
 setwd(paste(Path_base, "bamm/extant_only", sep=""))
-exTree <- read.tree("no_pleth.tre")
-exMCMC <- read.csv("np_mcmc_out.txt", stringsAsFactors=F)
-exEdata <- getEventData(exTree, "np_event_data.txt", burnin=0.5)
+exTree <- ladderize(read.tree("modernSal.tre"), right=F)
+exMCMC <- read.csv("ex_mcmc_out.txt", stringsAsFactors=F)
+exEdata <- getEventData(exTree, "ex_event_data.txt", burnin=0.5)
 maxT <- max(nodeHeights(exTree))
 
 setwd(paste(Path_base, "figures", sep=""))
@@ -63,15 +81,43 @@ addBAMMlegend(exPlot)
 tiplabels(text=exEdata$tip.label, cex=0.15, adj=-0.1, frame="none", bg=rgb(0,0,0,0))
 dev.off()
 
+
+# Extant-no pleth data
+setwd(paste(Path_base, "bamm/extant_only", sep=""))
+npTree <- ladderize(read.tree("no_pleth.tre"), right=F)
+npMCMC <- read.csv("np_mcmc_out.txt", stringsAsFactors=F)
+npEdata <- getEventData(npTree, "np_event_data.txt", burnin=0.5)
+maxT <- max(nodeHeights(npTree))
+
+setwd(paste(Path_base, "figures", sep=""))
+pdf("np_sp.pdf", height=10, width=10)
+par(mar=c(0,0,0,0), oma=c(0,0,0,14))
+npPlot <- plot(npEdata, breaks="quantile")
+addBAMMlegend(npPlot)
+
+# Add family labels
+tree <- as.phylo(npEdata)
+addFamily(c("Rhyacotriton", "Rhyacotriton", "Rhyacotriton"), "Rhyacotritonidae")
+addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T)
+addFamily(c("Dicamptodon", "Dicamptodon", "Dicamptodon"), "Dicamptodontidae")
+addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T)
+addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T)
+addFamily(c("Salamandra", "Neurergus", "Chioglossa"), "Salamandridae")
+addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae")
+addFamily(c("Hynobius", "Onychodactylus", "Liua"), "Hynobiidae")
+addFamily(c("Proteus", "Necturus", "Necturus"), "Proteidae", centering=F, Top=F)
+dev.off()
+
 # Extant-only rates through time
 exRTT <- getRateThroughTimeMatrix(exEdata)
+npRTT <- getRateThroughTimeMatrix(npEdata)
 
 # fossilBAMM runs
 ### Post-generation addition of files
 fbEdata <- list()
-fbEdata_hi <- list()
+fbEdata_all <- list()
 fbRTT <- list()
-fbRTT_hi <- list()
+fbRTT_all <- list()
 fmax <- c()
 fullmax <- c()
 llES <- c()
@@ -82,7 +128,7 @@ presRate <- c()
 
 for (count in 1:70)	{
 	setwd(paste(Path_base, "bamm/output-", count, sep=""))
-	fbTree <- read.tree("fossilTree.tre")
+	fbTree <- ladderize(read.tree("fossilTree.tre"), right=F)
 	MCMC_dat <- read.csv("base_mcmc_out.txt")
 	MCMC_dat <- MCMC_dat[floor(0.1*nrow(MCMC_dat)):nrow(MCMC_dat),]
 	
@@ -91,16 +137,16 @@ for (count in 1:70)	{
 	llES[count] <- effectiveSize(MCMC_dat$logLik)
 	nsES[count] <- effectiveSize(MCMC_dat$N_shifts)
 	BFmat <- computeBayesFactors(MCMC_dat, 200, burnin=0)
-	Nshifts[count] <- stepBF(BFmat, step.size=20, expectedNumberOfShifts=20, inputType="matrix")
+	Nshifts[count] <- stepBF(BFmat, step.size=20, expectedNumberOfShifts=200, inputType="matrix")[1]
 	meanNshifts[count] <- mean(MCMC_dat$N_shifts)
 	presRate[count] <- mean(MCMC_dat$preservationRate)
 	
-	fullTree <- read.tree("fullTree.tre")
-	fbEdata_hi[[count]] <- getEventData(fullTree, "full_event_data.txt", burnin=0.1, nsamples=200)
-	fbRTT_hi[[count]] <- getRateThroughTimeMatrix(fbEdata_hi[[count]])
+	fullTree <- ladderize(read.tree("fullTree.tre"), right=F)
+	fbEdata_all[[count]] <- getEventData(fullTree, "full_event_data.txt", burnin=0.1, nsamples=200)
+	fbRTT_all[[count]] <- getRateThroughTimeMatrix(fbEdata_all[[count]])
 	
 	fmax[count] <- max(nodeHeights(fbTree))
-	fullmax[count] <- max(nodeHeights(fullTree))
+ 	fullmax[count] <- max(nodeHeights(fullTree))
 }
 
 
@@ -120,9 +166,9 @@ fosPlot <- plot(fosEdata, colorbreaks=exPlot$colorbreaks)
 
 # Add family labels
 tree <- as.phylo(fosEdata)
-#addFamily(c("Rhyacotriton", "Rhyacotriton", "Rhyacotriton"), "Rhyacotritonidae")
+addFamily(c("Batrachosauroides", "Opisthotriton", "Peratosauroides"), "Batrachosauroididae")
 addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T)
-#addFamily(c("Dicamptodon", "Dicamptodon", "Dicamptodon"), "Dicamptodontidae")
+addFamily(c("Scapherpeton", "Piceoerpeton", "Piceoerpeton"), "Scapherpetonidae")
 addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T)
 addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T)
 addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")
@@ -142,9 +188,9 @@ fosPlot <- plot(fosEdata, colorbreaks=exPlot$colorbreaks)
 
 # Add family labels
 tree <- as.phylo(fosEdata)
-#addFamily(c("Rhyacotriton", "Rhyacotriton", "Rhyacotriton"), "Rhyacotritonidae")
+addFamily(c("Batrachosauroides", "Opisthotriton", "Peratosauroides"), "Batrachosauroididae")
 addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T)
-#addFamily(c("Dicamptodon", "Dicamptodon", "Dicamptodon"), "Dicamptodontidae")
+addFamily(c("Scapherpeton", "Piceoerpeton", "Piceoerpeton"), "Scapherpetonidae")
 addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T)
 addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T)
 addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")
@@ -156,134 +202,164 @@ addFamily(c("Hynobius", "Onychodactylus", "Liua"), "Hynobiidae")
 dev.off()
 
 Alpha <- 1
-exCol <- rgb(217/255, 95/255, 2/255, Alpha)
-hiCol <- rgb(27/255, 158/255, 119/255, Alpha)
-loCol <- rgb(117/255, 112/255, 179/255, Alpha)
+npCol <- rgb(166/255, 206/ 255, 227/255, Alpha) # extant w/o pleth
+exCol <- rgb(31/255, 120/255, 180/255, Alpha) # extant w/ pleth
+npfCol <- rgb(178/255, 223/255, 138/255, Alpha) # fossils w/o pleth
+allCol <- rgb(51/255, 160/255, 44/255, Alpha) # fossils w/ pleth
+
+LWD <- 2
+Xax <- c(0, 50, 100, 150, 200, 250)
+startT <- 225
 
 setwd(paste(Path_base, "figures", sep=""))
-pdf("spex.pdf", height=5, width=10)
-par(mfcol=c(1,2), mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, bty="n", las=1, cex.lab=1.5)
+pdf("spex.pdf", height=6.5, width=6.5)
+
+par(mfrow=c(2,2), mar=c(4,4,1,1), mgp=c(2.2,0.3,0), tck=-0.005, bty="n", las=1, cex.lab=1.5)
+
 # Speciation plot
-tDiff <- max(fmax) - maxT
-plot(exRTT$times + tDiff, apply(exRTT$lambda,2,mean), type='l', ylim=c(0,0.1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("speciation rate (", lambda, ")", sep="")), col=exCol, lwd=1.5)
+plot(max(exRTT$times) - exRTT$times, apply(exRTT$lambda,2,mean), type='n', ylim=c(0,0.1), xlim=c(startT, 0), axes=F, xlab="age (Ma)", ylab=expression(paste("speciation rate (", lambda, ")", sep="")), col=exCol, lwd=LWD)
 
-silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$lambda, 2, mean), col=hiCol))
+silent <- sapply(1:length(fbRTT_all), function(x) lines(max(fbRTT_all[[x]]$times) - fbRTT_all[[x]]$times, apply(fbRTT_all[[x]]$lambda, 2, mean), col=allCol))
+silent <- sapply(1:length(fbRTT), function(x) lines(max(fbRTT[[x]]$time) - fbRTT[[x]]$times, apply(fbRTT[[x]]$lambda, 2, mean), col=npfCol))
 
-silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x], apply(fbRTT[[x]]$lambda, 2, mean), col=loCol))
-Xax <- c(-100, 0, 50, 100, 150, 204, 240, 270)
-axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))
+lines(max(npRTT$times) - npRTT$times, apply(npRTT$lambda, 2, mean), col=npCol, lwd=LWD)
+lines(max(exRTT$times) - exRTT$times, apply(exRTT$lambda, 2, mean), col=exCol, lwd=LWD)
+
+axis(1, at=Xax)
 axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08, 0.1))
-segments(max(fmax) - 66, 0, max(fmax) - 66, 0.1, lty=3, lwd=1.2)
+segments(66, 0, 66, 0.1, lty=3, lwd=1.2)
 
 # Extinction plot
-plot(exRTT$times + tDiff, apply(exRTT$mu,2,mean), type='l', ylim=c(0,0.1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("extinction rate (", mu, ")", sep="")), col=exCol, lwd=1.5)
-#points(max(fmax) - fosRTT$Midpoint_Ma, fosRTT$X3T_mu, pch=16, type='b')
+plot(max(exRTT$times) - exRTT$times, apply(exRTT$mu,2,mean), type='n', ylim=c(0,0.1), xlim=c(startT, 0), axes=F, xlab="age (Ma)", ylab=expression(paste("extinction rate (", mu, ")", sep="")), col=exCol, lwd=LWD)
 
-silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$mu, 2, mean), col=hiCol))
-silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x], apply(fbRTT[[x]]$mu, 2, mean), col=loCol))
-axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))
+silent <- sapply(1:length(fbRTT_all), function(x) lines(max(fbRTT_all[[x]]$times) - fbRTT_all[[x]]$times, apply(fbRTT_all[[x]]$mu, 2, mean), col=allCol))
+silent <- sapply(1:length(fbRTT), function(x) lines(max(fbRTT[[x]]$time) - fbRTT[[x]]$times, apply(fbRTT[[x]]$mu, 2, mean), col=npfCol))
+
+lines(max(npRTT$times) - npRTT$times, apply(npRTT$mu, 2, mean), col=npCol, lwd=LWD)
+lines(max(exRTT$times) - exRTT$times, apply(exRTT$mu,2,mean), col=exCol, lwd=LWD)
+
+axis(1, at=Xax)
 axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08, 0.1))
 
-legend("topright", bty="n", legend=c("extant", "fossils", "fossils-full"), lty=1, col=c(exCol, loCol, hiCol))
-#legend("topright", bty="n", legend=c("extant", "fossils"), lty=1, col=c(exCol, loCol))
 segments(max(fmax) - 66, 0, max(fmax) - 66, 0.1, lty=3, lwd=1.2)
-dev.off()
+#dev.off()
 
-pdf("derivedPars.pdf", height=5, width=10)
-par(mfcol=c(1,2), mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, bty="n", las=1, cex.lab=1.5)
+#pdf("derivedPars.pdf", height=5, width=10)
+#par(mfcol=c(1,2), mar=c(4,4,1,1), mgp=c(2.2,0.5,0), tck=-0.005, bty="n", las=1, cex.lab=1.5)
 # Net div plot
-plot(exRTT$times + tDiff, apply(exRTT$lambda,2,mean) - apply(exRTT$mu,2,mean), type='l', ylim=c(0,0.1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("net diversification (", lambda, "-", mu, ")", sep="")), col=exCol, lwd=1.5)
-#points(max(fmax) - fosRTT$Midpoint_Ma, fosRTT$X3T_mu, pch=16, type='b')
-silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$lambda, 2, mean) - apply(fbRTT_hi[[x]]$mu, 2, mean), col=hiCol))
-silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x], apply(fbRTT[[x]]$lambda, 2, mean) - apply(fbRTT[[x]]$mu, 2, mean), col=loCol))
-axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))
+plot(max(exRTT$times) - exRTT$times, apply(exRTT$lambda,2,mean) - apply(exRTT$mu,2,mean), type='n', ylim=c(0,0.1), xlim=c(startT, 0), axes=F, xlab="age (Ma)", ylab=expression(paste("net diversification (", lambda, "-", mu, ")", sep="")), col=exCol, lwd=LWD)
+
+silent <- sapply(1:length(fbRTT_all), function(x) lines(max(fbRTT_all[[x]]$times) - fbRTT_all[[x]]$times, apply(fbRTT_all[[x]]$lambda, 2, mean) - apply(fbRTT_all[[x]]$mu, 2, mean), col=allCol))
+silent <- sapply(1:length(fbRTT), function(x) lines(max(fbRTT[[x]]$times) - fbRTT[[x]]$times, apply(fbRTT[[x]]$lambda, 2, mean) - apply(fbRTT[[x]]$mu, 2, mean), col=npfCol))
+
+lines(max(npRTT$times) - npRTT$times, apply(npRTT$lambda,2,mean) - apply(npRTT$mu, 2, mean), col=npCol, lwd=LWD)
+lines(max(exRTT$times) - exRTT$times, apply(exRTT$lambda,2,mean) - apply(exRTT$mu,2,mean), col=exCol, lwd=LWD)
+
+axis(1, at=Xax)
 axis(2, at=c(-10, 0, 0.02, 0.04, 0.06, 0.08, 0.1))
-legend("topright", bty="n", legend=c("extant", "fossils", "fossils-full"), lty=1, col=c(exCol, loCol, hiCol))
+legend("topleft", bty="n", legend=c("extant", "extant-reduced", "fossils", "fossils-reduced"), text.col=c(exCol, npCol, allCol, npfCol), cex=1.5)
 
 # Rel ext plot
-plot(exRTT$times + tDiff, apply(exRTT$mu,2,mean) / apply(exRTT$lambda,2,mean), type='l', ylim=c(0,1), xlim=c(0,max(fmax)), axes=F, xlab="age (Ma)", ylab=expression(paste("relative extinction (", mu, "/", lambda, ")", sep="")), lwd=1.5, col=exCol)
-#points(max(fmax) - fosRTT$Midpoint_Ma, fosRTT$X3T_mu, pch=16, type='b')
-silent <- sapply(1:length(fbRTT_hi), function(x) lines(fbRTT_hi[[x]]$times + max(fmax) - fmax[x], apply(fbRTT_hi[[x]]$mu, 2, mean) / apply(fbRTT_hi[[x]]$lambda, 2, mean), col=hiCol))
-silent <- sapply(1:length(fbRTT), function(x) lines(fbRTT[[x]]$times + max(fmax) - fmax[x],  apply(fbRTT[[x]]$mu, 2, mean) / apply(fbRTT[[x]]$lambda, 2, mean), col=loCol))
-axis(1, at=Xax, labels=as.character(sapply(max(fmax)-Xax, round)))
+plot(max(exRTT$times) - exRTT$times, apply(exRTT$mu,2,mean) / apply(exRTT$lambda,2,mean), type='n', ylim=c(0,1), xlim=c(startT, 0), axes=F, xlab="age (Ma)", ylab=expression(paste("relative extinction (", mu, "/", lambda, ")", sep="")), lwd=LWD, col=exCol)
+
+silent <- sapply(1:length(fbRTT_all), function(x) lines(max(fbRTT_all[[x]]$times) - fbRTT_all[[x]]$times, apply(fbRTT_all[[x]]$mu, 2, mean) / apply(fbRTT_all[[x]]$lambda, 2, mean), col=allCol))
+silent <- sapply(1:length(fbRTT), function(x) lines(max(fbRTT[[x]]$times) - fbRTT[[x]]$times,  apply(fbRTT[[x]]$mu, 2, mean) / apply(fbRTT[[x]]$lambda, 2, mean), col=npfCol))
+
+lines(max(npRTT$times) - npRTT$times, apply(npRTT$mu, 2, mean) / apply(npRTT$lambda,2,mean), col=npCol, lwd=LWD)
+lines(max(exRTT$times) - exRTT$times, apply(exRTT$mu,2,mean) / apply(exRTT$lambda,2,mean), lwd=LWD, col=exCol)
+
+axis(1, at=Xax)
 axis(2, at=c(-10, 0, 0.2, 0.4, 0.6, 0.8, 1))
 dev.off()
 
-sPlot <- plot(fbEdata[[1]], breaks="jenks", spex="s")
-ePlot <- plot(fbEdata[[1]], breaks="jenks", spex="e")
+sPlot <- plot(fbEdata_all[[1]], breaks="jenks", spex="s")
+ePlot <- plot(fbEdata_all[[1]], breaks="jenks", spex="e")
 
 setwd(paste(Path_base, "figures", sep=""))
 pdf("spexComparison.pdf", height=10, width=10)
-par(mfrow=c(2,2), mar=c(0,0,0,7), oma=c(0,5,2,0), pty="s")
-plot(exEdata, colorbreaks=sPlot$colorbreaks)
-addBAMMlegend(sPlot, location=c(-36,-30,152,313))
+par(mfrow=c(2,2), mar=c(0,0,0,7), oma=c(0,7,0,0), pty="s")
+x <- plot(exEdata, colorbreaks=sPlot$colorbreaks)
+addBAMMlegend(x, location="left")
 tree <- as.phylo(exEdata)
 CEX <- 1
 addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T, Cex=CEX)
 addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T, Cex=CEX)
 addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T, Cex=CEX)
-#addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")
-#addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")
-addFamily(c("Salamandra", "Neurergus", "Chioglossa"), "Salamandridae", Cex=CEX)
+addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae", Cex=CEX)
+addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae", Cex=CEX)
+addFamily(c("Tylototriton", "Echinotriton", "Pleurodeles"), "Salamandridae", centering=T, Cex=CEX)
 addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae", Cex=CEX)
 addFamily(c("Hynobius", "Onychodactylus", "Liua"), "Hynobiidae", Cex=CEX)
 mtext("extant-only", side=3, line=0, xpd=NA, cex=1.5)
-mtext("speciation rate", side=2, line=3, xpd=NA, cex=1.5)
-segments(219, 177, 302, 475, xpd=NA, lty=2)
-segments(215, -14, 519, -14, xpd=NA, lty=2)
+mtext("speciation rate", side=2, line=5, xpd=NA, cex=1.5, las=0)
+#segments(219, 177, 302, 475, xpd=NA, lty=2)
+#segments(215, -14, 519, -14, xpd=NA, lty=2)
 
-plot(fbEdata[[1]], colorbreaks=sPlot$colorbreaks)
-tree <- as.phylo(fbEdata[[1]])
+plot(fbEdata_all[[1]], colorbreaks=sPlot$colorbreaks)
+tree <- as.phylo(fbEdata_all[[1]])
 addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T, Cex=CEX)
 addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T, Cex=CEX)
 addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T, Cex=CEX)
-#addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")
-#addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")
-addFamily(c("Paramesotriton", "Paramesotriton", "Pachytriton"), "Salamandridae", Cex=CEX)
+addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae", Cex=CEX)
+addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae", Cex=CEX)
+addFamily(c("Tylototriton", "Echinotriton", "Pleurodeles"), "Salamandridae", centering=T, Cex=CEX)
 addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae", Cex=CEX)
-mtext("extant + extinct", side=3, line=0, xpd=NA, cex=1.5)
+addFamily(c("Hynobius", "Onychodactylus", "Liua"), "Hynobiidae", Cex=CEX)
+mtext("extant + fossils", side=3, line=0, xpd=NA, cex=1.5)
 
-#plot(fbEdata_hi[[1]], colorbreaks=sPlot$colorbreaks)
-#tree <- as.phylo(fbEdata_hi[[1]])
-#addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T, Cex=CEX)
-#addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T, Cex=CEX)
-#addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T, Cex=CEX)
-#addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")
-#addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")
-#addFamily(c("Paramesotriton", "Paramesotriton", "Pachytriton"), "Salamandridae", Cex=CEX)
-#addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae", Cex=CEX)
-
-plot(exEdata, colorbreaks=ePlot$colorbreaks, spex="e")
-addBAMMlegend(ePlot, location=c(-36,-30,152,313))
+x <- plot(exEdata, colorbreaks=ePlot$colorbreaks, spex="e")
+addBAMMlegend(x, location="left")
 tree <- as.phylo(exEdata)
 CEX <- 1
 addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T, Cex=CEX)
 addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T, Cex=CEX)
 addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T, Cex=CEX)
-#addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")
-#addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")
-addFamily(c("Salamandra", "Neurergus", "Chioglossa"), "Salamandridae", Cex=CEX)
+addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae", Cex=CEX)
+addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae", Cex=CEX)
+addFamily(c("Tylototriton", "Echinotriton", "Pleurodeles"), "Salamandridae", centering=T, Cex=CEX)
 addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae", Cex=CEX)
 addFamily(c("Hynobius", "Onychodactylus", "Liua"), "Hynobiidae", Cex=CEX)
-mtext("extinction rate", side=2, line=3, xpd=NA, cex=1.5)
-segments(219, 177, 302, 475, xpd=NA, lty=2)
-segments(215, -14, 519, -14, xpd=NA, lty=2)
+mtext("extinction rate", side=2, line=5, xpd=NA, cex=1.5)
+#segments(219, 177, 302, 475, xpd=NA, lty=2)
+#segments(215, -14, 519, -14, xpd=NA, lty=2)
 
-plot(fbEdata[[1]], colorbreaks=ePlot$colorbreaks, spex="e")
-tree <- as.phylo(fbEdata[[1]])
+plot(fbEdata_all[[1]], colorbreaks=ePlot$colorbreaks, spex="e")
+tree <- as.phylo(fbEdata_all[[1]])
 addFamily(c("Ambystoma", "Ambystoma", "Ambystoma"), "Ambystomatidae", centering=T, Cex=CEX)
 addFamily(c("Siren", "Siren", "Pseudobranchus"), "Sirenidae", centering=T, Cex=CEX)
 addFamily(c("Amphiuma", "Amphiuma", "Amphiuma"), "Amphiumidae", centering=T, Cex=CEX)
-#addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae")
-#addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae")
-addFamily(c("Paramesotriton", "Paramesotriton", "Pachytriton"), "Salamandridae", Cex=CEX)
+addFamily(c("Aneides", "Plethodon", "Ensatina"), "Plethodontinae", Cex=CEX)
+addFamily(c("Bolito", "Chiropterotriton", "Batrachoseps"), "Bolitoglossinae", Cex=CEX)
+addFamily(c("Tylototriton", "Echinotriton", "Pleurodeles"), "Salamandridae", centering=T, Cex=CEX)
 addFamily(c("Andrias", "Andrias", "Cryptobranchus"), "Cryptobranchidae", Cex=CEX)
+addFamily(c("Hynobius", "Onychodactylus", "Liua"), "Hynobiidae", Cex=CEX)
 dev.off()
 
 
+make.plot <- function(vec1, vec2, label=NULL, labline=3)	{
+	R <- range(c(vec1, vec2))
+	Ticks <- pretty(R)
+	plot(1, 1, type="n", xlim=range(Ticks), ylim=range(Ticks), axes=F, xlab="", ylab="")
+	points(vec1, vec2, pch=21, bg='gray70')
+	axis(1, at=c(-100, Ticks))
+	axis(2, at=c(-100, Ticks))
+	segments(Ticks[1], Ticks[1], Ticks[length(Ticks)], Ticks[length(Ticks)], lty=2)
+	if (!is.null(label))	{
+		mtext(label, side=2, at=max(Ticks), line=labline, cex=1.25)
+	}
+}
+options(scipen=6)
 
+
+setwd(paste(Path_base, "figures", sep=""))
+pdf("rateCors.pdf", height=6.5, width=6.5)
 # Tip rates between fossil and extant-only species
-edata <- fbEdata[[1]]
+par(mfrow=c(2,2), mar=c(4, 5, 0.5, 0.5), bty="n", las=1, mgp=c(2, 0.5, 0), tck=-0.01, cex.axis=0.9)
+Liney <- 3
+Linex <- 2
+
+# all
+edata <- fbEdata_all[[1]]
 Ext <- edata$meanTipMu
 names(Ext) <- edata$tip.label
 Spec <- edata$meanTipLambda
@@ -295,15 +371,47 @@ names(exExt) <- exEdata$tip.label
 
 Inter <- intersect(exEdata$tip.label, edata$tip.label)
 
-par(mfrow=c(1,2))
-hist(exSpec[Inter], xlim=c(0,0.14), border=rgb(0,0,0,0), col=rgb(0,0,0,0.5), main="", ylim=c(0, 60))
-hist(Spec[Inter], xlim=c(0,0.14), ylim=c(0,60), add=T, axes=F, col=rgb(1, 0, 0, 0.5), border=rgb(0, 0, 0, 0))
+make.plot(exSpec[Inter], Spec[Inter], label="a)")
+mtext("speciation rate - fossils", side=2, las=0, line=Liney)
+mtext("speciation rate - extant", side=1, line=Linex)
+make.plot(exExt[Inter], Ext[Inter], "b)")
+mtext("extinction rate - fossils", side=2, las=0, line=Liney)
+mtext("extinction rate - extant", side=1, line=Linex)
 
-hist(exExt[Inter], xlim=c(0,0.1), border=rgb(0,0,0,0), col=rgb(0,0,0,0.5), main="", ylim=c(0, 60))
-hist(Ext[Inter], xlim=c(0,0.1), add=T, axes=F, ylim=c(0,60), col=rgb(1,0,0,0.5), border=rgb(0,0,0,0))
+# No Pleths
+edata <- fbEdata[[1]]
+Ext <- edata$meanTipMu
+names(Ext) <- edata$tip.label
+Spec <- edata$meanTipLambda
+names(Spec) <- edata$tip.label
+exSpec <- npEdata$meanTipLambda
+names(exSpec) <- npEdata$tip.label
+exExt <- npEdata$meanTipMu
+names(exExt) <- npEdata$tip.label
+
+Inter <- intersect(npEdata$tip.label, edata$tip.label)
+
+make.plot(exSpec[Inter], Spec[Inter], label="c)")
+mtext("speciation rate - fossils", side=2, las=0, line=Liney)
+mtext("speciation rate - extant", side=1, line=Linex)
+make.plot(exExt[Inter], Ext[Inter], label="d)")
+mtext("extinction rate - fossils", side=2, las=0, line=Liney)
+mtext("extinction rate - extant", side=1, line=Linex)
+dev.off()
 
 
 #########################################################################################
+# No Pleths
+edata <- fbEdata[[1]]
+Ext <- edata$meanTipMu
+names(Ext) <- edata$tip.label
+Spec <- edata$meanTipLambda
+names(Spec) <- edata$tip.label
+exSpec <- npEdata$meanTipLambda
+names(exSpec) <- npEdata$tip.label
+exExt <- npEdata$meanTipMu
+names(exExt) <- npEdata$tip.label
+
 # IUCN
 IUCN <- read.csv(paste(Path_base, "datafiles/IUCN_list.csv", sep=""), stringsAsFactors=F)
 IUCN_sp <- apply(IUCN, 1, function(x) paste(c(x[which(colnames(IUCN)=="Genus")], x[which(colnames(IUCN)=="Species")]), sep="_", collapse="_"))
@@ -313,35 +421,40 @@ names(Scores) <- IUCN_sp
 # Key: DD= data deficient, NE= not evaluated, 
 # then: LC -> CD -> NT -> VU -> EN -> CR -> EW -> EX
 
-#Inter <- intersect(names(Scores), edata$tip.label)
-
-meanSp <- tapply(Spec[Inter], Scores[Inter], mean)
-sdSp <- tapply(Spec[Inter], Scores[Inter], sd)
-meanEx <- tapply(Ext[Inter], Scores[Inter], mean)
-sdEx <- tapply(Ext[Inter], Scores[Inter], sd)
-
+source('~/Documents/BAMMtools_Functions/spindlePlot.R', chdir = TRUE)
+par(mfrow=c(1, 2), mar=c(4, 5, 0.5, 0.5), las=1, mgp=c(1, 0.5, 0), tck=-0.01)
+COL <- 'gray70'
+WF <- 3
 Cats <- c("LC", "NT", "VU", "EN")
-plot(meanSp[Cats], axes=F)
 
-plot(meanEx[Cats], axes=F, xlim=c(0,4), ylim=c(0,0.15))
-silent <- sapply(1:length(Cats), function(x) segments(x, meanEx[Cats[x]]-sdEx[Cats[x]], x, meanEx[Cats[x]]+sdEx[Cats[x]]))
+plot(meanSp[Cats], axes=F, xlim=c(0.5, 4.5), ylim=c(0, 0.12), xlab="", ylab="", type="n")
+spindlePlot(Spec[names(which(Scores=="LC"))], at=1, col=COL, widthFactor=WF)
+spindlePlot(Spec[names(which(Scores=="NT"))], at=2, col=COL, widthFactor=WF)
+spindlePlot(Spec[names(which(Scores=="VU"))], at=3, col=COL, widthFactor=WF)
+spindlePlot(Spec[names(which(Scores=="EN"))], at=4, col=COL, widthFactor=WF)
 
+axis(1, at=c(1, 2, 3, 4), labels=Cats)
+axis(2, at=c(0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12))
 
+plot(meanEx[Cats], axes=F, xlim=c(0.5, 4.5), ylim=c(0, 0.08), xlab="", ylab="", type="n")
+spindlePlot(Ext[names(which(Scores=="LC"))], at=1, col=COL, widthFactor=WF)
+spindlePlot(Ext[names(which(Scores=="NT"))], at=2, col=COL, widthFactor=WF)
+spindlePlot(Ext[names(which(Scores=="VU"))], at=3, col=COL, widthFactor=WF)
+spindlePlot(Ext[names(which(Scores=="EN"))], at=4, col=COL, widthFactor=WF)
+
+axis(1, at=c(1, 2, 3, 4), labels=Cats)
+axis(2, at=c(0, 0.02, 0.04, 0.06, 0.08))
+
+#########################################################################################
 # Geographic range
 Areas <- read.table(paste(Path_base, "datafiles/areas.txt", sep=""), row.names=1, stringsAsFactors=F)
 
-edata <- fbEdata[[1]]
+edata <- fbEdata_all[[1]]
 Inter <- intersect(rownames(Areas), edata$tip.label)
 Ext <- edata$meanTipMu
 names(Ext) <- edata$tip.label
 Spec <- edata$meanTipLambda
 names(Spec) <- edata$tip.label
-
-# Let's check only Salamandridae
-#newts <- edata$tip.label[c(grep("Salamandrina", edata$tip.label), grep("Taricha", edata$tip.label))]
-#newt_tips <- edata$tip.label[getDescendants(as.phylo(edata), node=findMRCA(as.phylo(edata), newts))]
-#newt_tips <- na.omit(newt_tips)
-#Inter <- intersect(Inter, newt_tips)
 
 par(mfrow=c(2,2))
 Xax <- c(-10, 5.5, 7.5, 9.5, 11.5, 13.5)

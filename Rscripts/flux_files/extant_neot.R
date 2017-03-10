@@ -18,7 +18,7 @@ PrA <- matrix(rep(0.01666667, length(Cols)), nrow=1)
 colnames(PrA) <- names(Cols)
 rownames(PrA) <- Ntip(tree) + 1
 PrA[1,"0"] <- 1 - (3 * PrA[1,"1"])
-Ngen <- 5e6
+Ngen <- 1e8
 
 setwd(paste(Path_base, "bamm/extant_only/", sep=""))
 source(paste(Path_base, "Rscripts/ancThresh_write.R", sep=""), chdir = TRUE)

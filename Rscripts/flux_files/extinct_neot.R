@@ -1,5 +1,7 @@
 Path_base <- "/scratch/drabosky_flux/jonsmitc/Salamanders/"
+Path_base <- "~/Documents/Salamanders/"
 library(phytools)
+source(paste(Path_base, "Rscripts/ancThresh_write.R", sep=""), chdir = TRUE)
 
 count <- commandArgs(trailingOnly=TRUE)
 
@@ -19,9 +21,9 @@ names(Cols) <- c("-1", "0", "1", "2")
 PrA <- matrix(rep(0.01666667, length(Cols)), nrow=1)
 colnames(PrA) <- names(Cols)
 rownames(PrA) <- Ntip(tree) + 1
-PrA[1,"0"] <- 1 - (3 * PrA[1,"1"])
-Ngen <- 5e6
+PrA[1, "0"] <- 1 - (3 * PrA[1, "1"])
+Ngen <- 1e8
 
-ACE <- ancThresh(tree, neoteny[tree$tip.label], ngen=Ngen, sequence=colnames(PrA), control=list(sample=Ngen/1e3, propthresh=0.15*max(nodeHeights(tree)), propliab=0.75*max(nodeHeights(tree)), burnin=Ngen*0.1, piecol=Cols, tipcol="input", pr.anc=PrA, plot=F))
+ACE <- ancThresh(tree, neoteny[tree$tip.label], ngen=Ngen, sequence=colnames(PrA), control=list(sample=Ngen / 1e3, propthresh=0.15 * max(nodeHeights(tree)), propliab=0.75 * max(nodeHeights(tree)), pr.anc=PrA, plot=F))
 setwd(paste(Path_base, "output", sep=""))
 save(ACE, file=paste(Path_base, "output/neotAnc/neotAnc", count, ".RData", sep=""))

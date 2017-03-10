@@ -146,6 +146,10 @@ placeFossil <- function(tree, age, Name="fossil", Hs=NULL, taxa=NULL, node=NULL,
 		tree2 <- bind.tip(tree, Name, edge.length=brLen, where=dNode, position=branchPt)
 	}
 	if (Ntip(tree2) == Nnode(tree2) + 1)	{
+		if (min(tree2$edge.length) < grain)	{
+			require(paleotree)
+			tree2 <- minBranchLength(tree2, grain)
+		}
 		return(tree2)
 	}
 	else	{

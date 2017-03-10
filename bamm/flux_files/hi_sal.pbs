@@ -10,7 +10,7 @@
 #PBS -A drabosky_flux
 #PBS -l qos=flux
 #PBS -q flux
-#PBS -t 1-70%25
+#PBS -t 1-70
 
 ####  End PBS preamble
 #  Include the next three lines always

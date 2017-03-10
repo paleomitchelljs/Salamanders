@@ -30,7 +30,7 @@ tree_rates <- function(par)	{
 
 # Need speciation, extinction and preservation rates to determine branch lengths for fossil tips
 rates <- optim(c(0.01, 0.005), tree_rates)
-psi_rate <- 129 / sum(onlySal$edge.length) #sum(fossil$numOcc)
+psi_rate <- (sum(fossil$numOcc) + 26) / sum(onlySal$edge.length) # number of fossil occurrences + 26 plethodontid fossils
 
 Save <- c("Plethodon_cinereus", "Ambystoma_tigrinum", "Amphiuma_means", "Andrias_japonicus", "Rhyacotriton_cascadae", "Necturus_maculosus", "Bolitoglossa_stuarti", "Dicamptodon_copei", "Siren_lacertina", "Hynobius_katoi", "Neurergus_kaiseri")
 newtree <- drop.tip(onlySal, setdiff(onlySal$tip.label, Save))
@@ -167,18 +167,12 @@ for (tcount in 1:length(Topologies))	{
 			}
 		}
 
-		if (Opt == "bamm/")	{
-			# Remove the cursed frog! Remove crazy extants
-			fullTree <- drop.tip(salTree, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", "Ichthyophis_bombayensis", "Rana_alticola"))
-			fullTree_uni <- drop.tip(salTree_uni, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", "Ichthyophis_bombayensis", "Rana_alticola"))			
-			salTree <- drop.tip(salTree, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", hynTipN, plethTipN, "Ichthyophis_bombayensis", "Rana_alticola"))
-			salTree_uni <- drop.tip(salTree_uni, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", hynTipN, plethTipN, "Ichthyophis_bombayensis", "Rana_alticola"))
-		}
-		if (Opt == "full/")	{
-			# Remove the cursed frog! Retain crazy extants
-			salTree <- drop.tip(salTree, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", "Ichthyophis_bombayensis", "Rana_alticola"))
-			salTree_uni <- drop.tip(salTree_uni, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", "Ichthyophis_bombayensis", "Rana_alticola"))
-		}
+		# Remove the cursed frog! Remove crazy extants
+		fullTree <- drop.tip(salTree, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", "Ichthyophis_bombayensis", "Rana_alticola"))
+		fullTree_uni <- drop.tip(salTree_uni, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", "Ichthyophis_bombayensis", "Rana_alticola"))			
+		salTree <- drop.tip(salTree, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", plethTipN, "Ichthyophis_bombayensis", "Rana_alticola"))
+		salTree_uni <- drop.tip(salTree_uni, c(Frog, "Gerobatrachus_hottoni", "Celtedens_ibericus", plethTipN, "Ichthyophis_bombayensis", "Rana_alticola"))
+
 	
 		if (Ntip(salTree) >= 170)	{
 			dir.create(paste("output-", simN, sep=""))
