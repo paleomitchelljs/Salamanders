@@ -71,3 +71,7 @@ foreach(i=1:2) %dopar% {#
 	setwd(paste(Path_base, "output", sep=""))#
 	save(ACE, file=paste(Path_base, "output/neotAnc/neotAnc", i, ".RData", sep=""))#
 }
+?addBAMMlegend
+library(BAMMtools)
+?addBAMMlegend
+addBAMMlegend

@@ -44,6 +44,7 @@ latRange <- sapply(spList, function(x) x@bbox["y",])
 latBins <- seq(from=-20, to=74, by=1)
 Richness <- c()
 latMid <- c()
+binTax <- list()
 for (count in 2:length(latBins))	{
 	bin_min <- latBins[count-1]
 	bin_max <- latBins[count]
@@ -51,14 +52,39 @@ for (count in 2:length(latBins))	{
 	keep_max <- which(latRange[2,] <= bin_max & latRange[2,] >= bin_min)
 	Richness[count-1] <- length(unique(c(keep_min, keep_max)))
 	latMid[count-1] <- mean(c(bin_min, bin_max))
+	binTax[[count-1]] <- colnames(latRange)[c(keep_min, keep_max)]
 }
 
+ND <- fbEdata[[1]]$meanTipLambda - fbEdata[[1]]$meanTipMu
+names(ND) <- fbEdata[[1]]$tip.label
+EXT <- fbEdata[[1]]$meanTipMu
+names(EXT) <- fbEdata[[1]]$tip.label
+SPEC <- fbEdata[[1]]$meanTipLambda
+names(SPEC) <- fbEdata[[1]]$tip.label
+TURN <- fbEdata[[1]]$meanTipLambda + fbEdata[[1]]$meanTipMu
+names(TURN) <- fbEdata[[1]]$tip.label
+
+latDiv <- sapply(binTax, function(x) mean(ND[x], na.rm=T))
+latExt <- sapply(binTax, function(x) mean(EXT[x], na.rm=T))
+latSpec <- sapply(binTax, function(x) mean(SPEC[x], na.rm=T))
+latTurn <- sapply(binTax, function(x) mean(TURN[x], na.rm=T))
+
 setwd(paste(Path_base, "figures", sep=""))
-pdf("ldg.pdf", height=5, width=5)
-par(mar=c(4,4,1,1), mgp=c(2.2,0.5,0), las=1, bty="n", cex.lab=1.5, tck=-0.005)
-plot(latMid, Richness, type='b', col='black', pch=21, bg='gray70', lwd=1, cex=1.5, axes=F, xlim=c(-80, 80), ylim=c(0, 60), xlab="latitude", ylab="richness")
+pdf("ldg.pdf", height=3, width=9)
+par(mfrow=c(1,3), mar=c(4,4,1,1), mgp=c(2.2,0.5,0), las=1, bty="n", cex.lab=1.5, tck=-0.005)
+
+plot(latMid, latDiv, type='b', pch=21, bg='gray70', cex=1.5, xlim=c(-20, 80), ylim=c(0, 0.08), xlab="latitude", ylab='net div.', axes=F)
+axis(1, at=c(-120, -80, -60, -40, -20, 0, 20, 40, 60, 80))
+axis(2, at=c(-100, 0, 0.02, 0.04, 0.06, 0.08))
+
+plot(latMid, Richness, type='b', col='black', pch=21, bg='gray70', lwd=1, cex=1.5, axes=F, xlim=c(-20, 80), ylim=c(0, 60), xlab="latitude", ylab="richness")
 axis(1, at=c(-120, -80, -60, -40, -20, 0, 20, 40, 60, 80))
 axis(2, at=c(-100, 0, 10, 20, 30, 40, 50, 60))
+
+plot(Richness, latDiv, pch=21, bg='gray70', cex=1.5, xlim=c(0, 60), ylim=c(0, 0.08), xlab="richness", ylab='net div.', axes=F)
+axis(1, at=c(-100, 0, 10, 20, 30, 40, 50, 60))
+axis(2, at=c(-100, 0, 0.02, 0.04, 0.06, 0.08))
+
 dev.off()
 
 
